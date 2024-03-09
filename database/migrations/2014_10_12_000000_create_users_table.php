@@ -20,17 +20,17 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->integer('age')->nullable();
+            $table->date('DOB')->nullable();
             $table->string('gender')->nullable();
-            $table->float('weight')->nullable();
-            $table->float('height')->nullable();
+            $table->integer('weight')->nullable();
+            $table->integer('height')->nullable();
             $table->float('bmi')->nullable();
             $table->string('chronic_diseases')->nullable();
             $table->string('allergies')->nullable();
             $table->string('dietary_preferences')->nullable();
             $table->string('health_goals')->nullable();
             $table->string('ethical_meal_considerations')->nullable();
-            
+
             $table->rememberToken();
             $table->timestamps();
         });

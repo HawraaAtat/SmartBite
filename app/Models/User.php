@@ -32,5 +32,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'chronic_diseases' => 'array',
+        'allergies' => 'array',
+        'dietary_preferences' => 'array',
+        'health_goals' => 'array',
+        'ethical_meal_considerations' => 'array',
     ];
 }
