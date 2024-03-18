@@ -12,14 +12,15 @@ class SessionController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'min:3'],
+            'first_name' => ['required', 'min:3'],
+            'last_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'DOB' => ['nullable', 'date'],
             'gender' => ['nullable', 'string'],
             'weight' => ['nullable', 'integer'],
             'height' => ['nullable', 'integer'],
-            'bmi' => ['nullable', 'float'],
+            'bmi' => ['nullable', 'numeric'],
             'chronic_diseases' => ['nullable', 'array'],
             'allergies' => ['nullable', 'array'],
             'dietary_preferences' => ['nullable', 'array'],
