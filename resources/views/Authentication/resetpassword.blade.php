@@ -61,13 +61,20 @@
 	<main class="page-content">
 		<div class="container py-0">
 			<div class="dz-authentication-area">
+			<a href="javascript:void(0);" class="back-btn">
+						<i class="feather icon-arrow-left"></i>
+					</a>
+					<!-- <div class="logo">
+						<img src="assets/images/app-logo/logo.png" alt="logo">
+					</div> -->
+				</div>
 				<div class="main-logo">
 					<!-- <div class="logo">
 						<img src="assets/logo.png" alt="logo" >
 					</div> -->
 				</div>
 				<div class="section-head">
-					<h3 class="title">Sign In</h3>
+					<h3 class="title">Reset Password</h3>
 				</div>
 				<div class="account-section">
 					<form class="m-b30">
@@ -77,23 +84,11 @@
 								<input type="email" id="email" class="form-control" >
 							</div>
 						</div>
-						<div class="m-b30">
-							<label class="form-label" for="password">Password</label>
-							<div class="input-group input-mini input-lg">
-								<input type="password" id="password" class="form-control dz-password" ">
-								<span class="input-group-text show-pass"> 
-									<i class="icon feather icon-eye-off eye-close"></i>
-									<i class="icon feather icon-eye eye-open"></i>
-								</span>
-							</div>
-						</div>
-						<a href="{{ url('index') }}" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a> 
-						<p class="form-text">Forgot Password? <a href="{{ url('resetpassword') }}" class="link ms-2">Reset Password</a></p>
+						
 					</form>
 					<div class="text-center account-footer">
-						<p class="text-light">Dont have any account?</p>
-						<a href="{{ url('signup') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">CREATE AN ACCOUNT</a>
-					</div>
+						
+					<a href="" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Continue</a> 					</div>
 				</div>	
 			</div>
         </div>

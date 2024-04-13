@@ -30,6 +30,10 @@ Route::get('/signin', function () {
     return view('Authentication/signin');
 });
 
+Route::get('/resetpassword', function () {
+    return view('Authentication/resetpassword');
+});
+
 Route::get('/signup', function () {
     return view('Authentication/signup');
 });
