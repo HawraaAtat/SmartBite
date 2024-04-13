@@ -1,0 +1,17 @@
+{
+    "name": "Smart Bite",
+    "short_name": "SB",
+    "start_url": "/index.php",
+    "background_color": "#ffffff",
+    "description": "Smart",
+    "display": "fullscreen",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "logo.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
