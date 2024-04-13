@@ -18,9 +18,20 @@ Route::get('/', function () {
     return view('onboarding');
 });
 
+Route::get('/index', function () {
+    return view('index');
+});
 
 Route::get('/welcome', function () {
     return view('welcome');
+});
+
+Route::get('/signin', function () {
+    return view('Authentication/signin');
+});
+
+Route::get('/signup', function () {
+    return view('Authentication/signup');
 });
 
 

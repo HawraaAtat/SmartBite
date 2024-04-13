@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+	
     <!-- Title -->
 	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
 
@@ -34,23 +34,21 @@
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
     
-    <!-- Stylesheets -->
-	<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<!-- Globle Stylesheets -->
     
-	<!-- Animte -->
-    <link rel="stylesheet" href="assets/vendor/wow/css/libs/animate.css">
-	
+	<!-- Stylesheets -->
+    <link rel="stylesheet" class="main-css" type="text/css" href="assets/css/style.css">
+    
     <!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
-	
+
 </head>   
 <body>
-<div class="page-wrapper">
 
-    <!-- Preloader -->
+<div class="page-wrapper">
+	<!-- Preloader -->
 	<div id="preloader">
 		<div class="loader">
 			<div class="spinner-border text-primary" role="status">
@@ -60,29 +58,69 @@
 	</div>
     <!-- Preloader end-->
 
-    <!-- Welcome Start -->
+	<!-- Main Content Start  -->
 	<main class="page-content">
 		<div class="container py-0">
-			<div class="welcome-area row">
-				<div class="welcome-inner-2 col" style="background-image: url('assets/images/background/bg3.png'); background-size: cover; background-repeat: no-repeat;">
-					<div class="main-wrapper">
-						<div class="main-logo">
-							<div class="logo-icon">
-								<img src="assets/logo.png" alt="logo" >
+			<div class="dz-authentication-area">
+				<div class="main-logo">
+					<a href="javascript:void(0);" class="back-btn">
+						<i class="feather icon-arrow-left"></i>
+					</a>
+					<!-- <div class="logo">
+						<img src="assets/images/app-logo/logo.png" alt="logo">
+					</div> -->
+				</div>
+				<div class="section-head">
+					<h3 class="title">Create an account</h3>
+				</div>
+				<div class="account-section">
+					<form class="m-b20">
+						<div class="mb-4">
+							<label class="form-label" for="firstname">First Name</label>
+							<div class="input-group input-mini input-lg">
+								<input type="firstname" id="firstname" class="form-control" >
 							</div>
 						</div>
+                        <div class="mb-4">
+							<label class="form-label" for="lastname">Last Name</label>
+							<div class="input-group input-mini input-lg">
+								<input type="lastname" id="lastname" class="form-control" >
+							</div>
+						</div>
+                        <div class="mb-4">
+							<label class="form-label" for="DOB">Date Of Birth</label>
+							<div class="input-group input-mini input-lg">
+								<input type="date" id="dob" class="form-control" >
+							</div>
+						</div>
+
+						<div class="mb-4">
+							<label class="form-label" for="email">Email</label>
+							<div class="input-group input-mini input-lg">
+								<input type="email" id="email" class="form-control" >
+							</div>
+						</div>
+						<div class="m-b30">
+							<label class="form-label" for="password">Password</label>
+							<div class="input-group input-mini input-lg">
+								<input type="password" id="password" class="form-control dz-password" >
+								<span class="input-group-text show-pass"> 
+									<i class="icon feather icon-eye-off eye-close"></i>
+									<i class="icon feather icon-eye eye-open"></i>
+								</span>
+							</div>
+						</div>
+						<a href="{{ url('signin') }}" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</a> 
+					</form>
+					<div class="text-center">
+						<p class="form-text">By tapping “Sign Up” you accept our <a href="javascript:void(0);" class="link">terms</a> and <a href="javascript:void(0);" class="link">condition</a></p>
 					</div>
-					<div class="dz-button-group">
-						<h3 class="title">Welcome</h3>
-						<a href="{{ url('signin') }}" class="btn btn-primary btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/inbox.png" alt=""><span>Login With Email</span></a>
-						<a href="sign-in.html" class="btn btn-facebook btn-primary btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/facebook.png" alt=""><span>Login with facebook</span></a>
-						<a href="sign-in.html" class="btn btn-white btn-social btn-thin rounded-xl btn-lg w-100"><img src="assets/images/social/google-mail.png" alt=""><span class="text-dark">Login with Google</span></a>
-					</div>
-				</div>
+				</div>	
 			</div>
-		</div>
-	</main>
-    <!-- Welcome End -->
+        </div>
+	</main>	
+	<!-- Main Content End  -->
+    
     
 </div>
 <!--**********************************
@@ -92,20 +130,8 @@
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script><!-- Swiper -->
 <script src="assets/js/dz.carousel.js"></script><!-- Swiper -->
-<script src="assets/vendor/wow/dist/wow.min.js"></script>
 <script src="assets/js/settings.js"></script>
 <script src="assets/js/custom.js"></script>
-<script>
-    new WOW().init();
-    
-    var wow = new WOW(
-    {
-      boxClass:     'wow',       // animated element css class (default is wow)
-      animateClass: 'animated',  // animation css class (default is animated)
-      offset:       50,          // distance to the element when triggering the animation (default is 0)
-      mobile:       false        // trigger animations on mobile devices (true is default)
-    });
-    wow.init();
-</script>
+
 </body>
 </html>
