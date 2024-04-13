@@ -48,7 +48,7 @@
 <div class="page-wrapper">
     
     <!-- splash -->        
-	<div class="loader-screen" id="splashscreen" style="background-image: url('assets/images/background/bg1.jpg');">
+	<div class="loader-screen" id="splashscreen" style="background-image: url('assets/images/background/bg.jpg');">
 		<img src="assets/images/preloader/circle1.png" class="circle-1" alt="">
 		<img src="assets/images/preloader/circle2.png" class="circle-2" alt="">
 		<div class="main-screen">
