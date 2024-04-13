@@ -64,7 +64,7 @@
 	<main class="page-content">
 		<div class="container py-0">
 			<div class="welcome-area row">
-				<div class="welcome-inner-2 col" style="background-image: url('assets/images/background/bg3.png'); background-size: cover; background-repeat: no-repeat;">
+				<div class="welcome-inner-2 col" style="background-image: url('assets/images/background/bg.jpg'); background-size: cover; background-repeat: no-repeat;">
 					<div class="main-wrapper">
 						<div class="main-logo">
 							<div class="logo-icon">
