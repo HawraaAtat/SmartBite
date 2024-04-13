@@ -61,9 +61,14 @@
 	<main class="page-content">
 		<div class="container py-0">
 			<div class="dz-authentication-area">
-			<a href="javascript:void(0);" class="back-btn">
+			<div class="main-logo">
+					<a href="javascript:void(0);" class="back-btn">
 						<i class="feather icon-arrow-left"></i>
 					</a>
+					<!-- <div class="logo">
+						<img src="assets/images/app-logo/logo.png" alt="logo">
+					</div> -->
+				</div>
 					<!-- <div class="logo">
 						<img src="assets/images/app-logo/logo.png" alt="logo">
 					</div> -->
