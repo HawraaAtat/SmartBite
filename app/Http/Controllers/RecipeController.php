@@ -23,10 +23,6 @@ class RecipeController extends Controller
         // /1/user/[user-id]/temp/core/date/[date].json
         // docs url: https://dev.fitbit.com/build/reference/web-api/temperature/get-temperature-core-summary-by-date
 
-        // Get Temperature (Skin) Summary by Date
-        // /1/user/[user-id]/temp/skin/date/[date].json
-        // docs url: https://dev.fitbit.com/build/reference/web-api/temperature/get-temperature-skin-summary-by-date
-
         // Get Sleep Log by Date
         // /1.2/user/[user-id]/sleep/date/[date].json
         // docs url: https://dev.fitbit.com/build/reference/web-api/sleep/get-sleep-log-by-date/
@@ -161,18 +157,6 @@ class RecipeController extends Controller
                     "dateTime" => "2020-06-18T12:10:00",
                     "value" => 38.1,
                 ],
-            ]
-        ];
-
-        $skin_temperature = [
-            "tempSkin" => [
-                [
-                    "dateTime" => "2019-12-10",
-                    "value" => [
-                        "nightlyRelative" => 0.3
-                    ],
-                    "logType" => "dedicated_temp_sensor"
-                ]
             ]
         ];
 
