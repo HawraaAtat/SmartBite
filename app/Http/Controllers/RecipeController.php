@@ -18,6 +18,9 @@ class RecipeController extends Controller
         // -H "accept: application/json" \
         // -H "authorization: Bearer <access_token>"
 
+        // Get Food Goals
+        // /1/user/[user-id]/foods/log/goal.json
+        // docs url: https://dev.fitbit.com/build/reference/web-api/nutrition/get-food-goals/
 
         // Get Temperature (Core) Summary by Date
         // /1/user/[user-id]/temp/core/date/[date].json
@@ -146,6 +149,22 @@ class RecipeController extends Controller
                 "veryActiveMinutes" => 0
             ]
         ];
+        $totalCaloriesBurned = $activities['summary']['caloriesOut'];
+        echo $totalCaloriesBurned;
+        //
+
+        $food_goals = [
+            "goals" => [
+                "calories" => 2910
+            ]
+        ];
+        $caloriesGoal = $food_goals['goals']['calories'];
+        echo $caloriesGoal;
+        //
+
+        // Get the calories that the user has eaten throughout the day and include it in the formula.
+        // maybe food history
+        $total_calories = $caloriesGoal + $totalCaloriesBurned; // - eaten calories
 
         $core_temperature = [
             "tempCore" => [
@@ -159,6 +178,10 @@ class RecipeController extends Controller
                 ],
             ]
         ];
+        $mostRecentMeasurement = end($core_temperature['tempCore']);
+        $mostRecentTemperature = $mostRecentMeasurement['value'];
+        echo $mostRecentTemperature;
+        //
 
         $sleep = [
             "sleep" => [
@@ -258,6 +281,30 @@ class RecipeController extends Controller
             ]
         ];
 
+        $mostRecentSleep = end($sleep['sleep']);
+        $efficiency = $mostRecentSleep['efficiency']; //85
+        $minutesAsleep = $mostRecentSleep['minutesAsleep']; //420
+        $timeInBed = $mostRecentSleep['timeInBed']; //480
+
+        // Convert minutes to hours
+        $hoursAsleep = $minutesAsleep / 60;
+        $hoursInBed = $timeInBed / 60;
+
+        if($efficiency >= 85 && $hoursAsleep >= 7 && $hoursAsleep <= 9) {
+            $sleepQuality = "good";
+        } elseif($hoursAsleep < 7) {
+            $sleepQuality = "insufficient";
+        } elseif($hoursAsleep > 9) {
+            $sleepQuality = "excessive";
+        } elseif($hoursInBed > $hoursAsleep + 1) { // If time in bed > sleep time
+            $sleepQuality = "disturbed";
+        } else {
+            $sleepQuality = "poor";
+        }
+
+        echo $sleepQuality;
+        //
+
         $breathing = [
             "br" => [
                 [
@@ -268,6 +315,20 @@ class RecipeController extends Controller
                 ]
             ]
         ];
+
+        $mostRecentbreathing = end($breathing['br']);
+        $breathing_rate = $mostRecentbreathing['value']['breathingRate'];
+
+        if($breathing_rate >= 12 && $breathing_rate <= 20) {
+            $breath_rate = "normal";
+        } elseif($breathing_rate < 12) {
+            $breath_rate = "insufficient";
+        } else { // $breathing_rate > 20
+            $breath_rate = "excessive";
+        }
+
+        echo $breath_rate;
+        //
 
         $heart_rate = [
             "ecgReadings" => [
@@ -301,10 +362,24 @@ class RecipeController extends Controller
             ]
         ];
 
+        $mostRecentHeartRate = end($heart_rate['ecgReadings']);
+        $averageHeartRate = $mostRecentHeartRate['averageHeartRate'];
+
+        if($averageHeartRate >= 60 && $averageHeartRate <= 100) {
+            $heartRate = "normal";
+        } elseif($averageHeartRate < 60) {
+            $heartRate = "low";
+        } else { // if $averageHeartRate > 100
+            $heartRate = "high";
+        }
+
+        echo $heartRate;
+        //
 
         //formule
         //
 
+        return;//ma badna edamam now
         //edamam
         $client = new Client(); // same client here and  in fitbit api. we move this up
 
