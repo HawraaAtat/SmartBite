@@ -54,7 +54,7 @@ class RecipeController extends Controller
                 "caloriesBMR" => 1973,
                 "caloriesOut" => 2628,
                 "caloriesOutUnestimated" => 2628,
-                "customHeartRateZones" => [
+                "customHeart_rateZones" => [
                     [
                         "caloriesOut" => 2616.7788,
                         "max" => 140,
@@ -110,7 +110,7 @@ class RecipeController extends Controller
                 "elevation" => 0,
                 "fairlyActiveMinutes" => 0,
                 "floors" => 0,
-                "heartRateZones" => [
+                "heart_rateZones" => [
                     [
                         "caloriesOut" => 1200.33336,
                         "max" => 86,
@@ -142,15 +142,15 @@ class RecipeController extends Controller
                 ],
                 "lightlyActiveMinutes" => 110,
                 "marginalCalories" => 281,
-                "restingHeartRate" => 77,
+                "restingHeart_rate" => 77,
                 "sedentaryMinutes" => 802,
                 "steps" => 1698,
                 "useEstimation" => true,
                 "veryActiveMinutes" => 0
             ]
         ];
-        $totalCaloriesBurned = $activities['summary']['caloriesOut'];
-        echo $totalCaloriesBurned;
+        $total_calories_burned = $activities['summary']['caloriesOut'];
+        echo $total_calories_burned;
         //
 
         $food_goals = [
@@ -158,13 +158,13 @@ class RecipeController extends Controller
                 "calories" => 2910
             ]
         ];
-        $caloriesGoal = $food_goals['goals']['calories'];
-        echo $caloriesGoal;
+        $calories_goal = $food_goals['goals']['calories'];
+        echo $calories_goal;
         //
 
         // Get the calories that the user has eaten throughout the day and include it in the formula.
         // maybe food history
-        $total_calories = $caloriesGoal + $totalCaloriesBurned; // - eaten calories
+        $total_calories = $calories_goal + $total_calories_burned; // - eaten calories
 
         $core_temperature = [
             "tempCore" => [
@@ -178,9 +178,9 @@ class RecipeController extends Controller
                 ],
             ]
         ];
-        $mostRecentMeasurement = end($core_temperature['tempCore']);
-        $mostRecentTemperature = $mostRecentMeasurement['value'];
-        echo $mostRecentTemperature;
+        $most_recent_measurement = end($core_temperature['tempCore']);
+        $most_recent_temperature = $most_recent_measurement['value'];
+
         //
 
         $sleep = [
@@ -281,28 +281,27 @@ class RecipeController extends Controller
             ]
         ];
 
-        $mostRecentSleep = end($sleep['sleep']);
-        $efficiency = $mostRecentSleep['efficiency']; //85
-        $minutesAsleep = $mostRecentSleep['minutesAsleep']; //420
-        $timeInBed = $mostRecentSleep['timeInBed']; //480
+        $most_recent_sleep = end($sleep['sleep']);
+        $efficiency = $most_recent_sleep['efficiency']; //85
+        $minutesAsleep = $most_recent_sleep['minutesAsleep']; //420
+        $timeInBed = $most_recent_sleep['timeInBed']; //480
 
         // Convert minutes to hours
-        $hoursAsleep = $minutesAsleep / 60;
+        $hours_asleep = $minutesAsleep / 60;
         $hoursInBed = $timeInBed / 60;
 
-        if($efficiency >= 85 && $hoursAsleep >= 7 && $hoursAsleep <= 9) {
-            $sleepQuality = "good";
-        } elseif($hoursAsleep < 7) {
-            $sleepQuality = "insufficient";
-        } elseif($hoursAsleep > 9) {
-            $sleepQuality = "excessive";
-        } elseif($hoursInBed > $hoursAsleep + 1) { // If time in bed > sleep time
-            $sleepQuality = "disturbed";
+        if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
+            $sleep_quality = "good";
+        } elseif($hours_asleep < 7) {
+            $sleep_quality = "insufficient";
+        } elseif($hours_asleep > 9) {
+            $sleep_quality = "excessive";
+        } elseif($hoursInBed > $hours_asleep + 1) { // If time in bed > sleep time
+            $sleep_quality = "disturbed";
         } else {
-            $sleepQuality = "poor";
+            $sleep_quality = "poor";
         }
 
-        echo $sleepQuality;
         //
 
         $breathing = [
@@ -316,8 +315,8 @@ class RecipeController extends Controller
             ]
         ];
 
-        $mostRecentbreathing = end($breathing['br']);
-        $breathing_rate = $mostRecentbreathing['value']['breathingRate'];
+        $most_recent_breathing = end($breathing['br']);
+        $breathing_rate = $most_recent_breathing['value']['breathingRate'];
 
         if($breathing_rate >= 12 && $breathing_rate <= 20) {
             $breath_rate = "normal";
@@ -327,14 +326,13 @@ class RecipeController extends Controller
             $breath_rate = "excessive";
         }
 
-        echo $breath_rate;
         //
 
         $heart_rate = [
             "ecgReadings" => [
                 [
                     "startTime" => "2022-09-28T17:12:30.222",
-                    "averageHeartRate" => 70,
+                    "averageHeart_rate" => 70,
                     "resultClassification" => "Normal Sinus Rhythm",
                     "waveformSamples" => [
                         130,
@@ -362,22 +360,45 @@ class RecipeController extends Controller
             ]
         ];
 
-        $mostRecentHeartRate = end($heart_rate['ecgReadings']);
-        $averageHeartRate = $mostRecentHeartRate['averageHeartRate'];
+        $most_recent_heart_rate = end($heart_rate['ecgReadings']);
+        $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
 
-        if($averageHeartRate >= 60 && $averageHeartRate <= 100) {
-            $heartRate = "normal";
-        } elseif($averageHeartRate < 60) {
-            $heartRate = "low";
-        } else { // if $averageHeartRate > 100
-            $heartRate = "high";
+        if($averageHeart_rate >= 60 && $averageHeart_rate <= 100) {
+            $heart_rate = "normal";
+        } elseif($averageHeart_rate < 60) {
+            $heart_rate = "low";
+        } else { // if $averageHeart_rate > 100
+            $heart_rate = "high";
         }
 
-        echo $heartRate;
         //
+        $now = now();
+        $currentHour = $now->format('H');
 
-        //formule
+        $coffee_status = "";
+
+        if ($currentHour < 14) {
+            $coffee_status = "good";
+        } else {
+            $coffee_status = "not a good";
+        }
+
+
         //
+        //formule
+
+        echo $total_calories;
+        echo "<br>";
+        echo $most_recent_temperature;
+        echo "<br>";
+        echo $sleep_quality;
+        echo "<br>";
+        echo $breath_rate;
+        echo "<br>";
+        echo $heart_rate;
+        echo "<br>";
+        echo $coffee_status;
+        echo "<br>";
 
         return;//ma badna edamam now
         //edamam
