@@ -70,7 +70,8 @@
 					<h3 class="title">Sign In</h3>
 				</div>
 				<div class="account-section">
-					<form class="m-b30">
+					<form class="m-b30" action="{{ route('login') }}" method="POST">
+						@csrf
 						<div class="mb-4">
 							<label class="form-label" for="name">Email</label>
 							<div class="input-group input-mini input-lg">
@@ -80,15 +81,15 @@
 						<div class="m-b30">
 							<label class="form-label" for="password">Password</label>
 							<div class="input-group input-mini input-lg">
-								<input type="password" id="password" class="form-control dz-password" ">
+								<input type="password" id="password" class="form-control dz-password" >
 								<span class="input-group-text show-pass"> 
 									<i class="icon feather icon-eye-off eye-close"></i>
 									<i class="icon feather icon-eye eye-open"></i>
 								</span>
 							</div>
 						</div>
-						<a href="{{ url('index') }}" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a> 
-						<p class="form-text">Forgot Password? <a href="{{ url('resetpassword') }}" class="link ms-2">Reset Password</a></p>
+						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a> 
+						<!-- <p class="form-text">Forgot Password? <a href="{{ url('resetpassword') }}" class="link ms-2">Reset Password</a></p> -->
 					</form>
 					<div class="text-center account-footer">
 						<p class="text-light">Dont have any account?</p>

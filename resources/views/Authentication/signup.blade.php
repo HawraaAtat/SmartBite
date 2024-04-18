@@ -74,43 +74,44 @@
 					<h3 class="title">Create an account</h3>
 				</div>
 				<div class="account-section">
-					<form class="m-b20">
+					<form class="m-b20" action=>
 						<div class="mb-4">
 							<label class="form-label" for="firstname">First Name</label>
 							<div class="input-group input-mini input-lg">
-								<input type="firstname" id="firstname" class="form-control" >
+								<input type="firstname" id="firstname" class="form-control" name="firstname" >
 							</div>
 						</div>
                         <div class="mb-4">
 							<label class="form-label" for="lastname">Last Name</label>
 							<div class="input-group input-mini input-lg">
-								<input type="lastname" id="lastname" class="form-control" >
+								<input type="lastname" id="lastname" class="form-control" name="lastname" >
 							</div>
 						</div>
                         <div class="mb-4">
 							<label class="form-label" for="DOB">Date Of Birth</label>
 							<div class="input-group input-mini input-lg">
-								<input type="date" id="dob" class="form-control" >
+								<input type="date" id="dob" class="form-control" name="dob" >
 							</div>
 						</div>
 
 						<div class="mb-4">
 							<label class="form-label" for="email">Email</label>
 							<div class="input-group input-mini input-lg">
-								<input type="email" id="email" class="form-control" >
+								<input type="email" id="email" class="form-control" name="email" >
 							</div>
 						</div>
 						<div class="m-b30">
 							<label class="form-label" for="password">Password</label>
 							<div class="input-group input-mini input-lg">
-								<input type="password" id="password" class="form-control dz-password" >
+								<input type="password" id="password" class="form-control dz-password" name="password" >
+
 								<span class="input-group-text show-pass"> 
 									<i class="icon feather icon-eye-off eye-close"></i>
 									<i class="icon feather icon-eye eye-open"></i>
 								</span>
 							</div>
 						</div>
-						<a href="{{ url('signin') }}" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</a> 
+						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</button> 
 					</form>
 					<div class="text-center">
 						<p class="form-text">By tapping “Sign Up” you accept our <a href="javascript:void(0);" class="link">terms</a> and <a href="javascript:void(0);" class="link">condition</a></p>
