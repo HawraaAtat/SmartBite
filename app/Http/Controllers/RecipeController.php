@@ -353,16 +353,7 @@ class RecipeController extends Controller
 
         $most_recent_breathing = end($breathing['br']);
         $breathing_rate = $most_recent_breathing['value']['breathingRate'];
-///////////////////////////////////////////////////////////////////////////////////
-        if($breathing_rate >= 12 && $breathing_rate <= 20) {
-            $breath_rate = "normal";
-        } else { // $breathing_rate > 20 or <12
-            // $breath_rate = "excessive","insufficient";
-            $excludeRecipes = 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
-            $maxAlcohol = 0;
-        }
-
-        //
+//
         $heart_rate = [
             "ecgReadings" => [
                 [
@@ -398,11 +389,11 @@ class RecipeController extends Controller
         $most_recent_heart_rate = end($heart_rate['ecgReadings']);
         $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
 
-////////////////////////////////////////////////////////////////////////////////////
-        if($averageHeart_rate >= 60 && $averageHeart_rate <= 100) {
+        //making the tow formulas of the heart rate and breathing rate in one
+        if(($breathing_rate >= 12 && $breathing_rate <= 20) && ($averageHeart_rate >= 60 && $averageHeart_rate <= 100)) {
+            $breath_rate = "normal";
             $heart_rate = "normal";
-        } else
-         {
+        } else {
             $excludeRecipes = 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
             $maxAlcohol = 0;
         }
