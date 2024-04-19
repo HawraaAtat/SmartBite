@@ -356,10 +356,10 @@ class RecipeController extends Controller
 ///////////////////////////////////////////////////////////////////////////////////
         if($breathing_rate >= 12 && $breathing_rate <= 20) {
             $breath_rate = "normal";
-        } elseif($breathing_rate < 12) {
-            $breath_rate = "insufficient";
-        } else { // $breathing_rate > 20
-            $breath_rate = "excessive";
+        } else { // $breathing_rate > 20 or <12
+            // $breath_rate = "excessive","insufficient";
+            $'excludeRecipes' =>  = ['coffee, hot sauce, mayonnaise, sunflower oil', 'vegetable oil', 'corn oil'];
+            $maxAlcohol = 0;
         }
 
         //
@@ -401,10 +401,10 @@ class RecipeController extends Controller
 ////////////////////////////////////////////////////////////////////////////////////
         if($averageHeart_rate >= 60 && $averageHeart_rate <= 100) {
             $heart_rate = "normal";
-        } elseif($averageHeart_rate < 60) {
-            $heart_rate = "low";
-        } else { // if $averageHeart_rate > 100
-            $heart_rate = "high";
+        } else
+         {
+            $excludeRecipes = ['coffee, hot sauce, mayonnaise, sunflower oil', 'vegetable oil', 'corn oil'];
+            $maxAlcohol = 0;
         }
 
         //
@@ -432,6 +432,7 @@ class RecipeController extends Controller
         echo "<br>";
         echo $heart_rate;
         echo "<br>";
+        // coffee, energy drink, spicy food, heavy meals
 
         return;//ma badna spoonacular now
         //spoonacular
@@ -455,6 +456,8 @@ class RecipeController extends Controller
                 // 'fillIngredients' => true,
                 // 'addRecipeNutrition' => true,
                 'sort' => 'healthiness',
+                'excludeRecipes' => $excludeRecipes,
+                'maxAlcohol' => $maxAlcohol
             ]
         ];
 
