@@ -358,7 +358,7 @@ class RecipeController extends Controller
             $breath_rate = "normal";
         } else { // $breathing_rate > 20 or <12
             // $breath_rate = "excessive","insufficient";
-            $'excludeRecipes' =>  = ['coffee, hot sauce, mayonnaise, sunflower oil', 'vegetable oil', 'corn oil'];
+            $excludeRecipes = 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
             $maxAlcohol = 0;
         }
 
@@ -403,7 +403,7 @@ class RecipeController extends Controller
             $heart_rate = "normal";
         } else
          {
-            $excludeRecipes = ['coffee, hot sauce, mayonnaise, sunflower oil', 'vegetable oil', 'corn oil'];
+            $excludeRecipes = 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
             $maxAlcohol = 0;
         }
 
