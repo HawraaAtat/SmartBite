@@ -54,7 +54,7 @@ class RecipeController extends Controller
                 "caloriesBMR" => 1973,
                 "caloriesOut" => 2628,
                 "caloriesOutUnestimated" => 2628,
-                "customHeart_rateZones" => [
+                "customHeartRateZones" => [
                     [
                         "caloriesOut" => 2616.7788,
                         "max" => 140,
@@ -110,7 +110,7 @@ class RecipeController extends Controller
                 "elevation" => 0,
                 "fairlyActiveMinutes" => 0,
                 "floors" => 0,
-                "heart_rateZones" => [
+                "heartRateZones" => [
                     [
                         "caloriesOut" => 1200.33336,
                         "max" => 86,
@@ -142,7 +142,7 @@ class RecipeController extends Controller
                 ],
                 "lightlyActiveMinutes" => 110,
                 "marginalCalories" => 281,
-                "restingHeart_rate" => 77,
+                "restingHeartPate" => 77,
                 "sedentaryMinutes" => 802,
                 "steps" => 1698,
                 "useEstimation" => true,
