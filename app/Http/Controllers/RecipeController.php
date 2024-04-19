@@ -170,16 +170,16 @@ class RecipeController extends Controller
         $currentHour = $now->format('H');
 
         if ($currentHour >= 6 && $currentHour < 11) {
-            // $mealType = "Breakfast";
+            $mealType = "Breakfast";
             $allowed_calories = $total_calories * 0.30;
         } elseif ($currentHour >= 11 && $currentHour < 15) {
-            // $mealType = "Lunch";
+            $mealType = "Lunch";
             $allowed_calories = $total_calories * 0.35;
         } elseif ($currentHour >= 15 && $currentHour < 18) {
-            // $mealType = "Snack";
+            $mealType = "Snack";
             $allowed_calories = $total_calories * 0.10;
         } elseif ($currentHour >= 18 && $currentHour < 21) {
-            // $mealType = "Dinner";
+            $mealType = "Dinner";
             $allowed_calories = $total_calories * 0.25;
         } else {
             $mealType = "It's not mealtime";
@@ -319,21 +319,21 @@ class RecipeController extends Controller
         $exclude_ingredients = [];
 
         if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
-            // $sleep_quality = "good";
+            $sleep_quality = "good";
             // nothing to do
         } elseif($hours_asleep < 7) {
-            // $sleep_quality = "insufficient";
+            $sleep_quality = "insufficient";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
              $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
         } elseif($hours_asleep > 9) {
-            // $sleep_quality = "excessive";
+            $sleep_quality = "excessive";
             // nothing to do
         } elseif($hoursInBed > $hours_asleep + 1) { // If time in bed > sleep time
-            // $sleep_quality = "disturbed";
+            $sleep_quality = "disturbed";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
              $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
         } else {
-            // $sleep_quality = "poor";
+            $sleep_quality = "poor";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
              $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
         }
