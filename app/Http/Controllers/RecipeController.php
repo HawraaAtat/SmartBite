@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //fitbit
+        //fitbit api
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
         //get activities in a day:
         // /1/user/[user-id]/activities/date/[date].json
         // docs url: https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/
@@ -436,6 +438,13 @@ class RecipeController extends Controller
         $unique_ingredients_array = array_unique($exclude_ingredients);
         $exclude_ingredients = implode(', ', $unique_ingredients_array);
 
+        // database data
+        ///////////////////////////////////////////////////
+        // disease, intolerances(spoonacular)
+        // $intolerances = get from database;
+        // $disease = get from database;
+
+
         // return;//ma badna spoonacular now
         //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
@@ -457,12 +466,15 @@ class RecipeController extends Controller
                 // 'fillIngredients' => true,
                 // 'addRecipeNutrition' => true,
                 'sort' => 'healthiness' ?? null,
-                'maxAlcohol' => $maxAlcohol ?? null
+                'maxAlcohol' => $maxAlcohol ?? null,
+                'cuisine' => $request->input('cuisine'),
+                'type' => $request->input('type'),
+                'diet' => $request->input('diet'),
+                'intolerances' => $intolerances ?? null,
             ]
         ];
 
         return $params;
-
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){
