@@ -200,7 +200,6 @@ class RecipeController extends Controller
         $most_recent_measurement = end($core_temperature['tempCore']);
         $most_recent_temperature = $most_recent_measurement['value'];
 
-        $exclude_ingredients = '';
 
         $core_temperature = 39;
         if ($core_temperature > 38) {
@@ -208,7 +207,7 @@ class RecipeController extends Controller
             $minVitaminC = 50; // Increase vitamin C for immune support if fever is present
             $minZinc = 15; // Zinc may help immune function
             $maxSpice = 0; // Assuming 'maxSpice' could control spicy ingredients; reduce if fever is present
-            $exclude_ingredients = 'coffee, '; // Dairy and caffeine might be less suitable for a sick person
+            $exclude_ingredients[] = 'coffee'; // Dairy and caffeine might be less suitable for a sick person
         }
         //
 
@@ -320,28 +319,28 @@ class RecipeController extends Controller
         $hoursInBed = $timeInBed / 60;
 
 
-        $hours_asleep = 5;
+        // $hours_asleep = 8;
         if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
             $sleep_quality = "good";
-            // nothing to do
         } elseif($hours_asleep < 7) {
             $sleep_quality = "insufficient";
-             $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             echo $max_caffeine;
-             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
         } elseif($hours_asleep > 9) {
             $sleep_quality = "excessive";
-            // nothing to do
         } elseif($hoursInBed > $hours_asleep + 1) { // If time in bed > sleep time
             $sleep_quality = "disturbed";
-             $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
         } else {
             $sleep_quality = "poor";
-             $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
         }
-echo $sleep_quality;
+        // echo $sleep_quality;
         //
 
         $breathing = [
@@ -393,8 +392,8 @@ echo $sleep_quality;
         $most_recent_heart_rate = end($heart_rate['ecgReadings']);
         $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
 
-
-        $breathing_rate = 11;
+        // $averageHeart_rate= 120;
+        // $breathing_rate = 14;
         //making the tow formulas of the heart rate and breathing rate in one
         if(($breathing_rate >= 12 && $breathing_rate <= 20) && ($averageHeart_rate >= 60 && $averageHeart_rate <= 100)) {
             $breath_rate = "normal";
@@ -402,7 +401,7 @@ echo $sleep_quality;
         } else {
             $breath_rate = "anormal";
             $heart_rate = "anormal";
-            $exclude_ingredients .= 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
+            $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce', 'mayonnaise', 'sunflower oil', 'vegetable oil', 'corn oil'));
             $maxAlcohol = 0;
         }
 
@@ -433,6 +432,10 @@ echo $sleep_quality;
         echo "<br>";
         // coffee, energy drink, spicy food, heavy meals
 
+        $exclude_ingredients[]= 'coffee';
+        $unique_ingredients_array = array_unique($exclude_ingredients);
+        $exclude_ingredients = implode(', ', $unique_ingredients_array);
+
         // return;//ma badna spoonacular now
         //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
@@ -445,7 +448,6 @@ echo $sleep_quality;
                 'maxCalories' => $allowed_calories ?? null ,
                 //ethical constraint from database
                 // 'maxAlcohol'=> 0,
-                'maxCaffeine' => $max_caffeine ?? null,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
                 'maxSpice' => $maxSpice ?? null,
