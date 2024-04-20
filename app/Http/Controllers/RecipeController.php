@@ -203,8 +203,8 @@ class RecipeController extends Controller
         $most_recent_temperature = $most_recent_measurement['value'];
 
 
-        $core_temperature = 39;
-        if ($core_temperature > 38) {
+        $most_recent_temperature = 39;
+        if ($most_recent_temperature > 38) {
             // "The person might be sick.";
             $minVitaminC = 50; // Increase vitamin C for immune support if fever is present
             $minZinc = 15; // Zinc may help immune function
