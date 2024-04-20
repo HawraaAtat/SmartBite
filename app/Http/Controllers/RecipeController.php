@@ -166,7 +166,7 @@ class RecipeController extends Controller
         // maybe food history
         $total_calories = $calories_goal + $total_calories_burned;
 
-        $now = now();
+        $now = now()->setTimezone('Asia/Beirut');
         $currentHour = $now->format('H');
 
         if ($currentHour >= 6 && $currentHour < 11) {
