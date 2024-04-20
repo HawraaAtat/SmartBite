@@ -200,12 +200,15 @@ class RecipeController extends Controller
         $most_recent_measurement = end($core_temperature['tempCore']);
         $most_recent_temperature = $most_recent_measurement['value'];
 
+        $exclude_ingredients = '';
+
+        $core_temperature = 39;
         if ($core_temperature > 38) {
             // "The person might be sick.";
             $minVitaminC = 50; // Increase vitamin C for immune support if fever is present
             $minZinc = 15; // Zinc may help immune function
             $maxSpice = 0; // Assuming 'maxSpice' could control spicy ingredients; reduce if fever is present
-            $excludeIngredients = 'caffeine'; // Dairy and caffeine might be less suitable for a sick person
+            $exclude_ingredients = 'coffee, '; // Dairy and caffeine might be less suitable for a sick person
         }
         //
 
@@ -316,28 +319,29 @@ class RecipeController extends Controller
         $hours_asleep = $minutesAsleep / 60;
         $hoursInBed = $timeInBed / 60;
 
-        $exclude_ingredients = [];
 
+        $hours_asleep = 5;
         if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
             $sleep_quality = "good";
             // nothing to do
         } elseif($hours_asleep < 7) {
             $sleep_quality = "insufficient";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
+             echo $max_caffeine;
+             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
         } elseif($hours_asleep > 9) {
             $sleep_quality = "excessive";
             // nothing to do
         } elseif($hoursInBed > $hours_asleep + 1) { // If time in bed > sleep time
             $sleep_quality = "disturbed";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
+             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
         } else {
             $sleep_quality = "poor";
              $max_caffeine = ($currentHour < 14) ? 400 : 0;
-             $exclude_ingredients[] = ($currentHour < 14) ? 'caffeine' : null;
+             $exclude_ingredients .= ($currentHour < 14) ? null: 'coffee, ';
         }
-
+echo $sleep_quality;
         //
 
         $breathing = [
@@ -389,12 +393,16 @@ class RecipeController extends Controller
         $most_recent_heart_rate = end($heart_rate['ecgReadings']);
         $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
 
+
+        $breathing_rate = 11;
         //making the tow formulas of the heart rate and breathing rate in one
         if(($breathing_rate >= 12 && $breathing_rate <= 20) && ($averageHeart_rate >= 60 && $averageHeart_rate <= 100)) {
             $breath_rate = "normal";
             $heart_rate = "normal";
         } else {
-            $excludeRecipes = 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
+            $breath_rate = "anormal";
+            $heart_rate = "anormal";
+            $exclude_ingredients .= 'coffee, hot sauce, mayonnaise, sunflower oil, vegetable oil, corn oil';
             $maxAlcohol = 0;
         }
 
@@ -425,7 +433,7 @@ class RecipeController extends Controller
         echo "<br>";
         // coffee, energy drink, spicy food, heavy meals
 
-        return;//ma badna spoonacular now
+        // return;//ma badna spoonacular now
         //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
 
@@ -434,28 +442,29 @@ class RecipeController extends Controller
                 'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
                 // 'query' => 'chicken',
                 // 'cuisine' => 'italian',
-                'maxCalories' => $allowed_calories ,
+                'maxCalories' => $allowed_calories ?? null ,
                 //ethical constraint from database
                 // 'maxAlcohol'=> 0,
-                'maxCaffeine' => $max_caffeine,
-                'minVitaminC' => $minVitaminC,
-                'minZinc' => $minZinc,
-                'maxSpice' => $maxSpice,
-                'excludeIngredients' => $excludeIngredients,
+                'maxCaffeine' => $max_caffeine ?? null,
+                'minVitaminC' => $minVitaminC ?? null,
+                'minZinc' => $minZinc ?? null,
+                'maxSpice' => $maxSpice ?? null,
+                'exclude_ingredients' => $exclude_ingredients ?? null,
 
                 // 'instructionsRequired' => true,
                 // 'fillIngredients' => true,
                 // 'addRecipeNutrition' => true,
-                'sort' => 'healthiness',
-                'excludeRecipes' => $excludeRecipes,
-                'maxAlcohol' => $maxAlcohol
+                'sort' => 'healthiness' ?? null,
+                'maxAlcohol' => $maxAlcohol ?? null
             ]
         ];
+
+        return $params;
 
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){
-            return "Success: " . json_decode($response->getBody(), true);
+            return "Success: " . $response->getBody();
         } else {
             return "Error: " . $response->getStatusCode();
         }
