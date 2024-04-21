@@ -23,19 +23,4 @@ final class ChronicDiseasesEnum extends Enum
     const OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS = 10;
     const GASTROESOPHAGEAL_REFLUX_DISEASE = 11;
     const OTHER = 12;
-
-    const CHRONIC_DISEASES = [
-        self::CARDIOVASCULAR_DISEASES,
-        self::CANCER,
-        self::RESPIRATORY_DISEASES,
-        self::DIABETES,
-        self::ALZHEIMERS_AND_DEMENTIAS,
-        self::INFECTIOUS_DISEASES,
-        self::MENTAL_HEALTH_DISORDERS,
-        self::OBESITY_AND_OVERWEIGHT,
-        self::CHRONIC_KIDNEY_DISEASE,
-        self::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS,
-        self::GASTROESOPHAGEAL_REFLUX_DISEASE,
-        self::OTHER
-    ];
 }
