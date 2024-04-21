@@ -7,12 +7,17 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+<<<<<<< HEAD
+
+use App\Models\RequestDetail;
+=======
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail; 
 use Illuminate\Support\Facades\Hash; 
 
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 
 class AuthController extends Controller
 {
@@ -22,11 +27,27 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken');
+<<<<<<< HEAD
+            return redirect()->route('index', ['id' => $user->id]);
+
+        }
+        return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+    }
+    public function dashboard($id)
+    {
+        dd("hi");
+        $user = User::find($id);
+    
+    
+        return view('index', compact('user'));
+    }
+=======
             return redirect()->route('dashboard', ['id' => $user->id]);
         }
         return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
     }
 
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 
     public function logout()
     {
@@ -37,8 +58,13 @@ class AuthController extends Controller
                 $token->delete();
             });
     
+<<<<<<< HEAD
+            Auth::logout(); // Logging out the user
+    
+=======
             Auth::logout(); 
 
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
             return redirect('/welcome')->with('success', 'Logged out successfully.');
         }
     
@@ -53,6 +79,20 @@ class AuthController extends Controller
    
     public function register(Request $request){
 
+<<<<<<< HEAD
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        $user->save();
+
+        return redirect('/welcome')->with('success', 'User created successfully.');;
+    }
+
+  
+=======
         $validatedData = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
@@ -151,5 +191,6 @@ class AuthController extends Controller
         // Redirect to the login page with a success message
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 
 }

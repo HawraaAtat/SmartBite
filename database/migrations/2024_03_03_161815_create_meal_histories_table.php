@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('recipe_id'); //front use it with the api
+            $table->float('calories');
             $table->timestamps();
         });
     }

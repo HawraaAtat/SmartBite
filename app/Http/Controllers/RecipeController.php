@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MealHistory;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        //fitbit
+        //fitbit api
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
         //get activities in a day:
         // /1/user/[user-id]/activities/date/[date].json
         // docs url: https://dev.fitbit.com/build/reference/web-api/activity/get-daily-activity-summary/
@@ -18,6 +23,9 @@ class RecipeController extends Controller
         // -H "accept: application/json" \
         // -H "authorization: Bearer <access_token>"
 
+        // Get Food Goals
+        // /1/user/[user-id]/foods/log/goal.json
+        // docs url: https://dev.fitbit.com/build/reference/web-api/nutrition/get-food-goals/
 
         // Get Temperature (Core) Summary by Date
         // /1/user/[user-id]/temp/core/date/[date].json
@@ -139,13 +147,59 @@ class RecipeController extends Controller
                 ],
                 "lightlyActiveMinutes" => 110,
                 "marginalCalories" => 281,
-                "restingHeartRate" => 77,
+                "restingHeartPate" => 77,
                 "sedentaryMinutes" => 802,
                 "steps" => 1698,
                 "useEstimation" => true,
                 "veryActiveMinutes" => 0
             ]
         ];
+        $total_calories_burned = $activities['summary']['caloriesOut'];
+        echo $total_calories_burned;
+        //
+
+        $food_goals = [
+            "goals" => [
+                "calories" => 2910
+            ]
+        ];
+        $calories_goal = $food_goals['goals']['calories'];
+        echo $calories_goal;
+        //
+
+        $userId = auth()->id();
+
+        $start_of_Day = Carbon::today()->startOfDay();
+
+        $end_of_day = Carbon::today()->endOfDay();
+
+        // Query to sum up calories from 12:00 AM today to 12:00 PM today for the authenticated user
+        $database_calories = MealHistory::where('user_id', $userId)
+                        ->whereBetween('created_at', [$start_of_Day, $end_of_day])
+                        ->sum('calories');
+
+        $now = now();
+        $currentHour = $now->format('H');
+        return "    ".  $database_calories;
+        // Get the calories that the user has eaten throughout the day and include it in the formula.
+        // maybe food history
+        $total_calories = $calories_goal + $total_calories_burned - $database_calories;
+
+        if ($currentHour >= 6 && $currentHour < 11) {
+            $mealType = "Breakfast";
+            $allowed_calories = $total_calories * 0.30;
+        } elseif ($currentHour >= 11 && $currentHour < 15) {
+            $mealType = "Lunch";
+            $allowed_calories = $total_calories * 0.35;
+        } elseif ($currentHour >= 15 && $currentHour < 18) {
+            $mealType = "Snack";
+            $allowed_calories = $total_calories * 0.10;
+        } elseif ($currentHour >= 18 && $currentHour < 21) {
+            $mealType = "Dinner";
+            $allowed_calories = $total_calories * 0.25;
+        } else {
+            $mealType = "It's not mealtime";
+        }
 
         $core_temperature = [
             "tempCore" => [
@@ -159,6 +213,19 @@ class RecipeController extends Controller
                 ],
             ]
         ];
+        $most_recent_measurement = end($core_temperature['tempCore']);
+        $most_recent_temperature = $most_recent_measurement['value'];
+
+
+        $most_recent_temperature = 39;
+        if ($most_recent_temperature > 38) {
+            // "The person might be sick.";
+            $minVitaminC = 50; // Increase vitamin C for immune support if fever is present
+            $minZinc = 15; // Zinc may help immune function
+            $maxSpice = 0; // Assuming 'maxSpice' could control spicy ingredients; reduce if fever is present
+            $exclude_ingredients[] = 'coffee'; // Dairy and caffeine might be less suitable for a sick person
+        }
+        //
 
         $sleep = [
             "sleep" => [
@@ -258,6 +325,40 @@ class RecipeController extends Controller
             ]
         ];
 
+        $most_recent_sleep = end($sleep['sleep']);
+        $efficiency = $most_recent_sleep['efficiency']; //85
+        $minutesAsleep = $most_recent_sleep['minutesAsleep']; //420
+        $timeInBed = $most_recent_sleep['timeInBed']; //480
+
+        // Convert minutes to hours
+        $hours_asleep = $minutesAsleep / 60;
+        $hoursInBed = $timeInBed / 60;
+
+
+        // $hours_asleep = 8;
+        if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
+            $sleep_quality = "good";
+        } elseif($hours_asleep < 7) {
+            $sleep_quality = "insufficient";
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
+        } elseif($hours_asleep > 9) {
+            $sleep_quality = "excessive";
+        } elseif($hoursInBed > $hours_asleep + 1) { // If time in bed > sleep time
+            $sleep_quality = "disturbed";
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
+        } else {
+            $sleep_quality = "poor";
+            if ($currentHour >= 14) {
+                $exclude_ingredients[] = 'coffee';
+            }
+        }
+        // echo $sleep_quality;
+        //
+
         $breathing = [
             "br" => [
                 [
@@ -269,11 +370,14 @@ class RecipeController extends Controller
             ]
         ];
 
+        $most_recent_breathing = end($breathing['br']);
+        $breathing_rate = $most_recent_breathing['value']['breathingRate'];
+//
         $heart_rate = [
             "ecgReadings" => [
                 [
                     "startTime" => "2022-09-28T17:12:30.222",
-                    "averageHeartRate" => 70,
+                    "averageHeart_rate" => 70,
                     "resultClassification" => "Normal Sinus Rhythm",
                     "waveformSamples" => [
                         130,
@@ -301,25 +405,91 @@ class RecipeController extends Controller
             ]
         ];
 
+        $most_recent_heart_rate = end($heart_rate['ecgReadings']);
+        $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
 
-        //formule
+        // $averageHeart_rate= 120;
+        // $breathing_rate = 14;
+        //making the tow formulas of the heart rate and breathing rate in one
+        if(($breathing_rate >= 12 && $breathing_rate <= 20) && ($averageHeart_rate >= 60 && $averageHeart_rate <= 100)) {
+            $breath_rate = "normal";
+            $heart_rate = "normal";
+        } else {
+            $breath_rate = "anormal";
+            $heart_rate = "anormal";
+            $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce', 'mayonnaise', 'sunflower oil', 'vegetable oil', 'corn oil'));
+            $maxAlcohol = 0;
+        }
+
         //
+        //formule
 
-        //edamam
+        echo $total_calories;
+        echo "<br>";
+        // Breakfast: 30-35% of daily calories1
+        // Lunch: 35-40% of daily calories1
+        // Snack: 10-15% of daily calories1
+        // Dinner: 25-35% of daily calories1
+
+        // echo $sleep_quality;
+        // echo "<br>";
+        // echo $coffee_status;
+        // echo "<br>";
+        //hasab l coffe status mnesmahlo yekul akl fi caffeine , eza abl l 2pm fi yekul max 400 mill.. eza baad l 2 lezim 0
+        //coffee status feyit bel sleep quality, eza kenit poor, inseffcient, disturbed
+        // eza good aw exsessive ma mnaamil shi le2en l ahwe ymkin ma t2assir aa aalam w ydal ynzem ktir aade
+
+        // echo $most_recent_temperature;
+        // echo "<br>";
+        // eza aala mn 38 yaane marid
+        echo $breath_rate;
+        echo "<br>";
+        echo $heart_rate;
+        echo "<br>";
+        // coffee, energy drink, spicy food, heavy meals
+
+        $exclude_ingredients[]= 'coffee';
+        $unique_ingredients_array = array_unique($exclude_ingredients);
+        $exclude_ingredients = implode(', ', $unique_ingredients_array);
+
+        // database data
+        ///////////////////////////////////////////////////
+        // disease, intolerances(spoonacular)
+        // $intolerances = get from database;
+        // $disease = get from database;
+
+
+        // return;//ma badna spoonacular now
+        //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
 
         $params = [
             'query' => [
-                'type' => 'public',
-                'app_id' => '1022f7f6',
-                'app_key' => 'c8622bf90a55c8bca73250db9b231fdc',
-                'q' => 'avocado',
-                'diet' => 'balanced'
-                //params
+                'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
+                // 'query' => 'chicken',
+                // 'cuisine' => 'italian',
+                'maxCalories' => $allowed_calories ?? null ,
+                //ethical constraint from database
+                // 'maxAlcohol'=> 0,
+                'minVitaminC' => $minVitaminC ?? null,
+                'minZinc' => $minZinc ?? null,
+                'maxSpice' => $maxSpice ?? null,
+                'exclude_ingredients' => $exclude_ingredients ?? null,
+
+                // 'instructionsRequired' => true,
+                // 'fillIngredients' => true,
+                // 'addRecipeNutrition' => true,
+                'sort' => 'healthiness' ?? null,
+                'maxAlcohol' => $maxAlcohol ?? null,
+                'cuisine' => $request->input('cuisine'),
+                'type' => $request->input('type'),
+                'diet' => $request->input('diet'),
+                'intolerances' => $intolerances ?? null,
             ]
         ];
 
-        $response = $client->request('GET', 'https://api.edamam.com/api/recipes/v2', $params);
+        return $params;
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){
             return "Success: " . $response->getBody();

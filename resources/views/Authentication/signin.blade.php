@@ -81,15 +81,24 @@
 						<div class="m-b30">
 							<label class="form-label" for="password">Password</label>
 							<div class="input-group input-mini input-lg">
+<<<<<<< HEAD
+								<input type="password" id="password" class="form-control dz-password" >
+=======
 								<input type="password" id="password" class="form-control dz-password" name = "password">
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 								<span class="input-group-text show-pass"> 
 									<i class="icon feather icon-eye-off eye-close"></i>
 									<i class="icon feather icon-eye eye-open"></i>
 								</span>
 							</div>
 						</div>
+<<<<<<< HEAD
+						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a> 
+						<!-- <p class="form-text">Forgot Password? <a href="{{ url('resetpassword') }}" class="link ms-2">Reset Password</a></p> -->
+=======
 						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button> 
 						<p class="form-text">Forgot Password? <a href="{{route('forget.password')}}" class="link ms-2">Reset Password</a></p>
+>>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 					</form>
 					<div class="text-center account-footer">
 						<p class="text-light">Dont have any account?</p>
