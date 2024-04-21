@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\AllergensRule;
 use App\Rules\ChronicDiseasesArray;
 use App\Rules\ChronicDiseasesRule;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class SessionController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
-            'allergies' => ['nullable', 'array'],
+            'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'array'],
         ]);
 

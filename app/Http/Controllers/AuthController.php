@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Rules\AllergensRule;
 use App\Rules\ChronicDiseasesRule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -60,7 +61,7 @@ class AuthController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
-            'allergies' => ['nullable', 'array'],
+            'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'array'],
         ]);
 
