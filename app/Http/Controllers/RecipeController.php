@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ChronicDiseasesEnum;
 use App\Models\MealHistory;
+use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -167,8 +169,8 @@ class RecipeController extends Controller
         echo $calories_goal;
         //
 
-        $userId = auth()->id();
-
+        $user = Auth::user();
+        $userId = $user->id;
         $start_of_Day = Carbon::today()->startOfDay();
 
         $end_of_day = Carbon::today()->endOfDay();
@@ -180,7 +182,6 @@ class RecipeController extends Controller
 
         $now = now();
         $currentHour = $now->format('H');
-        return "    ".  $database_calories;
         // Get the calories that the user has eaten throughout the day and include it in the formula.
         // maybe food history
         $total_calories = $calories_goal + $total_calories_burned - $database_calories;
@@ -454,10 +455,56 @@ class RecipeController extends Controller
 
         // database data
         ///////////////////////////////////////////////////
-        // disease, intolerances(spoonacular)
-        // $intolerances = get from database;
-        // $disease = get from database;
 
+        $allergies = $user->allergies;
+        $intolerances = implode(", ", $allergies);
+
+        // $ethicalMealConsiderations = $user->ethical_meal_considerations;
+
+        $chronicDiseases = $user->chronic_diseases;
+        foreach ($chronicDiseases as $disease) {
+            switch ($disease) {
+                case ChronicDiseasesEnum::CARDIOVASCULAR_DISEASES :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::CANCER :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::RESPIRATORY_DISEASES :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::DIABETES :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::ALZHEIMERS_AND_DEMENTIAS :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::INFECTIOUS_DISEASES :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::MENTAL_HEALTH_DISORDERS :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::OBESITY_AND_OVERWEIGHT :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::GASTROESOPHAGEAL_REFLUX_DISEASE :
+                    //action
+                    break;
+                case ChronicDiseasesEnum::OTHER :
+                    //action
+                    break;
+                default:
+                    // Handle other cases
+                    break;
+            }
+        }
 
         // return;//ma badna spoonacular now
         //spoonacular
@@ -469,8 +516,6 @@ class RecipeController extends Controller
                 // 'query' => 'chicken',
                 // 'cuisine' => 'italian',
                 'maxCalories' => $allowed_calories ?? null ,
-                //ethical constraint from database
-                // 'maxAlcohol'=> 0,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
                 'maxSpice' => $maxSpice ?? null,
