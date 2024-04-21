@@ -82,19 +82,21 @@
 					<h3 class="title">Reset Password</h3>
 				</div>
 				<div class="account-section">
-					<form class="m-b30">
+					<form class="m-b30" action="{{ route('forget.password.post') }}" method="POST">
+						@csrf
+				
 						<div class="mb-4">
 							<label class="form-label" for="name">Email</label>
 							<div class="input-group input-mini input-lg">
-								<input type="email" id="email" class="form-control" >
+								<input type="email" id="email" class="form-control" name="email" >
 							</div>
 						</div>
-						
+						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Continue</a> 		
 					</form>
-					<div class="text-center account-footer">
+					<!-- <div class="text-center account-footer"> -->
 						
-					<a href="" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Continue</a> 					</div>
-				</div>	
+								</div>
+				<!-- </div>	 -->
 			</div>
         </div>
 	</main>	
