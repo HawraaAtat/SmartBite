@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Rules\ChronicDiseasesRule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail; 
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 
 class AuthController extends Controller
@@ -36,31 +37,34 @@ class AuthController extends Controller
             $tokens->each(function ($token, $key) {
                 $token->delete();
             });
-    
-            Auth::logout(); 
+
+            Auth::logout();
 
             return redirect('/welcome')->with('success', 'Logged out successfully.');
         }
-    
+
         return redirect('/welcome')->with('error', 'Not authenticated');
     }
-    
+
 
     public function create_user(){
         return view('Authentication.signup');
     }
 
-   
+
     public function register(Request $request){
 
         $validatedData = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            // 'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
+            'first_name' => ['required', 'min:3'],
+            'last_name' => ['required', 'min:3'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed', 'min:6'],
+            'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
+            'allergies' => ['nullable', 'array'],
+            'ethical_meal_considerations' => ['nullable', 'array'],
         ]);
-    
+
+
         $user = new User();
         $user->first_name = $validatedData['firstname'];
         $user->last_name = $validatedData['lastname'];
@@ -69,10 +73,10 @@ class AuthController extends Controller
         $user->password = $validatedData['password'];
 
         $user->save();
-    
+
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
-    
+
 
     public function dashboard($id){
 
@@ -115,8 +119,8 @@ class AuthController extends Controller
             return redirect()->route('forget.password')->with('success','We have sent an email to reset the password');
         }
     }
-    
-    
+
+
 
     function resetPassword($token){
         return view("Authentication/new-password", compact('token'));
@@ -128,11 +132,11 @@ class AuthController extends Controller
 
         $request->validate([
             'email' => 'required|email|exists:users',
-            'password' => 'required|string|confirmed', 
-            'token' => 'required', 
+            'password' => 'required|string|confirmed',
+            'token' => 'required',
         ]);
 
-       
+
         $passwordResetToken = DB::table('password_reset_tokens')
             ->where('email', $request->email)
             ->where('token', $request->token)
@@ -141,13 +145,13 @@ class AuthController extends Controller
             // If the token is invalid or doesn't match the user's email, redirect back with an error
             return redirect()->route('forget.password')->with('error', 'Invalid password reset token.');
         }
-    
+
         // Update the user's password
         User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
-    
+
         // Delete the used token from the password_reset_tokens table
         DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-    
+
         // Redirect to the login page with a success message
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
