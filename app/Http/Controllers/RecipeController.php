@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MealHistory;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
@@ -164,12 +167,23 @@ class RecipeController extends Controller
         echo $calories_goal;
         //
 
+        $userId = auth()->id();
+
+        $start_of_Day = Carbon::today()->startOfDay();
+
+        $end_of_day = Carbon::today()->endOfDay();
+
+        // Query to sum up calories from 12:00 AM today to 12:00 PM today for the authenticated user
+        $database_calories = MealHistory::where('user_id', $userId)
+                        ->whereBetween('created_at', [$start_of_Day, $end_of_day])
+                        ->sum('calories');
+
+        $now = now();
+        $currentHour = $now->format('H');
+        return "    ".  $database_calories;
         // Get the calories that the user has eaten throughout the day and include it in the formula.
         // maybe food history
-        $total_calories = $calories_goal + $total_calories_burned;
-
-        $now = now()->setTimezone('Asia/Beirut');
-        $currentHour = $now->format('H');
+        $total_calories = $calories_goal + $total_calories_burned - $database_calories;
 
         if ($currentHour >= 6 && $currentHour < 11) {
             $mealType = "Breakfast";
