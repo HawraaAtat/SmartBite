@@ -32,15 +32,6 @@ Route::get('/signin', function () {
 
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
-<<<<<<< HEAD
-Route::get('create-user', [AuthController::class, 'create_user'])->name('user.create');
-Route::post('register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/forget-password', [ForgetPasswordManager::class, 'forgetPassword' ])->name('forget.password');
-Route::post('/forget-password', [ForgetPasswordManager::class, 'forgetPasswordPost' ])->name('forget.password.post');
-Route::get('/forget-password/{token}', [ForgetPasswordManager::class, 'resetPassword' ])->name('reset.password');
-Route::post('/reset-password', [ForgetPasswordManager::class, 'resetPasswordPost' ])->name('reset.password.post');
-=======
 Route::get('signup', [AuthController::class, 'create_user'])->name('signup');
 Route::get('dashboard/{id}', [AuthController::class, 'dashboard'])->name('dashboard');
 Route::post('register', [AuthController::class, 'register'])->name('register');
@@ -50,7 +41,6 @@ Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name
 Route::post('/forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
 Route::get('/forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password');
 Route::post('/reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
->>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 
@@ -58,13 +48,5 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('create-user', [AuthController::class, 'create_user'])->name('user.create');
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-<<<<<<< HEAD
-Route::get('/forget-password', [ForgetPasswordManager::class, 'forgetPassword' ])->name('forget.password');
-
-Route::post('/forget-password', [ForgetPasswordManager::class, 'forgetPasswordPost' ])->name('forget.password.post');
-Route::get('/forget-password/{token}', [ForgetPasswordManager::class, 'resetPassword' ])->name('reset.password');
-Route::post('/reset-password', [ForgetPasswordManager::class, 'resetPasswordPost' ])->name('reset.password.post');
-=======
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
 
->>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
