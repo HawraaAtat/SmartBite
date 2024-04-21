@@ -29,6 +29,9 @@ Route::get('/signin', function () {
     return view('Authentication/signin');
 });
 
+Route::get('/test', function () {
+    return view('test');
+});
 
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
