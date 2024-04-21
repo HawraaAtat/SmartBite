@@ -32,12 +32,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
 
 	<!-- Favicons Icon -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/app-logo/favicon.png') }}">
     
 	<!-- Globle Stylesheets -->
     
 	<!-- Stylesheets -->
-    <link rel="stylesheet" class="main-css" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" class="main-css" type="text/css" href="{{ asset('assets/css/style.css') }}">
     
     <!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,49 +61,53 @@
 	<main class="page-content">
 		<div class="container py-0">
 			<div class="dz-authentication-area">
+			<div class="main-logo">
+					<a href="javascript:void(0);" class="back-btn">
+						<i class="feather icon-arrow-left"></i>
+					</a>
+					<!-- <div class="logo">
+						<img src="assets/images/app-logo/logo.png" alt="logo">
+					</div> -->
+				</div>
+					<!-- <div class="logo">
+						<img src="assets/images/app-logo/logo.png" alt="logo">
+					</div> -->
+				</div>
 				<div class="main-logo">
 					<!-- <div class="logo">
 						<img src="assets/logo.png" alt="logo" >
 					</div> -->
 				</div>
 				<div class="section-head">
-					<h3 class="title">Sign In</h3>
+					<h3 class="title">New Password</h3>
 				</div>
 				<div class="account-section">
-					<form class="m-b30" action="{{ route('login') }}" method="POST">
+					<form class="m-b30" action="{{ route('reset.password.post') }}" method="POST">
 						@csrf
+						@method('POST')
+						<input type="text" hidden value="{{$token}}" name="token"> 
 						<div class="mb-4">
 							<label class="form-label" for="name">Email</label>
 							<div class="input-group input-mini input-lg">
-								<input type="email" id="email" class="form-control" name = "email">
+								<input type="email" id="email" class="form-control" name="email" >
 							</div>
 						</div>
-						<div class="m-b30">
+                        <div class="mb-4">
 							<label class="form-label" for="password">Password</label>
 							<div class="input-group input-mini input-lg">
-<<<<<<< HEAD
-								<input type="password" id="password" class="form-control dz-password" >
-=======
-								<input type="password" id="password" class="form-control dz-password" name = "password">
->>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
-								<span class="input-group-text show-pass"> 
-									<i class="icon feather icon-eye-off eye-close"></i>
-									<i class="icon feather icon-eye eye-open"></i>
-								</span>
+								<input type="password" id="password" class="form-control" name="password" >
 							</div>
 						</div>
-<<<<<<< HEAD
-						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</a> 
-						<!-- <p class="form-text">Forgot Password? <a href="{{ url('resetpassword') }}" class="link ms-2">Reset Password</a></p> -->
-=======
-						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button> 
-						<p class="form-text">Forgot Password? <a href="{{route('forget.password')}}" class="link ms-2">Reset Password</a></p>
->>>>>>> eac7f83797f954e205052b93eee47701739a5d0a
+                        <div class="mb-4">
+							<label class="form-label" for="password_confirmation">Password</label>
+							<div class="input-group input-mini input-lg">
+								<input  type="password" id="password" class="form-control" name="password_confirmation" >
+							</div>
+						</div>
+						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Submit</button>
 					</form>
 					<div class="text-center account-footer">
-						<p class="text-light">Dont have any account?</p>
-						<a href="{{ url('signup') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">CREATE AN ACCOUNT</a>
-					</div>
+						
 				</div>	
 			</div>
         </div>
@@ -115,11 +119,18 @@
 <!--**********************************
     Scripts
 ***********************************-->
-<script src="assets/js/jquery.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script><!-- Swiper -->
-<script src="assets/js/dz.carousel.js"></script><!-- Swiper -->
-<script src="assets/js/settings.js"></script>
-<script src="assets/js/custom.js"></script>
+
+
+
+
+
+<script src="{{ asset('assets/js/jquery.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script><!-- Swiper -->
+<script src="{{ asset('assets/js/dz.carousel.js') }}"></script><!-- Swiper -->
+<script src="{{ asset('assets/js/settings.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="{{ asset('index.js') }}"></script>
+
 </body>
 </html>

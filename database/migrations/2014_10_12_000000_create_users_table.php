@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
-            $table->date('DOB')->nullable();
+            $table->date('dob')->nullable();
             $table->string('gender')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
