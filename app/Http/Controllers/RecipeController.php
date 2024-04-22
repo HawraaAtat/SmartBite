@@ -460,48 +460,49 @@ class RecipeController extends Controller
         $intolerances = implode(", ", $allergies);
 
         // $ethicalMealConsiderations = $user->ethical_meal_considerations;
+        ///////////////////to do
 
+
+        //finding actions from the if else below the switch
         $chronicDiseases = $user->chronic_diseases;
         foreach ($chronicDiseases as $disease) {
             switch ($disease) {
                 case ChronicDiseasesEnum::CARDIOVASCULAR_DISEASES :
-                    //action
+                case ChronicDiseasesEnum::DIABETES :
+                case ChronicDiseasesEnum::OBESITY_AND_OVERWEIGHT :
+                case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE :
+                    $maxSaturatedFat = 15;
+                    $maxSodium = 200;
                     break;
                 case ChronicDiseasesEnum::CANCER :
-                    //action
+                    $maxSaturatedFat = 10;
+                    $maxSugar = 20;
                     break;
                 case ChronicDiseasesEnum::RESPIRATORY_DISEASES :
-                    //action
-                    break;
-                case ChronicDiseasesEnum::DIABETES :
-                    //action
+                    $maxSaturatedFat =15;
+                    $maxSodium =300;
                     break;
                 case ChronicDiseasesEnum::ALZHEIMERS_AND_DEMENTIAS :
-                    //action
+                    $maxSaturatedFat = 15;
+                    $maxCholesterol = 30;
                     break;
                 case ChronicDiseasesEnum::INFECTIOUS_DISEASES :
-                    //action
+                    $maxSaturatedFat= 15;
+                    $maxSugar= 20;
                     break;
                 case ChronicDiseasesEnum::MENTAL_HEALTH_DISORDERS :
-                    //action
-                    break;
-                case ChronicDiseasesEnum::OBESITY_AND_OVERWEIGHT :
-                    //action
-                    break;
-                case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE :
-                    //action
+                    $maxSugar = 30;
                     break;
                 case ChronicDiseasesEnum::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS :
-                    //action
+                    $maxSaturatedFat = 15;
+                    $maxSugar = 20;
                     break;
                 case ChronicDiseasesEnum::GASTROESOPHAGEAL_REFLUX_DISEASE :
-                    //action
+                    $maxSaturatedFat = 15;
+                    $maxSugar = 20;
+                    $maxCaffeine = 50;
                     break;
                 case ChronicDiseasesEnum::OTHER :
-                    //action
-                    break;
-                default:
-                    // Handle other cases
                     break;
             }
         }
@@ -513,14 +514,12 @@ class RecipeController extends Controller
         $params = [
             'query' => [
                 'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
-                // 'query' => 'chicken',
-                // 'cuisine' => 'italian',
+                'query' => $request->input('query'),
                 'maxCalories' => $allowed_calories ?? null ,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
                 'maxSpice' => $maxSpice ?? null,
                 'exclude_ingredients' => $exclude_ingredients ?? null,
-
                 // 'instructionsRequired' => true,
                 // 'fillIngredients' => true,
                 // 'addRecipeNutrition' => true,
@@ -530,10 +529,15 @@ class RecipeController extends Controller
                 'type' => $request->input('type'),
                 'diet' => $request->input('diet'),
                 'intolerances' => $intolerances ?? null,
+                'maxSaturatedFat' => $maxSaturatedFat ?? null,
+                'maxSodium' => $maxSodium ?? null,
+                'maxSugar' => $maxSugar ?? null,
+                'maxCaffeine' => $maxCaffeine ?? null,
+                'maxCholesterol' => $maxCholesterol ?? null,
             ]
         ];
 
-        return $params;
+        // return $params;
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){
