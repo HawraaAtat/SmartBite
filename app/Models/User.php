@@ -34,6 +34,5 @@ class User extends Authenticatable
         'password' => 'hashed',
         'chronic_diseases' => 'array',
         'allergies' => 'array',
-        'ethical_meal_considerations' => 'array',
     ];
 }

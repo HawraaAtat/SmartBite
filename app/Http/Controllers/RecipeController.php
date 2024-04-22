@@ -449,19 +449,35 @@ class RecipeController extends Controller
         echo "<br>";
         // coffee, energy drink, spicy food, heavy meals
 
-        $exclude_ingredients[]= 'coffee';
-        $unique_ingredients_array = array_unique($exclude_ingredients);
-        $exclude_ingredients = implode(', ', $unique_ingredients_array);
-
         // database data
         ///////////////////////////////////////////////////
 
         $allergies = $user->allergies;
         $intolerances = implode(", ", $allergies);
 
-        // $ethicalMealConsiderations = $user->ethical_meal_considerations;
-        ///////////////////to do
+        $ethicalMealConsiderations = $user->ethical_meal_considerations;
 
+        if ($ethicalMealConsiderations == 1)
+        {
+            $exclude_ingredients = array_merge($exclude_ingredients, [
+                'gelatin',
+                'ground pork',
+                'ground pork sausage',
+                'lean pork tenderloin',
+                'pork',
+                'Pork & Beans',
+                'pork belly',
+                'pork butt',
+                'pork chops',
+                'pork links',
+                'pork loin chops',
+                'pork loin roast',
+                'pork roast',
+                'pork shoulder',
+                'pork tenderloin'
+            ]);
+            $maxAlcohol = 0;
+        }
 
         //finding actions from the if else below the switch
         $chronicDiseases = $user->chronic_diseases;
@@ -507,7 +523,10 @@ class RecipeController extends Controller
             }
         }
 
-        // return;//ma badna spoonacular now
+        $exclude_ingredients[]= 'coffee';
+        $unique_ingredients_array = array_unique($exclude_ingredients);
+        $exclude_ingredients = implode(', ', $unique_ingredients_array);
+
         //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
 
@@ -537,7 +556,6 @@ class RecipeController extends Controller
             ]
         ];
 
-        // return $params;
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){

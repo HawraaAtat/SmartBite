@@ -62,7 +62,7 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed', 'min:6'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
             'allergies' => ['nullable', 'array', new AllergensRule],
-            'ethical_meal_considerations' => ['nullable', 'array'],
+            'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
 
 

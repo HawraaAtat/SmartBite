@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('chronic_diseases')->nullable();
             $table->string('allergies')->nullable();
-            $table->string('ethical_meal_considerations')->nullable();
+            $table->boolean('ethical_meal_considerations')->default(0);
 
             $table->rememberToken();
             $table->timestamps();
