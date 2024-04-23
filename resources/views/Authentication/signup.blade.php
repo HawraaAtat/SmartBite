@@ -139,9 +139,17 @@
                         <div class="mb-4">
                             <label class="form-label" for="password_confirmation">Confirm Password</label>
                             <div class="input-group input-mini input-lg">
-                                <input type="password" id="password_confirmation" class="form-control" name="password_confirmation">
+                                <input type="password" id="password_confirmation" class="form-control dz-password" name="password_confirmation">
+                                <span class="input-group-text show-pass">
+                                    <i class="icon feather icon-eye-off eye-close"></i>
+                                    <i class="icon feather icon-eye eye-open"></i>
+                                </span>
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
+
 						<button type="submit"  class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</button>
 					</form>
 					<div class="text-center">
