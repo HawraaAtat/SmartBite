@@ -61,8 +61,8 @@ class AuthController extends Controller
     public function register(Request $request){
 
         $validatedData = $request->validate([
-            'firstname' => ['required', 'min:3'],
-            'lastname' => ['required', 'min:3'],
+            'first_name' => ['required', 'min:3'],
+            'last_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
@@ -70,21 +70,13 @@ class AuthController extends Controller
             'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
 
-
-        $user = new User();
-        $user->first_name = $validatedData['firstname'];
-        $user->last_name = $validatedData['lastname'];
-        // $user->dob = $validatedData['date_of_birth'];
-        $user->email = $validatedData['email'];
-        $user->password = $validatedData['password'];
-
-        $user->save();
+        $user = User::create($validatedData);
 
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
 
 
-    
+
     function forgetPassword(){
         return view('Authentication/forget-password');
     }

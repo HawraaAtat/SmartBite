@@ -314,18 +314,6 @@
                 </div>
               </div>
             </div>
-            @foreach ($repices as $recipe)
-    <div>
-        <h2>{{ $result['title'] }}</h2>
-        <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
-        <p>Nutrition:</p>
-        <ul>
-            @foreach ($result['nutrition']['nutrients'] as $nutrient)
-                <li>{{ $nutrient['name'] }}: {{ $nutrient['amount'] }} {{ $nutrient['unit'] }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endforeach
             <!-- Page Content Start -->
             <style>
               .column {
@@ -355,7 +343,7 @@
                     <div class="offcanvas-body">
                       <div class="row" id="contentArea">
                         <div class="col-12">
-                         
+
                             <div class="card-header"></div>
                             <div class="card-body">
                               <div class="accordion accordion-primary" id="accordion-one">
@@ -370,7 +358,7 @@
                                       <div class="row">
                                         <div class="column">
                                           <div class="radio square-radio">
-                                   
+
                                             <label class="radio-label">African <input type="checkbox" checked="checked" value="African">
                                               <span class="checkmark"></span>
                                             </label>
@@ -434,7 +422,7 @@
                                         </div>
                                         <div class="column">
                                           <div class="radio square-radio">
-                                    
+
                                             <label class="radio-label">Latin American <input type="checkbox" value="Latin American">
                                               <span class="checkmark"></span>
                                             </label>
@@ -617,7 +605,7 @@
                               </div>
                             </div>
                           </div>
-                        
+
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -634,99 +622,36 @@
               <a href="products.html">More</a>
             </div>
             <ul class="featured-list">
-              <li>
-                <div class="dz-card list">
-                  <div class="dz-media">
-                    <a href="product-detail.html">
-                      <img src="{{ asset('assets/images/products/product1.jpg') }}" alt="image">
-                    </a>
-                    </a>
-                    <div class="dz-rating">
-                      <i class="fa fa-star"></i> 3.8
-                    </div>
-                  </div>
-                  <div class="dz-content">
-                    <div class="dz-head">
-                      <h6 class="title">
-                        <a href="product-detail.html">Hot Creamy Cappuccino Latte Ombe</a>
-                      </h6>
-                    </div>
-                    <ul class="dz-meta">
-                      <li class="dz-price flex-1">$12.6</li>
-                      <li class="dz-pts">50 Pts</li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dz-card list">
-                  <div class="dz-media">
-                    <a href="product-detail.html">
-                      <img src="{{ asset('assets/images/products/product1.jpg') }}" alt="image">
-                    </a>
-                    <div class="dz-rating">
-                      <i class="fa fa-star"></i> 3.8
-                    </div>
-                  </div>
-                  <div class="dz-content">
-                    <div class="dz-head">
-                      <h6 class="title">
-                        <a href="product-detail.html">Creamy Mocha Ome Coffee </a>
-                      </h6>
-                    </div>
-                    <ul class="dz-meta">
-                      <li class="dz-price flex-1">$12.6</li>
-                      <li class="dz-pts">50 Pts</li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dz-card list">
-                  <div class="dz-media">
-                    <a href="product-detail.html">
-                      <img src="{{ asset('assets/images/products/product1.jpg') }}" alt="image">
-                    </a>
-                    <div class="dz-rating">
-                      <i class="fa fa-star"></i> 3.8
-                    </div>
-                  </div>
-                  <div class="dz-content">
-                    <div class="dz-head">
-                      <h6 class="title">
-                        <a href="product-detail.html">Arabica Latte Ombe Coffee </a>
-                      </h6>
-                    </div>
-                    <ul class="dz-meta">
-                      <li class="dz-price flex-1">$12.6</li>
-                      <li class="dz-pts">50 Pts</li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dz-card list">
-                  <div class="dz-media">
-                    <a href="product-detail.html">
-                      <img src="{{ asset('assets/images/products/product1.jpg') }}" alt="image">
-                    </a>
-                    <div class="dz-rating">
-                      <i class="fa fa-star"></i> 3.8
-                    </div>
-                  </div>
-                  <div class="dz-content">
-                    <div class="dz-head">
-                      <h6 class="title">
-                        <a href="product-detail.html">Original Hot Coffee </a>
-                      </h6>
-                    </div>
-                    <ul class="dz-meta">
-                      <li class="dz-price flex-1">$12.6</li>
-                      <li class="dz-pts">50 Pts</li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
+                @if(isset($recipes['results']) && count($recipes['results']) > 0)
+                    @foreach ($recipes['results'] as $result)
+                        <li>
+                            <div class="dz-card list">
+                            <div class="dz-media">
+                                <a href="product-detail.html">
+                                <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
+                                </a>
+                                </a>
+                                {{-- <div class="dz-rating">
+                                <i class="fa fa-star"></i> 3.8
+                                </div> --}}
+                            </div>
+                            <div class="dz-content">
+                                <div class="dz-head">
+                                <h6 class="title">
+                                    <a href="product-detail.html">{{$result['title']}}</a>
+                                </h6>
+                                </div>
+                                {{-- <ul class="dz-meta">
+                                <li class="dz-price flex-1">$12.6</li>
+                                <li class="dz-pts">50 Pts</li>
+                                </ul> --}}
+                            </div>
+                            </div>
+                        </li>
+                    @endforeach
+                @else
+                    <p>No recipes found.</p>
+                @endif
             </ul>
             <!-- Featured Beverages -->
           </div>
