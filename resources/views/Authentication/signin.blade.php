@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
     <!-- Title -->
 	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
 
@@ -11,7 +11,7 @@
 	<meta name="author" content="DexignZone">
 	<meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">   
+	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
 
 	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
 
@@ -33,18 +33,18 @@
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-    
+
 	<!-- Globle Stylesheets -->
-    
+
 	<!-- Stylesheets -->
     <link rel="stylesheet" class="main-css" type="text/css" href="assets/css/style.css">
-    
+
     <!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 
-</head>   
+</head>
 <body>
 <div class="page-wrapper">
 	<!-- Preloader -->
@@ -71,37 +71,43 @@
 				</div>
 				<div class="account-section">
 					<form class="m-b30" action="{{ route('login') }}" method="POST">
-						@csrf
-						<div class="mb-4">
-							<label class="form-label" for="name">Email</label>
-							<div class="input-group input-mini input-lg">
-								<input type="email" id="email" class="form-control" name = "email">
-							</div>
-						</div>
-						<div class="m-b30">
-							<label class="form-label" for="password">Password</label>
-							<div class="input-group input-mini input-lg">
-								<input type="password" id="password" class="form-control dz-password" name = "password">
-								<span class="input-group-text show-pass"> 
-									<i class="icon feather icon-eye-off eye-close"></i>
-									<i class="icon feather icon-eye eye-open"></i>
-								</span>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button> 
-						<p class="form-text">Forgot Password? <a href="{{route('forget.password')}}" class="link ms-2">Reset Password</a></p>
-					</form>
+                        @csrf
+                        <div class="mb-4">
+                            <label class="form-label" for="email">Email</label>
+                            <div class="input-group input-mini input-lg">
+                                <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="m-b30">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="input-group input-mini input-lg">
+                                <input type="password" id="password" class="form-control dz-password" name="password">
+                                <span class="input-group-text show-pass">
+                                    <i class="icon feather icon-eye-off eye-close"></i>
+                                    <i class="icon feather icon-eye eye-open"></i>
+                                </span>
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button>
+                        <p class="form-text">Forgot Password? <a href="{{ route('forget.password') }}" class="link ms-2">Reset Password</a></p>
+                    </form>
 					<div class="text-center account-footer">
 						<p class="text-light">Dont have any account?</p>
 						<a href="{{ url('signup') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">CREATE AN ACCOUNT</a>
 					</div>
-				</div>	
+				</div>
 			</div>
         </div>
-	</main>	
+	</main>
 	<!-- Main Content End  -->
-    
-    
+
+
 </div>
 <!--**********************************
     Scripts
