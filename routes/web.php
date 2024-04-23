@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Front\RecipeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +20,6 @@ Route::get('/', function () {
     return view('onboarding');
 });
 
-Route::get('/index', function () {
-    return view('index');
-});
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -36,7 +35,6 @@ Route::get('/test', function () {
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('signup', [AuthController::class, 'create_user'])->name('signup');
-Route::get('dashboard/{id}', [AuthController::class, 'dashboard'])->name('dashboard');
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
@@ -53,3 +51,6 @@ Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
 
+//////////////////////////
+Route::get('dashboard/{id}', [RecipeController::class, 'dashboard'])->name('dashboard');
+//////////////////////////

@@ -14,6 +14,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Enums\ChronicDiseasesEnum;
+use App\Models\MealHistory;
+use GuzzleHttp\Client;
+
+
 
 
 class AuthController extends Controller
@@ -56,8 +61,8 @@ class AuthController extends Controller
     public function register(Request $request){
 
         $validatedData = $request->validate([
-            'first_name' => ['required', 'min:3'],
-            'last_name' => ['required', 'min:3'],
+            'firstname' => ['required', 'min:3'],
+            'lastname' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
@@ -79,10 +84,7 @@ class AuthController extends Controller
     }
 
 
-    public function dashboard($id){
-
-        return view('index');
-    }
+    
     function forgetPassword(){
         return view('Authentication/forget-password');
     }

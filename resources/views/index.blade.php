@@ -314,6 +314,18 @@
                 </div>
               </div>
             </div>
+            @foreach ($repices as $recipe)
+    <div>
+        <h2>{{ $result['title'] }}</h2>
+        <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
+        <p>Nutrition:</p>
+        <ul>
+            @foreach ($result['nutrition']['nutrients'] as $nutrient)
+                <li>{{ $nutrient['name'] }}: {{ $nutrient['amount'] }} {{ $nutrient['unit'] }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endforeach
             <!-- Page Content Start -->
             <style>
               .column {
