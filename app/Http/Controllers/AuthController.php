@@ -65,7 +65,6 @@ class AuthController extends Controller
 
 
     public function register(Request $request){
-
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
@@ -78,10 +77,13 @@ class AuthController extends Controller
 
         $user = User::create($validatedData);
 
-        return redirect('/welcome')->with('success', 'User created successfully.');
+        if ($user) {
+            Auth::login($user);
+            return redirect()->route('dashboard', ['id' => $user->id]);
+        } else {
+            return back();
+        }
     }
-
-
 
     function forgetPassword(){
         return view('Authentication/forget-password');

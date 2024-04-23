@@ -125,32 +125,32 @@ class RecipeController extends Controller
                  ]
              ];
              $total_calories_burned = $activities['summary']['caloriesOut'];
-             echo $total_calories_burned;
+            //  echo $total_calories_burned;
              //
-     
+
              $food_goals = [
                  "goals" => [
                      "calories" => 2910
                  ]
              ];
              $calories_goal = $food_goals['goals']['calories'];
-             echo $calories_goal;
+            //  echo $calories_goal;
              //
-     
+
              $user = Auth::user();
              $userId = $user->id;
              $start_of_Day = Carbon::today()->startOfDay();
-     
+
              $end_of_day = Carbon::today()->endOfDay();
-     
+
              $database_calories = MealHistory::where('user_id', $userId)
                              ->whereBetween('created_at', [$start_of_Day, $end_of_day])
                              ->sum('calories');
-     
+
              $now = now();
              $currentHour = $now->format('H');
              $total_calories = $calories_goal + $total_calories_burned - $database_calories;
-     
+
              if ($currentHour >= 6 && $currentHour < 11) {
                  $mealType = "Breakfast";
                  $allowed_calories = $total_calories * 0.30;
@@ -166,7 +166,7 @@ class RecipeController extends Controller
              } else {
                  $mealType = "It's not mealtime";
              }
-     
+
              $core_temperature = [
                  "tempCore" => [
                      [
@@ -181,17 +181,17 @@ class RecipeController extends Controller
              ];
              $most_recent_measurement = end($core_temperature['tempCore']);
              $most_recent_temperature = $most_recent_measurement['value'];
-     
-     
+
+
              $most_recent_temperature = 39;
              if ($most_recent_temperature > 38) {
-                 $minVitaminC = 50; 
-                 $minZinc = 15; 
-                 $maxSpice = 0; 
+                 $minVitaminC = 50;
+                 $minZinc = 15;
+                 $maxSpice = 0;
                  $exclude_ingredients[] = 'coffee';
              }
-             
-     
+
+
              $sleep = [
                  "sleep" => [
                      [
@@ -289,16 +289,16 @@ class RecipeController extends Controller
                      "totalTimeInBed" => 462
                  ]
              ];
-     
+
              $most_recent_sleep = end($sleep['sleep']);
              $efficiency = $most_recent_sleep['efficiency']; //85
              $minutesAsleep = $most_recent_sleep['minutesAsleep']; //420
              $timeInBed = $most_recent_sleep['timeInBed']; //480
-     
+
              $hours_asleep = $minutesAsleep / 60;
              $hoursInBed = $timeInBed / 60;
-     
-     
+
+
              if($efficiency >= 85 && $hours_asleep >= 7 && $hours_asleep <= 9) {
                  $sleep_quality = "good";
              } elseif($hours_asleep < 7) {
@@ -321,7 +321,7 @@ class RecipeController extends Controller
              }
              // echo $sleep_quality;
              //
-     
+
              $breathing = [
                  "br" => [
                      [
@@ -332,7 +332,7 @@ class RecipeController extends Controller
                      ]
                  ]
              ];
-     
+
              $most_recent_breathing = end($breathing['br']);
              $breathing_rate = $most_recent_breathing['value']['breathingRate'];
      //
@@ -367,11 +367,11 @@ class RecipeController extends Controller
                      "sort" => "asc"
                  ]
              ];
-     
+
              $most_recent_heart_rate = end($heart_rate['ecgReadings']);
              $averageHeart_rate = $most_recent_heart_rate['averageHeart_rate'];
-     
-         
+
+
              if(($breathing_rate >= 12 && $breathing_rate <= 20) && ($averageHeart_rate >= 60 && $averageHeart_rate <= 100)) {
                  $breath_rate = "normal";
                  $heart_rate = "normal";
@@ -381,23 +381,23 @@ class RecipeController extends Controller
                  $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce', 'mayonnaise', 'sunflower oil', 'vegetable oil', 'corn oil'));
                  $maxAlcohol = 0;
              }
-     
-             
-     
+
+
+
              // echo $total_calories;
              // echo "<br>";
-             
+
              // echo $breath_rate;
              // echo "<br>";
              // echo $heart_rate;
              // echo "<br>";
-       
-     
+
+
              $allergies = $user->allergies ?? null;
              $intolerances = isset($allergies) ? implode(", ", $allergies) : null;
-     
+
              $ethicalMealConsiderations = $user->ethical_meal_considerations;
-     
+
              if ($ethicalMealConsiderations == 1)
              {
                  $exclude_ingredients = array_merge($exclude_ingredients, [
@@ -419,7 +419,7 @@ class RecipeController extends Controller
                  ]);
                  $maxAlcohol = 0;
              }
-     
+
              //finding actions from the if else below the switch
              $chronicDiseases = $user->chronic_diseases ?? null;
              if(isset($chronicDiseases)){
@@ -468,10 +468,10 @@ class RecipeController extends Controller
              $exclude_ingredients[]= 'coffee';
              $unique_ingredients_array = array_unique($exclude_ingredients);
              $exclude_ingredients = implode(', ', $unique_ingredients_array);
-     
+
              //spoonacular
              $client = new Client(); // same client here and  in fitbit api. we move this up
-     
+
              $params = [
                  'query' => [
                      'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
@@ -497,9 +497,9 @@ class RecipeController extends Controller
                      'maxCholesterol' => $maxCholesterol ?? null,
                  ]
              ];
-     
+
              $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
-     
+
              if($response->getStatusCode() == 200){
                  $recipes = json_decode($response->getBody(), true);
                  return view('index', compact('recipes'));
@@ -508,6 +508,6 @@ class RecipeController extends Controller
                  return view('index')->with('error', $errorMessage);
              }
          }
-         
+
 }
 
