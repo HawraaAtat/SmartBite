@@ -19,17 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-
-            $table->date('dob')->nullable();
-            $table->string('gender')->nullable();
-            $table->integer('weight')->nullable();
-            $table->integer('height')->nullable();
-            $table->float('bmi')->nullable();
             $table->string('chronic_diseases')->nullable();
             $table->string('allergies')->nullable();
-            $table->string('dietary_preferences')->nullable();
-            $table->string('health_goals')->nullable();
-            $table->string('ethical_meal_considerations')->nullable();
+            $table->boolean('ethical_meal_considerations')->default(0);
 
             $table->rememberToken();
             $table->timestamps();

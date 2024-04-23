@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ChronicDiseasesEnum;
 use App\Models\MealHistory;
+use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -167,8 +169,8 @@ class RecipeController extends Controller
         echo $calories_goal;
         //
 
-        $userId = auth()->id();
-
+        $user = Auth::user();
+        $userId = $user->id;
         $start_of_Day = Carbon::today()->startOfDay();
 
         $end_of_day = Carbon::today()->endOfDay();
@@ -180,7 +182,6 @@ class RecipeController extends Controller
 
         $now = now();
         $currentHour = $now->format('H');
-        return "    ".  $database_calories;
         // Get the calories that the user has eaten throughout the day and include it in the formula.
         // maybe food history
         $total_calories = $calories_goal + $total_calories_burned - $database_calories;
@@ -448,34 +449,96 @@ class RecipeController extends Controller
         echo "<br>";
         // coffee, energy drink, spicy food, heavy meals
 
+        // database data
+        ///////////////////////////////////////////////////
+
+        $allergies = $user->allergies;
+        $intolerances = implode(", ", $allergies);
+
+        $ethicalMealConsiderations = $user->ethical_meal_considerations;
+
+        if ($ethicalMealConsiderations == 1)
+        {
+            $exclude_ingredients = array_merge($exclude_ingredients, [
+                'gelatin',
+                'ground pork',
+                'ground pork sausage',
+                'lean pork tenderloin',
+                'pork',
+                'Pork & Beans',
+                'pork belly',
+                'pork butt',
+                'pork chops',
+                'pork links',
+                'pork loin chops',
+                'pork loin roast',
+                'pork roast',
+                'pork shoulder',
+                'pork tenderloin'
+            ]);
+            $maxAlcohol = 0;
+        }
+
+        //finding actions from the if else below the switch
+        $chronicDiseases = $user->chronic_diseases;
+        foreach ($chronicDiseases as $disease) {
+            switch ($disease) {
+                case ChronicDiseasesEnum::CARDIOVASCULAR_DISEASES :
+                case ChronicDiseasesEnum::DIABETES :
+                case ChronicDiseasesEnum::OBESITY_AND_OVERWEIGHT :
+                case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE :
+                    $maxSaturatedFat = 15;
+                    $maxSodium = 200;
+                    break;
+                case ChronicDiseasesEnum::CANCER :
+                    $maxSaturatedFat = 10;
+                    $maxSugar = 20;
+                    break;
+                case ChronicDiseasesEnum::RESPIRATORY_DISEASES :
+                    $maxSaturatedFat =15;
+                    $maxSodium =300;
+                    break;
+                case ChronicDiseasesEnum::ALZHEIMERS_AND_DEMENTIAS :
+                    $maxSaturatedFat = 15;
+                    $maxCholesterol = 30;
+                    break;
+                case ChronicDiseasesEnum::INFECTIOUS_DISEASES :
+                    $maxSaturatedFat= 15;
+                    $maxSugar= 20;
+                    break;
+                case ChronicDiseasesEnum::MENTAL_HEALTH_DISORDERS :
+                    $maxSugar = 30;
+                    break;
+                case ChronicDiseasesEnum::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS :
+                    $maxSaturatedFat = 15;
+                    $maxSugar = 20;
+                    break;
+                case ChronicDiseasesEnum::GASTROESOPHAGEAL_REFLUX_DISEASE :
+                    $maxSaturatedFat = 15;
+                    $maxSugar = 20;
+                    $maxCaffeine = 50;
+                    break;
+                case ChronicDiseasesEnum::OTHER :
+                    break;
+            }
+        }
+
         $exclude_ingredients[]= 'coffee';
         $unique_ingredients_array = array_unique($exclude_ingredients);
         $exclude_ingredients = implode(', ', $unique_ingredients_array);
 
-        // database data
-        ///////////////////////////////////////////////////
-        // disease, intolerances(spoonacular)
-        // $intolerances = get from database;
-        // $disease = get from database;
-
-
-        // return;//ma badna spoonacular now
         //spoonacular
         $client = new Client(); // same client here and  in fitbit api. we move this up
 
         $params = [
             'query' => [
                 'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
-                // 'query' => 'chicken',
-                // 'cuisine' => 'italian',
+                'query' => $request->input('query'),
                 'maxCalories' => $allowed_calories ?? null ,
-                //ethical constraint from database
-                // 'maxAlcohol'=> 0,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
                 'maxSpice' => $maxSpice ?? null,
                 'exclude_ingredients' => $exclude_ingredients ?? null,
-
                 // 'instructionsRequired' => true,
                 // 'fillIngredients' => true,
                 // 'addRecipeNutrition' => true,
@@ -485,10 +548,14 @@ class RecipeController extends Controller
                 'type' => $request->input('type'),
                 'diet' => $request->input('diet'),
                 'intolerances' => $intolerances ?? null,
+                'maxSaturatedFat' => $maxSaturatedFat ?? null,
+                'maxSodium' => $maxSodium ?? null,
+                'maxSugar' => $maxSugar ?? null,
+                'maxCaffeine' => $maxCaffeine ?? null,
+                'maxCholesterol' => $maxCholesterol ?? null,
             ]
         ];
 
-        return $params;
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
         if($response->getStatusCode() == 200){

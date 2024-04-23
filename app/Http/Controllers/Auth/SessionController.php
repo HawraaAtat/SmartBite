@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\AllergensRule;
+use App\Rules\ChronicDiseasesArray;
+use App\Rules\ChronicDiseasesRule;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -16,16 +19,9 @@ class SessionController extends Controller
             'last_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:6'],
-            'DOB' => ['nullable', 'date'],
-            'gender' => ['nullable', 'string'],
-            'weight' => ['nullable', 'integer'],
-            'height' => ['nullable', 'integer'],
-            'bmi' => ['nullable', 'numeric'],
-            'chronic_diseases' => ['nullable', 'array'],
-            'allergies' => ['nullable', 'array'],
-            'dietary_preferences' => ['nullable', 'array'],
-            'health_goals' => ['nullable', 'array'],
-            'ethical_meal_considerations' => ['nullable', 'array'],
+            'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
+            'allergies' => ['nullable', 'array', new AllergensRule],
+            'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
 
         $data['password'] = bcrypt($data['password']);
