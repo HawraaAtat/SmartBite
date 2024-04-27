@@ -14,19 +14,30 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Enums\ChronicDiseasesEnum;
+use App\Models\MealHistory;
+use GuzzleHttp\Client;
+
+
 
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+
         $credentials = $request->only('email', 'password');
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('authToken');
+            $token = $user->createToken('authToken')->accessToken;
             return redirect()->route('dashboard', ['id' => $user->id]);
         }
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+        return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
     }
 
 
@@ -54,7 +65,6 @@ class AuthController extends Controller
 
 
     public function register(Request $request){
-
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
@@ -65,24 +75,16 @@ class AuthController extends Controller
             'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
 
+        $user = User::create($validatedData);
 
-        $user = new User();
-        $user->first_name = $validatedData['firstname'];
-        $user->last_name = $validatedData['lastname'];
-        // $user->dob = $validatedData['date_of_birth'];
-        $user->email = $validatedData['email'];
-        $user->password = $validatedData['password'];
-
-        $user->save();
-
-        return redirect('/welcome')->with('success', 'User created successfully.');
+        if ($user) {
+            Auth::login($user);
+            return redirect()->route('dashboard', ['id' => $user->id]);
+        } else {
+            return back();
+        }
     }
 
-
-    public function dashboard($id){
-
-        return view('index');
-    }
     function forgetPassword(){
         return view('Authentication/forget-password');
     }
