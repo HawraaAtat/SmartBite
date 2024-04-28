@@ -336,7 +336,7 @@
                   <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
                     <div class="offcanvas-header">
                       <h5 class="offcanvas-title" id="offcanvasTopLabel">Filter</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cancel">
                         <i class="icon feather icon-x"></i>
                       </button>
                     </div>
@@ -610,15 +610,15 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-sm btn-danger light" style="margin-right: 3px;" data-bs-dismiss="offcanvas">Close</button>
-                      <button type="button" class="btn btn-sm btn-primary">Save changes</button>
-                    </div>
+                                <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                            </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Featured Beverages -->
+            <!-- Recommended recipes -->
             <div class="title-bar">
-              <h5 class="title">Featured Beverages</h5>
+              <h5 class="title">Recommended recipes</h5>
               <a href="products.html">More</a>
             </div>
             <ul class="featured-list">
