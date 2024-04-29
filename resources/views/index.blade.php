@@ -33,6 +33,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -636,9 +637,10 @@
                             </div>
                             <div class="dz-content">
                                 <div class="dz-head">
-                                <h6 class="title">
-                                    <a href="product-detail.html">{{$result['title']}}</a>
-                                </h6>
+                                  <h6 class="title" style=" display: flex;align-items: center;">
+                                      <a href="product-detail.html" style="margin-right: 10px;">{{$result['title']}}</a>
+                                  </h6>
+                                  <i class="fa-regular fa-heart favorite"></i>
                                 </div>
                                 {{-- <ul class="dz-meta">
                                 <li class="dz-price flex-1">$12.6</li>
@@ -710,5 +712,22 @@
     <script src="{{ asset('assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}"></script>
     <!-- Swiper -->
     <script src="{{ asset('index.js') }}"></script>
+    <script>
+      $(document).ready(function(){
+    // Add click event handler to the heart icon
+        $('.favorite').click(function(){
+          if ($(this).css('color') === '#04764E') {
+            $(this).removeClass('fa-solid fa-heart');
+            $(this).addClass('fa-regular fa-heart');
+            $(this).css('color', 'black');
+          } else {
+            $(this).removeClass('fa-regular fa-heart');
+            $(this).addClass('fa-solid fa-heart');
+            $(this).css('color', 'red');
+
+          }
+        });
+      });
+    </script>
   </body>
 </html>
