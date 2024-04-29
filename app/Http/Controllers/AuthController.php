@@ -69,7 +69,8 @@ class AuthController extends Controller
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'confirmed', 'min:6'],
+            'password' => ['required', 'string', 'min:6'],
+            'password_confirmation' => ['required', 'string', 'min:6', 'same:password'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
             'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'boolean'],
@@ -92,7 +93,7 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'email' => 'required|email|exists:users',
+            'email' => ['required', 'email', 'exists:users'],
         ]);
 
         // Check if email already exists in the password_reset_tokens table
@@ -134,9 +135,10 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'email' => 'required|email|exists:users',
-            'password' => 'required|string|confirmed',
-            'token' => 'required',
+            'email' => ['required', 'email', 'exists:users'],
+            'password' => ['required', 'string', 'min:6'],
+            'password_confirmation' => ['required', 'string', 'min:6', 'same:password'],
+            'token' => ['required'],
         ]);
 
 

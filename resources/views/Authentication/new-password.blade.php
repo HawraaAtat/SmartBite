@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
     <!-- Title -->
 	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
 
@@ -11,7 +11,7 @@
 	<meta name="author" content="DexignZone">
 	<meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">   
+	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
 
 	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
 
@@ -33,18 +33,18 @@
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/app-logo/favicon.png') }}">
-    
+
 	<!-- Globle Stylesheets -->
-    
+
 	<!-- Stylesheets -->
     <link rel="stylesheet" class="main-css" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    
+
     <!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 
-</head>   
+</head>
 <body>
 <div class="page-wrapper">
 	<!-- Preloader -->
@@ -85,36 +85,57 @@
 					<form class="m-b30" action="{{ route('reset.password.post') }}" method="POST">
 						@csrf
 						@method('POST')
-						<input type="text" hidden value="{{$token}}" name="token"> 
+						<input type="text" hidden value="{{$token}}" name="token">
 						<div class="mb-4">
 							<label class="form-label" for="name">Email</label>
 							<div class="input-group input-mini input-lg">
-								<input type="email" id="email" class="form-control" name="email" >
+								<input type="email" id="email" class="form-control" name="email" value="{{old('email')}}">
 							</div>
+                            @error('email')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
 						</div>
                         <div class="mb-4">
 							<label class="form-label" for="password">Password</label>
 							<div class="input-group input-mini input-lg">
 								<input type="password" id="password" class="form-control" name="password" >
 							</div>
+                            @error('password')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
 						</div>
                         <div class="mb-4">
-							<label class="form-label" for="password_confirmation">Password</label>
+							<label class="form-label" for="password_confirmation">Confirm Password</label>
 							<div class="input-group input-mini input-lg">
-								<input  type="password" id="password" class="form-control" name="password_confirmation" >
+								<input  ype="password" id="password" class="form-control" name="password_confirmation" >
 							</div>
+                            @error('password_confirmation')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
 						</div>
 						<button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Submit</button>
 					</form>
 					<div class="text-center account-footer">
-						
-				</div>	
+
+				</div>
 			</div>
         </div>
-	</main>	
+	</main>
 	<!-- Main Content End  -->
-    
-    
+
+
 </div>
 <!--**********************************
     Scripts
