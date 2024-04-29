@@ -337,289 +337,288 @@
                   <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
                     <div class="offcanvas-header">
                       <h5 class="offcanvas-title" id="offcanvasTopLabel">Filter</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cancel">
                         <i class="icon feather icon-x"></i>
                       </button>
                     </div>
                     <div class="offcanvas-body">
                       <div class="row" id="contentArea">
                         <div class="col-12">
+                            <form id="filterForm" action="{{ route('dashboard')}}" method="GET">
+                                <div class="card-header"></div>
+                                    <div class="card-body">
+                                    <div class="accordion accordion-primary" id="accordion-one">
+                                        <div class="accordion-item">
+                                        <div class="accordion-header collapsed " id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseTwo" aria-expanded="true" role="button">
+                                            <span class="accordion-header-icon"></span>
+                                            <span class="accordion-header-text">Cuisine</span>
+                                            <span class="accordion-header-indicator"></span>
+                                        </div>
+                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                                            <div class="accordion-body-text">
+                                            <div class="row">
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <label class="radio-label">African<input type="checkbox" name="cuisine[]" value="African">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Asian<input type="checkbox" name="cuisine[]" value="Asian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">American<input type="checkbox" name="cuisine[]" value="American">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">British<input type="checkbox" name="cuisine[]" value="British">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Cajun<input type="checkbox" name="cuisine[]" value="Cajun">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Caribbean<input type="checkbox" name="cuisine[]" value="Caribbean">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Chinese<input type="checkbox" name="cuisine[]"  value="Chinese">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Eastern European<input type="checkbox" name="cuisine[]" value="Eastern European">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">European<input type="checkbox" name="cuisine[]" value="European">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <label class="radio-label">French<input type="checkbox" name="cuisine[]" value="French">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">German<input type="checkbox" name="cuisine[]"  value="German">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Greek<input type="checkbox" name="cuisine[]" value="Greek">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Indian<input type="checkbox" name="cuisine[]" value="Indian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Irish<input type="checkbox" name="cuisine[]" value="Irish">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Italian<input type="checkbox" name="cuisine[]" value="Italian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Japanese<input type="checkbox" name="cuisine[]" value="Japanese">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Jewish<input type="checkbox" name="cuisine[]" value="Jewish">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    </label>
+                                                    <label class="radio-label">Korean<input type="checkbox" name="cuisine[]" value="Korean">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
 
-                            <div class="card-header"></div>
-                            <div class="card-body">
-                              <div class="accordion accordion-primary" id="accordion-one">
-                                <div class="accordion-item">
-                                  <div class="accordion-header collapsed " id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-controls="collapseTwo" aria-expanded="true" role="button">
-                                    <span class="accordion-header-icon"></span>
-                                    <span class="accordion-header-text">Cuisine</span>
-                                    <span class="accordion-header-indicator"></span>
-                                  </div>
-                                  <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-                                    <div class="accordion-body-text">
-                                      <div class="row">
-                                        <div class="column">
-                                          <div class="radio square-radio">
-
-                                            <label class="radio-label">African <input type="checkbox" checked="checked" value="African">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Asian <input type="checkbox" value="Asian">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">American <input type="checkbox" value="American">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">British <input type="checkbox" value="British">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Cajun <input type="checkbox" value="Cajun">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Caribbean <input type="checkbox" value="Caribbean">
-                                              <span class="checkmark"></span>
-                                            </label>
-											<label class="radio-label">Chinese <input type="checkbox"  value="Chinese">
-                                              <span class="checkmark"></span>
-                                            </label>
-											<label class="radio-label">Eastern European <input type="checkbox" value="Eastern European">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">European <input type="checkbox" value="European">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
+                                                    <label class="radio-label">Latin American<input type="checkbox" name="cuisine[]" value="Latin American">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Mediterranean<input type="checkbox" name="cuisine[]" value="Mediterranean">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Mexican<input type="checkbox" name="cuisine[]" value="Mexican">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Middle Eastern<input type="checkbox" name="cuisine[]" value="Middle Eastern">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Nordic<input type="checkbox" name="cuisine[]" value="Nordic">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    </label>
+                                                    <label class="radio-label">Southern<input type="checkbox" name="cuisine[]" value="Southern">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Spanish<input type="checkbox" name="cuisine[]" value="Spanish">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Thai<input type="checkbox" name="cuisine[]" value="Thai">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    </label>
+                                                    <label class="radio-label">Vietnamese<input type="checkbox" name="cuisine[]" value="Vietnamese">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <label class="radio-label">French <input type="checkbox" value="French">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">German <input type="checkbox"  value="German">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Greek <input type="checkbox" value="Greek">
-                                              <span class="checkmark"></span>
-                                            </label>
-											<label class="radio-label">Indian <input type="checkbox" value="Indian">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Irish <input type="checkbox" value="Irish">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Italian <input type="checkbox" value="Italian">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Japanese <input type="checkbox" value="Japanese">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Jewish <input type="checkbox" value="Jewish">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            </label>
-                                            <label class="radio-label">Korean <input type="checkbox" value="Korean">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-
-                                            <label class="radio-label">Latin American <input type="checkbox" value="Latin American">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Mediterranean<input type="checkbox" value="Mediterranean">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Mexican<input type="checkbox" value="Mexican">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Middle Eastern<input type="checkbox" value="Middle Eastern">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Nordic<input type="checkbox" value="Nordic">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            </label>
-                                            <label class="radio-label">Southern<input type="checkbox" value="Southern">
-                                              <span class="checkmark"></span>
-                                            </label>
-											<label class="radio-label">Spanish<input type="checkbox" value="Spanish">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Thai<input type="checkbox" value="Thai">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            </label>
-                                            <label class="radio-label">Vietnamese<input type="checkbox" value="Vietnamese">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
-                                        </div>
-                                      </div>
                                     </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion accordion-primary" id="accordion-two">
-                                <div class="accordion-item">
-                                  <div class="accordion-header collapsed " id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo" role="button" aria-expanded="true">
-                                    <span class="accordion-header-text">Diet</span>
-                                    <span class="accordion-header-indicator"></span>
-                                  </div>
-                                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
-                                    <div class="accordion-body-text">
-                                      <div class="row">
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-                                            <label class="radio-label">Gluten Free <input type="checkbox" value="">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Ketogenic <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Vegetarian <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Lacto-Vegetarian <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
+                                    <div class="accordion accordion-primary" id="accordion-two">
+                                        <div class="accordion-item">
+                                        <div class="accordion-header collapsed " id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo" role="button" aria-expanded="true">
+                                            <span class="accordion-header-text">Diet</span>
+                                            <span class="accordion-header-indicator"></span>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-                                            <label class="radio-label">Ovo-Vegetarian <input type="checkbox" checked="checked" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Vegan <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Pescetarian <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Paleo <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
+                                            <div class="accordion-body-text">
+                                            <div class="row">
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Gluten Free<input type="checkbox" name="diet[]" value="Gluten Free">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Ketogenic<input type="checkbox" name="diet[]" value="Ketogenic">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Vegetarian<input type="checkbox" name="diet[]" value="Vegetarian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Lacto-Vegetarian<input type="checkbox" name="diet[]" value="Lacto-Vegetarian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Ovo-Vegetarian<input type="checkbox" name="diet[]" value="Ovo-Vegetarian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Vegan<input type="checkbox" name="diet[]" value="Vegan">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Pescetarian<input type="checkbox" name="diet[]" value="Pescetarian">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Paleo<input type="checkbox" name="diet[]" value="Paleo">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Primal<input type="checkbox" name="diet[]" value="Primal">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Low FODMAP<input type="checkbox" name="diet[]" value="Low FODMAP">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Whole30<input type="checkbox" name="diet[]" value="Whole30">
+                                                    <span class="checkmark"></span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-                                            <label class="radio-label">Primal <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Low FODMAP <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Whole30 <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                          </div>
                                         </div>
-                                      </div>
                                     </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="accordion accordion-primary" id="accordion-three">
-                                <div class="accordion-item">
-                                  <div class="accordion-header collapsed " id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree" role="button" aria-expanded="true">
-                                    <span class="accordion-header-text">Type</span>
-                                    <span class="accordion-header-indicator"></span>
-                                  </div>
-                                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
-                                    <div class="accordion-body-text">
-                                      <div class="row">
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-                                            <label class="radio-label">Main Course <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Side Dish <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Dessert <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Appetizer <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Salad <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
+                                    <div class="accordion accordion-primary" id="accordion-three">
+                                        <div class="accordion-item">
+                                        <div class="accordion-header collapsed " id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree" role="button" aria-expanded="true">
+                                            <span class="accordion-header-text">Type</span>
+                                            <span class="accordion-header-indicator"></span>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-                                            <label class="radio-label">Bread <input type="checkbox" checked="checked" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Breakfast <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Soup <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Beverage <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                            <label class="radio-label">Sauce <input type="checkbox" name="radio1">
-                                              <span class="checkmark"></span>
-                                            </label>
-                                          </div>
+                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
+                                            <div class="accordion-body-text">
+                                            <div class="row">
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Main Course<input type="checkbox" name="radio1[]" typeue="main course">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Side Dish<input type="checkbox" name="radio1[]" typeue="side dish">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Dessert<input type="checkbox" name="type[]" value="dessert">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Appetizer<input type="checkbox" name="type[]" value="appetizer">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Salad<input type="checkbox" name="type[]" value="salad">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Bread<input type="checkbox" name="type[]" value="bread">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Breakfast<input type="checkbox" name="type[]" value="breakfast">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Soup<input type="checkbox" name="type[]" value="soup">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Beverage<input type="checkbox" name="type[]" value="beverage">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-label">Sauce<input type="checkbox" name="type[]" value="sauce">
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                </div>
+                                                <div class="column">
+                                                <div class="radio square-radio">
+                                                    <h4>
+                                                    <br>
+                                                    </h4>
+                                                    <label class="radio-label">Marinade<input type="checkbox" name="type[]" value="marinade">
+                                                <span class="checkmark"></span>
+                                                </label>
+                                                <label class="radio-label">Fingerfood<input type="checkbox" name="type[]" value="fingerfood">
+                                                <span class="checkmark"></span>
+                                                </label>
+                                                <label class="radio-label">Snack<input type="checkbox" name="type[]" value="snack">
+                                                <span class="checkmark"></span>
+                                                </label>
+                                                <label class="radio-label">Drink<input type="checkbox" name="type[]" value="drink">
+                                                <span class="checkmark"></span>
+                                                </label>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="column">
-                                          <div class="radio square-radio">
-                                            <h4>
-                                              <br>
-                                            </h4>
-											<label class="radio-label">Marinade <input type="checkbox" name="radio1">
-                                          <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-label">Fingerfood <input type="checkbox" name="radio1">
-                                          <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-label">Snack <input type="checkbox" name="radio1">
-                                          <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-label">Drink <input type="checkbox" name="radio1">
-                                          <span class="checkmark"></span>
-                                        </label>
-                                          </div>
                                         </div>
-                                      </div>
                                     </div>
-                                  </div>
+                                    </div>
                                 </div>
-                              </div>
+                             </div>
                             </div>
-                          </div>
-
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-sm btn-danger light" style="margin-right: 3px;" data-bs-dismiss="offcanvas">Close</button>
-                      <button type="button" class="btn btn-sm btn-primary">Save changes</button>
-                    </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-danger light" style="margin-right: 3px;" data-bs-dismiss="offcanvas">Close</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                            </div>
+                        </form>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Featured Beverages -->
+            <!-- Recommended recipes -->
             <div class="title-bar">
-              <h5 class="title">Featured Beverages</h5>
+              <h5 class="title">Recommended recipes</h5>
               <a href="products.html">More</a>
             </div>
             <ul class="featured-list">

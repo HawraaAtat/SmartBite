@@ -52,5 +52,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
 
 //////////////////////////
-Route::get('dashboard/{id}', [RecipeController::class, 'dashboard'])->name('dashboard');
+Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard');
 //////////////////////////
