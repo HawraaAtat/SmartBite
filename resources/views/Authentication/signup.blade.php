@@ -150,6 +150,28 @@
                             </div>
                         </div>
 
+                        <div class="mb-4">
+                            <div class="input-group input-mini input-lg">
+                                <select class="form-control select2" name="allergies[]" multiple>
+                                    <option value=""></option>
+                                    @foreach(App\Enums\AllergensEnum::getValues() as $allergen)
+                                        <option value="{{ $allergen }}">{{ $allergen }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="input-group input-mini input-lg">
+                                <select class="form-control select2" name="chronic_diseases[]" multiple>
+                                    <option value=""></option>
+                                    @foreach(App\Enums\ChronicDiseasesEnum::getValues() as $diseases)
+                                        <option value="{{ $diseases }}">{{ App\Enums\ChronicDiseasesEnum::getDescription($diseases) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
 						<button type="submit"  class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</button>
 					</form>
 					<div class="text-center">

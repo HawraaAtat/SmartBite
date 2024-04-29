@@ -9,10 +9,11 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RecipeController extends Controller
 {
-    public function dashboard($id){
+    public function dashboard(Request $request){
         $activities = [
                  "activities" => [],
                  "goals" => [
@@ -378,7 +379,7 @@ class RecipeController extends Controller
              } else {
                  $breath_rate = "anormal";
                  $heart_rate = "anormal";
-                 $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce', 'mayonnaise', 'sunflower oil', 'vegetable oil', 'corn oil'));
+                 $exclude_ingredients = array_merge($exclude_ingredients, array('coffee','hot sauce','mayonnaise','sunflower oil','vegetable oil','corn oil'));
                  $maxAlcohol = 0;
              }
 
@@ -467,7 +468,7 @@ class RecipeController extends Controller
          }
              $exclude_ingredients[]= 'coffee';
              $unique_ingredients_array = array_unique($exclude_ingredients);
-             $exclude_ingredients = implode(', ', $unique_ingredients_array);
+             $exclude_ingredients = implode(',', $unique_ingredients_array);
 
              //spoonacular
              $client = new Client(); // same client here and  in fitbit api. we move this up
@@ -475,7 +476,7 @@ class RecipeController extends Controller
              $params = [
                  'query' => [
                      'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
-                     'query' => request()->input('query'),
+                     'query' => implode(',', request()->input('query')),
                      'maxCalories' => $allowed_calories ?? null ,
                      'minVitaminC' => $minVitaminC ?? null,
                      'minZinc' => $minZinc ?? null,
@@ -486,9 +487,9 @@ class RecipeController extends Controller
                      // 'addRecipeNutrition' => true,
                      'sort' => 'healthiness' ?? null,
                      'maxAlcohol' => $maxAlcohol ?? null,
-                     'cuisine' => request()->input('cuisine'),
-                     'type' => request()->input('type'),
-                     'diet' => request()->input('diet'),
+                     'cuisine' => implode(',', request()->input('cuisine')),
+                     'type' => implode(',', request()->input('type')),
+                     'diet' => implode(',', request()->input('diet')),
                      'intolerances' => $intolerances ?? null,
                      'maxSaturatedFat' => $maxSaturatedFat ?? null,
                      'maxSodium' => $maxSodium ?? null,
