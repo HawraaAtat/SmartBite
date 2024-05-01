@@ -121,7 +121,7 @@ class AuthController extends Controller
                 $message -> subject("Reset Password");
             });
 
-            return redirect()->route('forget.password')->with('success','We have sent an email to reset the password');
+            return redirect()->back()->with('success', 'Email sent successfully.');
         }
     }
 
