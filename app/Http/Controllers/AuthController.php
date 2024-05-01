@@ -89,6 +89,7 @@ class AuthController extends Controller
     function forgetPassword(){
         return view('Authentication/forget-password');
     }
+
     Public function forgetPasswordPost(Request $request)
     {
 
@@ -124,12 +125,9 @@ class AuthController extends Controller
         }
     }
 
-
-
     function resetPassword($token){
         return view("Authentication/new-password", compact('token'));
     }
-
 
     public function resetPasswordPost(Request $request)
     {
@@ -160,5 +158,4 @@ class AuthController extends Controller
         // Redirect to the login page with a success message
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
-
 }
