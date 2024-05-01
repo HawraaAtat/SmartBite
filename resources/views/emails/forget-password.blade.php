@@ -48,7 +48,8 @@
 <body>
     <div class="container">
         <h1>Reset Password</h1>
-        <p>Click the link below to reset your password:</p>
+        <p>Please click the link below to reset your password.</p>
+        <p style="color: red;">This link will expire after 15 minutes for security reasons.</p>
         <a class="btn mb-2 me-2 btn-icon icon-start w-100 btn-primary" href="{{ route('reset.password', $token) }}">RESET PASSWORD</a>
     </div>
 </body>

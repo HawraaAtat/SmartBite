@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Enums\ChronicDiseasesEnum;
 use App\Models\MealHistory;
 use GuzzleHttp\Client;
-
-
-
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -90,42 +88,60 @@ class AuthController extends Controller
         return view('Authentication/forget-password');
     }
 
-    Public function forgetPasswordPost(Request $request)
+    public function forgetPasswordPost(Request $request)
     {
-
         $request->validate([
             'email' => ['required', 'email', 'exists:users'],
         ]);
 
-        // Check if email already exists in the password_reset_tokens table
         $existingToken = DB::table('password_reset_tokens')
                           ->where('email', $request->email)
                           ->first();
 
         if ($existingToken) {
-            // Handle the case where the email already exists
-            // For example, update the existing token or return an error message
-            return redirect()->back()->withErrors(['email' => 'Password reset request already sent.']);
-        } else {
-            // Email does not exist, generate a new token and insert it into the table
-            $token = Str::random(64);
-            DB::table('password_reset_tokens')->insert([
-                'email' => $request->email,
-                'token' => $token,
-                'created_at' => Carbon::now()
-            ]);
+            $createdAt = Carbon::parse($existingToken->created_at);
+            $expirationTime = Carbon::now()->subMinutes(15); // 15 minutes ago
 
-            // Send the password reset email
-            Mail::send("emails.forget-password", ['token'=> $token], function ($message) use ($request){
-                $message -> to($request->email);
-                $message -> subject("Reset Password");
-            });
-
-            return redirect()->back()->with('success', 'Email sent successfully.');
+            if ($createdAt->greaterThan($expirationTime)) {
+                // If the token is not expired, do not send the email
+                return redirect()->back()->withErrors(['email' => 'Password reset request already sent.']);
+            }
         }
+
+        // Generate a new token and proceed with sending the email
+        $token = Str::random(64);
+        $createdAt = Carbon::now();
+
+        DB::table('password_reset_tokens')->updateOrInsert(
+            ['email' => $request->email],
+            ['token' => $token, 'created_at' => $createdAt]
+        );
+
+        Mail::send("emails.forget-password", ['token'=> $token], function ($message) use ($request){
+            $message->to($request->email);
+            $message->subject("Reset Password");
+        });
+
+        return redirect()->back()->with('success', 'Email sent successfully.');
     }
 
-    function resetPassword($token){
+    public function resetPassword($token){
+        // Check if the token is expired
+        $passwordResetToken = DB::table('password_reset_tokens')
+            ->where('token', $token)
+            ->first();
+
+        if (!$passwordResetToken) {
+            return redirect()->route('forget.password')->with('error', 'Invalid or expired password reset token.');
+        }
+
+        $createdAt = Carbon::parse($passwordResetToken->created_at);
+        $expirationTime = Carbon::now()->subMinutes(15); // 15 minutes ago
+
+        if ($createdAt->lessThan($expirationTime)) {
+            return redirect()->route('forget.password')->with('error', 'Password reset token has expired.');
+        }
+
         return view("Authentication/new-password", compact('token'));
     }
 
