@@ -115,7 +115,7 @@
                         <div class="mb-4">
 							<label class="form-label" for="password_confirmation">Confirm Password</label>
 							<div class="input-group input-mini input-lg">
-								<input  ype="password" id="password" class="form-control" name="password_confirmation" >
+								<input type="password" id="password" class="form-control" name="password_confirmation" >
 							</div>
                             @error('password_confirmation')
                                 <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
