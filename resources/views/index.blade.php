@@ -33,6 +33,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
   </head>
   <body>
@@ -359,7 +360,7 @@
                                         <div class="column">
                                           <div class="radio square-radio">
 
-                                            <label class="radio-label">African <input type="checkbox" checked="checked" value="African">
+                                            <label class="radio-label">African <input type="checkbox"  value="African">
                                               <span class="checkmark"></span>
                                             </label>
                                             <label class="radio-label">Asian <input type="checkbox" value="Asian">
@@ -492,7 +493,7 @@
                                             <h4>
                                               <br>
                                             </h4>
-                                            <label class="radio-label">Ovo-Vegetarian <input type="checkbox" checked="checked" name="radio1">
+                                            <label class="radio-label">Ovo-Vegetarian <input type="checkbox" name="radio1">
                                               <span class="checkmark"></span>
                                             </label>
                                             <label class="radio-label">Vegan <input type="checkbox" name="radio1">
@@ -562,7 +563,7 @@
                                             <h4>
                                               <br>
                                             </h4>
-                                            <label class="radio-label">Bread <input type="checkbox" checked="checked" name="radio1">
+                                            <label class="radio-label">Bread <input type="checkbox" name="radio1">
                                               <span class="checkmark"></span>
                                             </label>
                                             <label class="radio-label">Breakfast <input type="checkbox" name="radio1">
@@ -616,43 +617,140 @@
                 </div>
               </div>
             </div>
-            <!-- Featured Beverages -->
             <div class="title-bar">
-              <h5 class="title">Featured Beverages</h5>
-              <a href="products.html">More</a>
+              <h5 class="title">Recipes</h5>
+             
             </div>
             <ul class="featured-list">
-                @if(isset($recipes['results']) && count($recipes['results']) > 0)
-                    @foreach ($recipes['results'] as $result)
-                        <li>
-                            <div class="dz-card list">
-                            <div class="dz-media">
-                                <a href="product-detail.html">
-                                <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
-                                </a>
-                                </a>
-                                {{-- <div class="dz-rating">
-                                <i class="fa fa-star"></i> 3.8
-                                </div> --}}
-                            </div>
-                            <div class="dz-content">
-                                <div class="dz-head">
-                                <h6 class="title">
-                                    <a href="product-detail.html">{{$result['title']}}</a>
-                                </h6>
-                                </div>
-                                {{-- <ul class="dz-meta">
-                                <li class="dz-price flex-1">$12.6</li>
-                                <li class="dz-pts">50 Pts</li>
-                                </ul> --}}
-                            </div>
-                            </div>
-                        </li>
-                    @endforeach
-                @else
-                    <p>No recipes found.</p>
-                @endif
-            </ul>
+            @if($recipes->count() > 0)
+        @foreach ($recipes as $result)
+            <li>
+                <div class="dz-card list">
+                    <div class="dz-media">
+                        <a href="product-detail.html">
+                            <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
+                        </a>
+                    </div>
+                    <div class="dz-content">
+                        <div class="dz-head">
+                            <h6 class="title" style="display: flex; align-items: center;">
+                                <a href="product-detail.html" style="margin-right: 10px;">{{ $result['title'] }}</a>
+                               
+                            </h6>
+                            @php
+                                    $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
+                                @endphp
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'green' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
+                                <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}"></i>
+
+                              </div>
+                    </div>
+                </div>
+            </li>
+        @endforeach
+    @else
+        <p>No recipes found.</p>
+    @endif
+</ul>
+{{ $recipes->links('pagination::bootstrap-4') }}
+
+
+<script>
+    document.querySelectorAll('.heart-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const recipeId = this.getAttribute('data-recipe-id');
+            const token = '{{ csrf_token() }}';
+
+            if (this.classList.contains('active')) {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.remove('active');
+                        this.style.color = 'black';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.add('active');
+                        this.style.color = 'green';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+
+    document.querySelectorAll('.book-icon').forEach(icon => {
+    icon.addEventListener('click', function() {
+        const recipeId = this.getAttribute('data-recipe-id');
+        const userId = '{{ auth()->id() }}'; // Get the authenticated user's ID
+        const token = '{{ csrf_token() }}';
+
+        fetch(`/meal-history/${userId}/${recipeId}`, { // Include both user ID and recipe ID in the URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+            },
+            body: JSON.stringify({
+                recipe_id: recipeId
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show fixed-bottom';
+                alertDiv.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                    </svg>
+                    <strong>Done! Recipe successfully added to your history!</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                        <span><i class="icon feather icon-x"></i></span>
+                    </button>
+                `;
+                document.body.appendChild(alertDiv);
+                
+                // Auto-dismiss the alert after 3 seconds
+                setTimeout(() => {
+                    alertDiv.classList.add('show');
+                    setTimeout(() => {
+                        alertDiv.remove();
+                    }, 5000);
+                }, 3000);
+            } else {
+                alert('Failed to store meal history');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+
+
+
+</script>
+
+
+
+
+
+
+
             <!-- Featured Beverages -->
           </div>
         </main>
@@ -660,16 +758,17 @@
         <!-- Menubar -->
         <div class="menubar-area footer-fixed">
           <div class="toolbar-inner menubar-nav">
-            <a href="index.html" class="nav-link active">
+            <a href="{{route('dashboard',Auth::user()->id)}}" class="nav-link active ">
               <i class="fi fi-rr-home"></i>
             </a>
-            <a href="wishlist.html" class="nav-link">
-              <i class="fi fi-rr-heart"></i>
-            </a>
+            <a href="{{ route('favorites.index', ['id' => Auth::user()->id]) }}" class="nav-link ">
+    <i class="fi fi-rr-heart"></i>
+</a>
+
             <a href="cart.html" class="nav-link">
               <i class="fi fi-rr-shopping-cart"></i>
             </a>
-            <a href="profile.html" class="nav-link">
+            <a href="{{route('profile',Auth::user()->id)}}" class="nav-link ">
               <i class="fi fi-rr-user"></i>
             </a>
           </div>
@@ -711,5 +810,7 @@
     <script src="{{ asset('assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}"></script>
     <!-- Swiper -->
     <script src="{{ asset('index.js') }}"></script>
+
+
   </body>
 </html>

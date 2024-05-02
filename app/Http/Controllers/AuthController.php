@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Broadcast;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -145,18 +144,47 @@ class AuthController extends Controller
             ->where('token', $request->token)
             ->first();
         if (!$passwordResetToken) {
-            // If the token is invalid or doesn't match the user's email, redirect back with an error
             return redirect()->route('forget.password')->with('error', 'Invalid password reset token.');
         }
 
-        // Update the user's password
         User::where('email', $request->email)->update(['password' => Hash::make($request->password)]);
-
-        // Delete the used token from the password_reset_tokens table
         DB::table('password_reset_tokens')->where('email', $request->email)->delete();
-
-        // Redirect to the login page with a success message
         return redirect('/welcome')->with('success', 'User created successfully.');
+    }
+
+    
+    public function profile($id){
+        $user = User::find($id);
+
+        return view('profile',compact('user'));
+    }
+
+    public function edit_profile($id){
+        $user = User::find($id);
+
+        return view('edit-profile',compact('user'));
+    }
+
+    public function update_profile(Request $request,$id){
+        $validatedData = $request->validate([
+            'first_name' => ['required', 'min:3'],
+            'last_name' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
+            'allergies' => ['nullable', 'array', new AllergensRule],
+            'ethical_meal_considerations' => ['nullable', 'boolean'],
+        ]);
+    
+        $user = User::findOrFail($id);
+        $user->fill($validatedData);
+    
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+    
+        $user->save();
+    
+        return redirect()->route('dashboard', ['id' => $user->id])->with('success', 'User information updated successfully.');
     }
 
 }
