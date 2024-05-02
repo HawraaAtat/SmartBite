@@ -34,7 +34,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken')->accessToken;
-            return redirect()->route('dashboard', ['id' => $user->id]);
+            return redirect()->route('dashboard');
         }
         return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
     }
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
         if ($user) {
             Auth::login($user);
-            return redirect()->route('dashboard', ['id' => $user->id]);
+            return redirect()->route('dashboard');
         } else {
             return back();
         }
