@@ -21,32 +21,27 @@ class FavoritesController extends Controller
     public function index(Request $request, $id)
     {
         
-        // Retrieve the authenticated user
         $user = Auth::user();
 
-        // Retrieve the IDs of recipes liked by the authenticated user
         $likedRecipeIds = Favorites::where('user_id', $user->id)->pluck('item_id')->toArray();
-        // Fetch recipes from Spoonacular API
         $client = new Client();
 
         $params = [
             'query' => [
-                'apiKey' => '4369cde01c844dcaabaea9400aa5745c',
-                // Add any other parameters you need for your query
-            ]
+                'apiKey' => env('API_KEY'),
+                ]
         ];
 
     
             $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch', $params);
-            dd("hellooo");
 
             if ($response->getStatusCode() == 200) {
 
                 $recipes = json_decode($response->getBody(), true);
-                dd($recipes);
                 $filteredRecipes = array_filter($recipes['results'], function ($recipe) use ($likedRecipeIds) {
                     return in_array($recipe['id'], $likedRecipeIds);
                 });
+
                 return view('favorites', compact('filteredRecipes'));
             }
     

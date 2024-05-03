@@ -475,19 +475,19 @@ class RecipeController extends Controller
 
              $params = [
                  'query' => [
-                     'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
-                     'query' => implode(',', request()->input('query')),
+                     'apiKey' => env('API_KEY'),
+
+                     'query' => request()->has('query') ? implode(',', request()->input('query')) : null,
                      'maxCalories' => $allowed_calories ?? null ,
                      'minVitaminC' => $minVitaminC ?? null,
                      'minZinc' => $minZinc ?? null,
                      'maxSpice' => $maxSpice ?? null,
                      'exclude_ingredients' => $exclude_ingredients ?? null,
-                  
                      'sort' => 'healthiness' ?? null,
                      'maxAlcohol' => $maxAlcohol ?? null,
-                     'cuisine' => implode(',', request()->input('cuisine')),
-                     'type' => implode(',', request()->input('type')),
-                     'diet' => implode(',', request()->input('diet')),
+                     'cuisine' => request()->has('cuisine') ? implode(',', request()->input('cuisine')) : null,
+                     'type' => request()->has('type') ? implode(',', request()->input('type')) : null,
+                     'diet' => request()->has('diet') ? implode(',', request()->input('diet')) : null,
                      'intolerances' => $intolerances ?? null,
                      'maxSaturatedFat' => $maxSaturatedFat ?? null,
                      'maxSodium' => $maxSodium ?? null,

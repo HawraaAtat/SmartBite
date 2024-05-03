@@ -639,7 +639,7 @@
                             @php
                                     $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
                                 @endphp
-                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'green' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
                                 <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}"></i>
 
                               </div>
@@ -686,7 +686,7 @@
                 .then(response => {
                     if (response.ok) {
                         this.classList.add('active');
-                        this.style.color = 'green';
+                        this.style.color = 'red';
                     }
                 })
                 .catch(error => console.error('Error:', error));
