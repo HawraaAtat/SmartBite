@@ -76,10 +76,14 @@
                             <label class="form-label" for="email">Email</label>
                             <div class="input-group input-mini input-lg">
                                 <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}">
-                                @error('email')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('email')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <div class="m-b30">
                             <label class="form-label" for="password">Password</label>
@@ -89,10 +93,14 @@
                                     <i class="icon feather icon-eye-off eye-close"></i>
                                     <i class="icon feather icon-eye eye-open"></i>
                                 </span>
-                                @error('password')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('password')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                         <button type="submit" class="btn btn-thin btn-lg w-100 btn-primary rounded-xl mb-3">Login</button>
                         <p class="form-text">Forgot Password? <a href="{{ route('forget.password') }}" class="link ms-2">Reset Password</a></p>

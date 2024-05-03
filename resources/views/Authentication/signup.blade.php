@@ -81,10 +81,14 @@
                             <label class="form-label" for="first_name">First Name</label>
                             <div class="input-group input-mini input-lg">
                                 <input type="text" id="first_name" class="form-control" name="first_name" value="{{ old('first_name') }}">
-                                @error('first_name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('first_name')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <!-- Last Name -->
@@ -92,10 +96,14 @@
                             <label class="form-label" for="last_name">Last Name</label>
                             <div class="input-group input-mini input-lg">
                                 <input type="text" id="last_name" class="form-control" name="last_name" value="{{ old('last_name') }}">
-                                @error('last_name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('last_name')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         {{-- <!-- Date of Birth -->
@@ -103,10 +111,14 @@
                             <label class="form-label" for="dob">Date Of Birth</label>
                             <div class="input-group input-mini input-lg">
                                 <input type="date" id="dob" class="form-control datepicker" name="date_of_birth" value="{{ old('date_of_birth') }}">
-                                @error('date_of_birth')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('date_of_birth')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div> --}}
 
                         <!-- Email -->
@@ -114,10 +126,14 @@
                             <label class="form-label" for="email">Email</label>
                             <div class="input-group input-mini input-lg">
                                 <input type="email" id="email" class="form-control" name="email" value="{{ old('email') }}">
-                                @error('email')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('email')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <!-- Password -->
@@ -129,10 +145,14 @@
                                     <i class="icon feather icon-eye-off eye-close"></i>
                                     <i class="icon feather icon-eye eye-open"></i>
                                 </span>
-                                @error('password')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('password')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <!-- Confirm Password -->
@@ -144,10 +164,14 @@
                                     <i class="icon feather icon-eye-off eye-close"></i>
                                     <i class="icon feather icon-eye eye-open"></i>
                                 </span>
-                                @error('password_confirmation')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
+                            @error('password_confirmation')
+                                <div class="alert alert-danger alert-dismissible alert-alt fade show" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">
@@ -176,6 +200,10 @@
 					</form>
 					<div class="text-center">
 						<p class="form-text">By tapping “Sign Up” you accept our <a href="javascript:void(0);" class="link">terms</a> and <a href="javascript:void(0);" class="link">condition</a></p>
+					</div>
+                    <div class="text-center account-footer">
+						<p class="text-light">Already have an account?</p>
+						<a href="{{ url('signin') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">SIGNIN TO YOUR ACCOUNT</a>
 					</div>
 				</div>
 			</div>
