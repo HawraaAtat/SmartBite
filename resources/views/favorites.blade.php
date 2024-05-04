@@ -95,9 +95,10 @@
                         </div>
                         <ul class="dz-meta">
                             <li>
-                                <a href="javascript:void(0);" class="item-bookmark active style-1">
-                                    <i class="feather icon-heart-on"></i>
-                                </a>
+							@php
+                                    $isFavorite = Auth::user()->favorites->contains('item_id', $recipe['id']);
+                                @endphp
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $recipe['id'] }}"></i>
                             </li>
                         </ul>
                     </div>
@@ -107,6 +108,46 @@
         </div>
     </div>
 </main>
+<script>
+    document.querySelectorAll('.heart-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const recipeId = this.getAttribute('data-recipe-id');
+            const token = '{{ csrf_token() }}';
+
+            if (this.classList.contains('active')) {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.remove('active');
+                        this.style.color = 'black';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.add('active');
+                        this.style.color = 'red';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+	</script>
 
 	<!-- Main Content End -->
 	
