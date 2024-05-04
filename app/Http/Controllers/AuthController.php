@@ -169,19 +169,22 @@ class AuthController extends Controller
     }
 
     
-    public function profile($id){
+    public function profile(){
+        $id= Auth::id();
         $user = User::find($id);
 
         return view('profile',compact('user'));
     }
 
-    public function edit_profile($id){
+    public function edit_profile(){
+        $id= Auth::id();
         $user = User::find($id);
 
         return view('edit-profile',compact('user'));
     }
 
-    public function update_profile(Request $request,$id){
+    public function update_profile(Request $request){
+        $id= Auth::id();
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],

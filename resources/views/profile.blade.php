@@ -53,7 +53,7 @@
 				<h4 class="title">Profile</h4>
 			</div>
 			<div class="right-content d-flex align-items-center gap-4">
-				<a href="{{route('edit-profile',$user->id)}}">
+				<a href="{{route('edit-profile')}}">
 					<svg enable-background="new 0 0 461.75 461.75" height="24" viewBox="0 0 461.75 461.75" width="24" xmlns="http://www.w3.org/2000/svg">
 						<path d="m23.099 461.612c2.479-.004 4.941-.401 7.296-1.177l113.358-37.771c3.391-1.146 6.472-3.058 9.004-5.587l226.67-226.693 75.564-75.541c9.013-9.016 9.013-23.63 0-32.645l-75.565-75.565c-9.159-8.661-23.487-8.661-32.645 0l-75.541 75.565-226.693 226.67c-2.527 2.53-4.432 5.612-5.564 9.004l-37.794 113.358c-4.029 12.097 2.511 25.171 14.609 29.2 2.354.784 4.82 1.183 7.301 1.182zm340.005-406.011 42.919 42.919-42.919 42.896-42.896-42.896zm-282.056 282.056 206.515-206.492 42.896 42.896-206.492 206.515-64.367 21.448z" fill="#4A3749"></path>
 					</svg>
@@ -164,17 +164,17 @@
 	<!-- Menubar -->
 	<div class="menubar-area footer-fixed">
           <div class="toolbar-inner menubar-nav">
-            <a href="{{route('dashboard',Auth::user()->id)}}" class="nav-link ">
+            <a href="{{route('dashboard')}}" class="nav-link ">
               <i class="fi fi-rr-home"></i>
             </a>
-			<a href="{{ route('favorites.index', ['id' => Auth::user()->id]) }}" class="nav-link ">
+			<a href="{{ route('favorites.index') }}" class="nav-link ">
     <i class="fi fi-rr-heart"></i>
 </a>
 
-            <a href="cart.html" class="nav-link">
-              <i class="fi fi-rr-shopping-cart"></i>
+<a href="{{route('meal-history.index')}}" class="nav-link">
+<i class="fi fi-rr-document"></i>
             </a>
-            <a href="{{route('profile',Auth::user()->id)}}" class="nav-link active">
+            <a href="{{route('profile')}}" class="nav-link active">
               <i class="fi fi-rr-user"></i>
             </a>
           </div>

@@ -18,8 +18,9 @@ class FavoritesController extends Controller
 
 
 
-     public function index(Request $request, $id)
+     public function index(Request $request)
      {
+        $id= Auth::id();
          $user = Auth::user();
      
          $likedRecipeIds = Favorites::where('user_id', $user->id)->pluck('item_id')->toArray();
