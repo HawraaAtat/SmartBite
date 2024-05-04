@@ -18,36 +18,31 @@ class FavoritesController extends Controller
 
 
 
-    public function index(Request $request, $id)
-    {
-        
-        $user = Auth::user();
+     public function index(Request $request, $id)
+     {
+         $user = Auth::user();
+     
+         $likedRecipeIds = Favorites::where('user_id', $user->id)->pluck('item_id')->toArray();
+     
+         $client = new Client();
+         $filteredRecipes = [];
+         foreach ($likedRecipeIds as $recipeId) {
+             $params = [
+                 'query' => [
+                     'apiKey' => env('API_KEY'),
+                 ]
+             ];
+     
+             $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$recipeId.'/information', $params);
+     
+             if ($response->getStatusCode() == 200) {
+                 $recipe = json_decode($response->getBody(), true);
+                 $filteredRecipes[] = $recipe;
+             }
+         }
 
-        $likedRecipeIds = Favorites::where('user_id', $user->id)->pluck('item_id')->toArray();
-        $client = new Client();
-
-        $params = [
-            'query' => [
-                'apiKey' => env('API_KEY'),
-                ]
-        ];
-
-    
-            $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch', $params);
-
-            if ($response->getStatusCode() == 200) {
-
-                $recipes = json_decode($response->getBody(), true);
-                $filteredRecipes = array_filter($recipes['results'], function ($recipe) use ($likedRecipeIds) {
-                    return in_array($recipe['id'], $likedRecipeIds);
-                });
-
-                return view('favorites', compact('filteredRecipes'));
-            }
-    
-        // If no recipes were found, return an empty view
-        return view('favorites')->with('filteredRecipes', []);
-    }
+         return view('favorites', compact('filteredRecipes'));
+     }
 
     
     

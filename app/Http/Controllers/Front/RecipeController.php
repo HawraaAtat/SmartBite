@@ -484,6 +484,7 @@ class RecipeController extends Controller
                      'maxSpice' => $maxSpice ?? null,
                      'exclude_ingredients' => $exclude_ingredients ?? null,
                      'sort' => 'healthiness' ?? null,
+                     'addRecipeNutrition' => true,
                      'maxAlcohol' => $maxAlcohol ?? null,
                      'cuisine' => request()->has('cuisine') ? implode(',', request()->input('cuisine')) : null,
                      'type' => request()->has('type') ? implode(',', request()->input('type')) : null,

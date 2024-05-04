@@ -621,7 +621,7 @@
              
             </div>
             <ul class="featured-list">
-            @if($recipes->count() > 0)
+    @if($recipes->count() > 0)
         @foreach ($recipes as $result)
             <li>
                 <div class="dz-card list">
@@ -631,18 +631,22 @@
                         </a>
                     </div>
                     <div class="dz-content">
-                        <div class="dz-head">
-                            <h6 class="title" style="display: flex; align-items: center;">
-                                <a href="product-detail.html" style="margin-right: 10px;">{{ $result['title'] }}</a>
-                               
-                            </h6>
-                            @php
+                        <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <h6 class="title" style="margin: 0;">
+                                    <a href="product-detail.html">{{ $result['title'] }}</a>
+                                </h6>
+                                {{ $result['nutrition']['nutrients'][0]['amount']}} calories
+
+                            </div>
+                            <div>
+                                @php
                                     $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
                                 @endphp
                                 <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
-                                <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}"></i>
-
-                              </div>
+                                <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}" data-calories="{{ $result['id'] }}"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -651,6 +655,8 @@
         <p>No recipes found.</p>
     @endif
 </ul>
+
+
 {{ $recipes->links('pagination::bootstrap-4') }}
 
 

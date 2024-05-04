@@ -91,7 +91,7 @@
                     <div class="dz-info">
                         <div class="dz-head">
                             <h6 class="title">{{ $recipe['title'] }}</a></h6>
-                            <
+                            
                         </div>
                         <ul class="dz-meta">
                             <li>
