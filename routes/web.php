@@ -72,3 +72,5 @@ Route::middleware('auth')->get('/meal-history', [MealHistoryController::class, '
 
 
 //////////////////////////
+Route::get('edit-password', [AuthController::class, 'edit_password'])->name('edit-password');
+Route::post('update-password/{id}', [AuthController::class, 'update_password'])->name('update-password');

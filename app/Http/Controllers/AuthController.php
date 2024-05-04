@@ -17,6 +17,9 @@ use App\Enums\ChronicDiseasesEnum;
 use App\Models\MealHistory;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
 
 class AuthController extends Controller
 {
@@ -72,6 +75,8 @@ class AuthController extends Controller
             'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
+        unset($validatedData['password_confirmation']);
+
 
         $user = User::create($validatedData);
 
@@ -183,6 +188,15 @@ class AuthController extends Controller
         return view('edit-profile',compact('user'));
     }
 
+
+    public function edit_password(){
+        $id= Auth::id();
+        $user = User::find($id);
+
+        return view('edit-password',compact('user'));
+    }
+
+
     public function update_profile(Request $request){
         $id= Auth::id();
         $validatedData = $request->validate([
@@ -203,7 +217,35 @@ class AuthController extends Controller
     
         $user->save();
     
-        return redirect()->route('dashboard', ['id' => $user->id])->with('success', 'User information updated successfully.');
+        return redirect()->route('profile')->with('success', 'User information updated successfully.');
+    }
+    public function update_password(Request $request, $id)
+{
+    $user = User::findOrFail($id);
+
+    // Validate request data
+    $validator = Validator::make($request->all(), [
+        'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+            if (!Hash::check($value, $user->password)) {
+                $fail('The current password is incorrect.');
+            }
+        }],
+        'new_password' => 'required|string|min:8|confirmed',
+    ], [
+        'new_password.required' => 'Please enter a new password.',
+        'new_password.min' => 'The new password must be at least :min characters.',
+        'new_password.confirmed' => 'The new password confirmation does not match.',
+    ]);
+
+    // If validation fails, throw ValidationException
+    if ($validator->fails()) {
+        throw new ValidationException($validator);
     }
 
+    // Update the user's password
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return redirect()->route('profile')->with('success', 'Password updated successfully.');
+}
 }
