@@ -198,7 +198,7 @@ class AuthController extends Controller
 
 
     public function update_profile(Request $request){
-        $id= Auth::id();
+        $id = Auth::id();
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
@@ -207,6 +207,8 @@ class AuthController extends Controller
             'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
+    
+        $validatedData['ethical_meal_considerations'] = $request->has('ethical_meal_considerations') ? true : false;
     
         $user = User::findOrFail($id);
         $user->fill($validatedData);
@@ -219,11 +221,10 @@ class AuthController extends Controller
     
         return redirect()->route('profile')->with('success', 'User information updated successfully.');
     }
+    
     public function update_password(Request $request, $id)
 {
     $user = User::findOrFail($id);
-
-    // Validate request data
     $validator = Validator::make($request->all(), [
         'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
             if (!Hash::check($value, $user->password)) {

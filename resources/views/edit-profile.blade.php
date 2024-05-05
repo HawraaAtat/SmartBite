@@ -134,6 +134,14 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="mb-4">
+    <label class="form-label">Halal</label>
+    <div class="form-check form-switch">
+        <input class="form-check-input" id="flexSwitchCheckDefault" name="ethical_meal_considerations" type="checkbox" value="1" {{ $user->ethical_meal_considerations == 1 ? 'checked' : '' }}>
+        <label class="form-check-label" for="flexSwitchCheckDefault">Yes</label>
+    </div>
+</div>
 						<button type="submit"  class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Update</button>
 					</form>
 				</div>

@@ -175,6 +175,8 @@
                         </div>
 
                         <div class="mb-4">
+                        <label class="form-label" >Intolerances</label>
+
                             <div class="input-group input-mini input-lg">
                                 <select class="form-control select2" name="allergies[]" multiple>
                                     <option value=""></option>
@@ -186,6 +188,8 @@
                         </div>
 
                         <div class="mb-4">
+                        <label class="form-label" >Chronic Diseases</label>
+
                             <div class="input-group input-mini input-lg">
                                 <select class="form-control select2" name="chronic_diseases[]" multiple>
                                     <option value=""></option>
@@ -195,6 +199,17 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="mb-4">
+    <label class="form-label">Halal</label>
+    <div class="form-check form-switch">
+        <input class="form-check-input" id="flexSwitchCheckDefault" name="ethical_meal_considerations" type="checkbox" value="1">
+        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+    </div>
+</div>
+
+
+                        </div>
+
 
 						<button type="submit"  class="btn btn-thin btn-lg w-100 btn-primary rounded-xl">Sign up</button>
 					</form>

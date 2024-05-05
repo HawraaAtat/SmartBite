@@ -44,11 +44,7 @@
 	<!-- Header -->
 	<header class="header header-fixed">
 		<div class="header-content">
-			<div class="left-content">
-				<a href="javascript:void(0);" class="back-btn">
-					<i class="feather icon-arrow-left"></i>
-				</a>
-			</div>
+			
 			<div class="mid-content">
 				<h4 class="title">Profile</h4>
 			</div>
@@ -155,13 +151,7 @@
     </div>
 	<div class="dz-content">
     <p class="sub-title">Halal</p>
-    @if($user->intolerances != null && count($user->intolerances) > 0)
-        @foreach($user->intolerances as $intolerance)
-            <h6 class="title">Yes</h6>
-        @endforeach
-    @else
-        <h6 class="title">No</h6>
-    @endif
+    <h6 class="title">{{ $user->ethical_meal_considerations == 1 ? 'Yes' : 'No' }}</h6>
 </div>
 </li>
 

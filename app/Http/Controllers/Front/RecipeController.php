@@ -396,7 +396,7 @@ class RecipeController extends Controller
 
              $allergies = $user->allergies ?? null;
              $intolerances = isset($allergies) ? implode(", ", $allergies) : null;
-
+             $exclude_ingredients = [];
              $ethicalMealConsiderations = $user->ethical_meal_considerations;
 
              if ($ethicalMealConsiderations == 1)
