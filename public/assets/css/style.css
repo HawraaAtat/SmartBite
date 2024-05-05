@@ -18419,7 +18419,7 @@ label input {
   .loader-screen::after {
     content: "";
     position: absolute;
-    background: var(--rgba-primary-8);
+    background: white;
     backdrop-filter: blur(0px);
     top: 0;
     left: 50%;
@@ -18448,7 +18448,7 @@ label input {
     margin-bottom: 10px;
     z-index: 2;
     font-size: 12px;
-    color: #fff;
+    color: black;
     text-transform: uppercase; }
 
 .main-screen {

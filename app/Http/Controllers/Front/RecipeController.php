@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class RecipeController extends Controller
 {
@@ -184,9 +184,9 @@ class RecipeController extends Controller
              $most_recent_temperature = $most_recent_measurement['value'];
 
 
-             $most_recent_temperature = 39;
+             $most_recent_temperature = 36;
              if ($most_recent_temperature > 38) {
-                 $minVitaminC = 50;
+                 $minVitaminC = 10;
                  $minZinc = 15;
                  $maxSpice = 0;
                  $exclude_ingredients[] = 'coffee';
@@ -379,7 +379,7 @@ class RecipeController extends Controller
              } else {
                  $breath_rate = "anormal";
                  $heart_rate = "anormal";
-                 $exclude_ingredients = array_merge($exclude_ingredients, array('coffee','hot sauce','mayonnaise','sunflower oil','vegetable oil','corn oil'));
+                 $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce'));
                  $maxAlcohol = 0;
              }
 
@@ -396,7 +396,7 @@ class RecipeController extends Controller
 
              $allergies = $user->allergies ?? null;
              $intolerances = isset($allergies) ? implode(", ", $allergies) : null;
-
+             $exclude_ingredients = [];
              $ethicalMealConsiderations = $user->ethical_meal_considerations;
 
              if ($ethicalMealConsiderations == 1)
@@ -475,39 +475,48 @@ class RecipeController extends Controller
 
              $params = [
                  'query' => [
-                     'apiKey' => '859e8cec5b5d44828d1d9f917929bfe4',
-                     'query' => implode(',', request()->input('query')),
+                     'apiKey' => env('API_KEY'),
+
+                     'query' => request()->has('query') ? implode(',', request()->input('query')) : null,
                      'maxCalories' => $allowed_calories ?? null ,
                      'minVitaminC' => $minVitaminC ?? null,
                      'minZinc' => $minZinc ?? null,
                      'maxSpice' => $maxSpice ?? null,
                      'exclude_ingredients' => $exclude_ingredients ?? null,
-                     // 'instructionsRequired' => true,
-                     // 'fillIngredients' => true,
-                     // 'addRecipeNutrition' => true,
                      'sort' => 'healthiness' ?? null,
+                     'addRecipeNutrition' => true,
                      'maxAlcohol' => $maxAlcohol ?? null,
-                     'cuisine' => implode(',', request()->input('cuisine')),
-                     'type' => implode(',', request()->input('type')),
-                     'diet' => implode(',', request()->input('diet')),
+                     'cuisine' => request()->has('cuisine') ? implode(',', request()->input('cuisine')) : null,
+                     'type' => request()->has('type') ? implode(',', request()->input('type')) : null,
+                     'diet' => request()->has('diet') ? implode(',', request()->input('diet')) : null,
                      'intolerances' => $intolerances ?? null,
                      'maxSaturatedFat' => $maxSaturatedFat ?? null,
                      'maxSodium' => $maxSodium ?? null,
                      'maxSugar' => $maxSugar ?? null,
                      'maxCaffeine' => $maxCaffeine ?? null,
                      'maxCholesterol' => $maxCholesterol ?? null,
+                     'number' => '200',
                  ]
              ];
 
              $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch',$params);
 
              if($response->getStatusCode() == 200){
-                 $recipes = json_decode($response->getBody(), true);
-                 return view('index', compact('recipes'));
-             } else {
-                 $errorMessage = "Error: " . $response->getStatusCode();
-                 return view('index')->with('error', $errorMessage);
-             }
+                $recipes = json_decode($response->getBody(), true);
+            
+                $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                $itemCollection = collect($recipes['results']);
+                $perPage = 10;
+                $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+                $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+            
+                $paginatedItems->setPath(request()->url());
+            
+                return view('index', ['recipes' => $paginatedItems]);
+            } else {
+                $errorMessage = "Error: " . $response->getStatusCode();
+                return view('index')->with('error', $errorMessage);
+            }
          }
 
 }

@@ -616,44 +616,146 @@
                 </div>
               </div>
             </div>
-            <!-- Recommended recipes -->
             <div class="title-bar">
-              <h5 class="title">Recommended recipes</h5>
-              <a href="products.html">More</a>
+              <h5 class="title">Recipes</h5>
+             
             </div>
             <ul class="featured-list">
-                @if(isset($recipes['results']) && count($recipes['results']) > 0)
-                    @foreach ($recipes['results'] as $result)
-                        <li>
-                            <div class="dz-card list">
-                            <div class="dz-media">
-                                <a href="product-detail.html">
-                                <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
-                                </a>
-                                </a>
-                                {{-- <div class="dz-rating">
-                                <i class="fa fa-star"></i> 3.8
-                                </div> --}}
+    @if($recipes->count() > 0)
+        @foreach ($recipes as $result)
+            <li>
+                <div class="dz-card list">
+                    <div class="dz-media">
+                        <a href="product-detail.html">
+                            <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
+                        </a>
+                    </div>
+                    <div class="dz-content">
+                        <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1;">
+                                <h6 class="title" style="margin: 0;">
+                                    <a href="product-detail.html">{{ $result['title'] }}</a>
+                                </h6>
+                                {{ $result['nutrition']['nutrients'][0]['amount']}} calories
                             </div>
-                            <div class="dz-content">
-                                <div class="dz-head">
-                                  <h6 class="title" style=" display: flex;align-items: center;">
-                                      <a href="product-detail.html" style="margin-right: 10px;">{{$result['title']}}</a>
-                                  </h6>
-                                  <i class="fa-regular fa-heart favorite"></i>
-                                </div>
-                                {{-- <ul class="dz-meta">
-                                <li class="dz-price flex-1">$12.6</li>
-                                <li class="dz-pts">50 Pts</li>
-                                </ul> --}}
+                            <div>
+                                @php
+                                    $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
+                                @endphp
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
+                                <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}" data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
                             </div>
-                            </div>
-                        </li>
-                    @endforeach
-                @else
-                    <p>No recipes found.</p>
-                @endif
-            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        @endforeach
+    @else
+        <p>No recipes found.</p>
+    @endif
+</ul>
+
+
+{{ $recipes->links('pagination::bootstrap-4') }}
+
+
+<script>
+    document.querySelectorAll('.heart-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const recipeId = this.getAttribute('data-recipe-id');
+            const token = '{{ csrf_token() }}';
+
+            if (this.classList.contains('active')) {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.remove('active');
+                        this.style.color = 'black';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                fetch(`/favorites/${recipeId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        this.classList.add('active');
+                        this.style.color = 'red';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+
+    document.querySelectorAll('.book-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const recipeId = this.getAttribute('data-recipe-id');
+            const userId = '{{ auth()->id() }}'; // Get the authenticated user's ID
+            const token = '{{ csrf_token() }}';
+            const calories = this.getAttribute('data-calories'); // Get the calories from the data attribute
+
+            fetch(`/meal-history/${userId}/${recipeId}`, { // Include both user ID and recipe ID in the URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                },
+                body: JSON.stringify({
+                    recipe_id: recipeId,
+                    calories: calories // Pass the calories value in the request body
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success alert-dismissible fade show fixed-bottom';
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        <strong>Done! Recipe successfully added to your history!</strong> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+                    document.body.appendChild(alertDiv);
+                    
+                    // Auto-dismiss the alert after 3 seconds
+                    setTimeout(() => {
+                        alertDiv.classList.add('show');
+                        setTimeout(() => {
+                            alertDiv.remove();
+                        }, 5000);
+                    }, 3000);
+                } else {
+                    alert('Failed to store meal history');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
             <!-- Featured Beverages -->
           </div>
         </main>
@@ -661,16 +763,17 @@
         <!-- Menubar -->
         <div class="menubar-area footer-fixed">
           <div class="toolbar-inner menubar-nav">
-            <a href="index.html" class="nav-link active">
+            <a href="{{route('dashboard')}}" class="nav-link active ">
               <i class="fi fi-rr-home"></i>
             </a>
-            <a href="wishlist.html" class="nav-link">
-              <i class="fi fi-rr-heart"></i>
+            <a href="{{ route('favorites.index') }}" class="nav-link ">
+    <i class="fi fi-rr-heart"></i>
+</a>
+
+            <a href="{{route('meal-history.index')}}" class="nav-link">
+            <i class="fi fi-rr-document"></i>
             </a>
-            <a href="cart.html" class="nav-link">
-              <i class="fi fi-rr-shopping-cart"></i>
-            </a>
-            <a href="profile.html" class="nav-link">
+            <a href="{{route('profile')}}" class="nav-link ">
               <i class="fi fi-rr-user"></i>
             </a>
           </div>
@@ -712,22 +815,7 @@
     <script src="{{ asset('assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js') }}"></script>
     <!-- Swiper -->
     <script src="{{ asset('index.js') }}"></script>
-    <script>
-      $(document).ready(function(){
-    // Add click event handler to the heart icon
-        $('.favorite').click(function(){
-          if ($(this).css('color') === '#04764E') {
-            $(this).removeClass('fa-solid fa-heart');
-            $(this).addClass('fa-regular fa-heart');
-            $(this).css('color', 'black');
-          } else {
-            $(this).removeClass('fa-regular fa-heart');
-            $(this).addClass('fa-solid fa-heart');
-            $(this).css('color', 'red');
 
-          }
-        });
-      });
-    </script>
+
   </body>
 </html>
