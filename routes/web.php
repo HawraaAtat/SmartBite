@@ -34,43 +34,36 @@ Route::get('/signin', function () {
 Route::get('/test', function () {
     return view('test');
 });
+////////////////////////////////////////////Authentication
 
-
+Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('signup', [AuthController::class, 'create_user'])->name('signup');
 Route::post('register', [AuthController::class, 'register'])->name('register');
-Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+////////////////////////////////////////////Forget Password
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
 Route::post('/forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
 Route::get('/forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password');
 Route::post('/reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
 
-Route::get('login', [AuthController::class, 'login'])->name('login');
 
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::get('create-user', [AuthController::class, 'create_user'])->name('user.create');
-Route::post('register', [AuthController::class, 'register'])->name('register');
-Route::get('edit-profile', [AuthController::class, 'edit_profile'])->name('edit-profile');
+////////////////////////////////////////////User Profile
+Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 Route::post('update-profile/{id}', [AuthController::class, 'update_profile'])->name('update-profile');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
+Route::get('edit-profile', [AuthController::class, 'edit_profile'])->name('edit-profile');
 
-//////////////////////////
+////////////////////////////////////////////Dashboard
 Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard');
-
-
+////////////////////////////////////////////Like Recipes
 Route::middleware('auth')->post('/favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
 Route::middleware('auth')->delete('/favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
 Route::middleware('auth')->get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index');
 
-
+////////////////////////////////////////////Meal History
 Route::post('/meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
 Route::middleware('auth')->get('/meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index');
-
-
-
-//////////////////////////
+////////////////////////////////////////////Reset Password From Profile
 Route::get('edit-password', [AuthController::class, 'edit_password'])->name('edit-password');
 Route::post('update-password/{id}', [AuthController::class, 'update_password'])->name('update-password');
