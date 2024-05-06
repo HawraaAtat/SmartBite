@@ -503,20 +503,23 @@ class RecipeController extends Controller
 
              if($response->getStatusCode() == 200){
                 $recipes = json_decode($response->getBody(), true);
-            
+                
                 $currentPage = LengthAwarePaginator::resolveCurrentPage();
                 $itemCollection = collect($recipes['results']);
                 $perPage = 10;
                 $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
                 $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
-            
+                
+                $paginatedItems->appends(request()->query());
+                
                 $paginatedItems->setPath(request()->url());
-            
+                
                 return view('index', ['recipes' => $paginatedItems]);
             } else {
                 $errorMessage = "Error: " . $response->getStatusCode();
                 return view('index')->with('error', $errorMessage);
             }
+            
          }
 
 }
