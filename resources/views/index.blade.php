@@ -203,19 +203,118 @@
         <!-- Main Content Start -->
         <main class="page-content bg-white p-b60">
           <div class="container">
+             <!-- Overlay Card -->
+            <div class="swiper overlay-swiper1">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                <div class="dz-card-overlay style-1">
+                    <div class="dz-media">
+                    <a href="product-detail.html">
+                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
+                    </a>
+                    </div>
+                    <div class="dz-info">
+                    <h6 class="title">
+                        <a href="product-detail.html">Creamy Ice Coffe</a>
+                    </h6>
+                    <ul class="dz-meta">
+                        <li class="dz-price">
+                        <sup>$</sup>5.8 <del>$9.9</del>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="swiper-slide">
+                <div class="dz-card-overlay style-1">
+                    <div class="dz-media">
+                    <a href="product-detail.html">
+                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
+                    </a>
+                    </div>
+                    <div class="dz-info">
+                    <h6 class="title">
+                        <a href="product-detail.html">Chocolate Coffee</a>
+                    </h6>
+                    <ul class="dz-meta">
+                        <li class="dz-price">
+                        <sup>$</sup>5.8 <del>$9.9</del>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="swiper-slide">
+                <div class="dz-card-overlay style-1">
+                    <div class="dz-media">
+                    <a href="product-detail.html">
+                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
+                    </a>
+                    </div>
+                    <div class="dz-info">
+                    <h6 class="title">
+                        <a href="product-detail.html">Creamy Ice Coffe</a>
+                    </h6>
+                    <ul class="dz-meta">
+                        <li class="dz-price">
+                        <sup>$</sup>5.8 <del>$9.9</del>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="swiper-slide">
+                <div class="dz-card-overlay style-1">
+                    <div class="dz-media">
+                    <a href="product-detail.html">
+                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
+                    </a>
+                    </div>
+                    <div class="dz-info">
+                    <h6 class="title">
+                        <a href="product-detail.html">Chocolate Coffee</a>
+                    </h6>
+                    <ul class="dz-meta">
+                        <li class="dz-price">
+                        <sup>$</sup>5.8 <del>$9.9</del>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                <div class="swiper-slide">
+                <div class="dz-card-overlay style-1">
+                    <div class="dz-media">
+                    <a href="product-detail.html">
+                        <img src="{{ asset('assets/images/featured/pic2.png') }}" alt="image">
+                    </a>
+                    </div>
+                    <div class="dz-info">
+                    <h6 class="title">
+                        <a href="product-detail.html">Chocolate Coffee</a>
+                    </h6>
+                    <ul class="dz-meta">
+                        <li class="dz-price">
+                        <sup>$</sup>5.8 <del>$9.9</del>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
             <form id="filterForm" action="{{ route('dashboard')}}" method="GET">
                 <!-- SearchBox -->
                 <div class="search-box">
-                <div class="input-group input-radius input-rounded input-lg">
-                    <input type="text" name="search" placeholder="Search beverages or foods" class="form-control">
-                    <span class="input-group-text">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.65925 19.3102C11.8044 19.3103 13.8882 18.5946 15.5806 17.2764L21.9653 23.6612C22.4423 24.1218 23.2023 24.1086 23.663 23.6316C24.1123 23.1664 24.1123 22.4288 23.663 21.9635L17.2782 15.5788C20.5491 11.3682 19.7874 5.30333 15.5769 2.03243C11.3663 -1.23848 5.30149 -0.476799 2.03058 3.73374C-1.24033 7.94428 -0.478646 14.0092 3.73189 17.2801C5.42702 18.5969 7.51269 19.3113 9.65925 19.3102ZM4.52915 4.5273C7.36245 1.69394 11.9561 1.69389 14.7895 4.5272C17.6229 7.3605 17.6229 11.9542 14.7896 14.7876C11.9563 17.6209 7.36261 17.621 4.52925 14.7877C4.5292 14.7876 4.5292 14.7876 4.52915 14.7876C1.69584 11.9749 1.67915 7.39794 4.49181 4.56464C4.50424 4.55216 4.51667 4.53973 4.52915 4.5273Z" fill="#C9C9C9" />
-                    </svg>
-                    </span>
+                    <div class="input-group input-radius input-rounded input-lg">
+                        <input type="text" name="search" placeholder="Search beverages or foods" class="form-control">
+                        <span class="input-group-text">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.65925 19.3102C11.8044 19.3103 13.8882 18.5946 15.5806 17.2764L21.9653 23.6612C22.4423 24.1218 23.2023 24.1086 23.663 23.6316C24.1123 23.1664 24.1123 22.4288 23.663 21.9635L17.2782 15.5788C20.5491 11.3682 19.7874 5.30333 15.5769 2.03243C11.3663 -1.23848 5.30149 -0.476799 2.03058 3.73374C-1.24033 7.94428 -0.478646 14.0092 3.73189 17.2801C5.42702 18.5969 7.51269 19.3113 9.65925 19.3102ZM4.52915 4.5273C7.36245 1.69394 11.9561 1.69389 14.7895 4.5272C17.6229 7.3605 17.6229 11.9542 14.7896 14.7876C11.9563 17.6209 7.36261 17.621 4.52925 14.7877C4.5292 14.7876 4.5292 14.7876 4.52915 14.7876C1.69584 11.9749 1.67915 7.39794 4.49181 4.56464C4.50424 4.55216 4.51667 4.53973 4.52915 4.5273Z" fill="#C9C9C9" />
+                        </svg>
+                        </span>
+                    </div>
                 </div>
-                </div>
-                <!-- SearchBox -->
                 <!-- Filters -->
                 <div class="row" id="contentArea">
                     <div class="col-12">
@@ -502,108 +601,7 @@
                     </div>
                     </div>
                 </div>
-                <!-- Filters -->
             </form>
-            <!-- Overlay Card -->
-            <div class="swiper overlay-swiper1">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <div class="dz-card-overlay style-1">
-                    <div class="dz-media">
-                      <a href="product-detail.html">
-                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
-                      </a>
-                    </div>
-                    <div class="dz-info">
-                      <h6 class="title">
-                        <a href="product-detail.html">Creamy Ice Coffe</a>
-                      </h6>
-                      <ul class="dz-meta">
-                        <li class="dz-price">
-                          <sup>$</sup>5.8 <del>$9.9</del>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="dz-card-overlay style-1">
-                    <div class="dz-media">
-                      <a href="product-detail.html">
-                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
-                      </a>
-                    </div>
-                    <div class="dz-info">
-                      <h6 class="title">
-                        <a href="product-detail.html">Chocolate Coffee</a>
-                      </h6>
-                      <ul class="dz-meta">
-                        <li class="dz-price">
-                          <sup>$</sup>5.8 <del>$9.9</del>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="dz-card-overlay style-1">
-                    <div class="dz-media">
-                      <a href="product-detail.html">
-                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
-                      </a>
-                    </div>
-                    <div class="dz-info">
-                      <h6 class="title">
-                        <a href="product-detail.html">Creamy Ice Coffe</a>
-                      </h6>
-                      <ul class="dz-meta">
-                        <li class="dz-price">
-                          <sup>$</sup>5.8 <del>$9.9</del>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="dz-card-overlay style-1">
-                    <div class="dz-media">
-                      <a href="product-detail.html">
-                        <img src="{{ asset('assets/images/featured/pic1.png') }}" alt="image">
-                      </a>
-                    </div>
-                    <div class="dz-info">
-                      <h6 class="title">
-                        <a href="product-detail.html">Chocolate Coffee</a>
-                      </h6>
-                      <ul class="dz-meta">
-                        <li class="dz-price">
-                          <sup>$</sup>5.8 <del>$9.9</del>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div class="dz-card-overlay style-1">
-                    <div class="dz-media">
-                      <a href="product-detail.html">
-                        <img src="{{ asset('assets/images/featured/pic2.png') }}" alt="image">
-                      </a>
-                    </div>
-                    <div class="dz-info">
-                      <h6 class="title">
-                        <a href="product-detail.html">Chocolate Coffee</a>
-                      </h6>
-                      <ul class="dz-meta">
-                        <li class="dz-price">
-                          <sup>$</sup>5.8 <del>$9.9</del>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <!-- Page Content Start -->
             <style>
               .column {
@@ -622,140 +620,134 @@
               <h5 class="title">Recipes</h5>
             </div>
             <ul class="featured-list">
-    @if($recipes->count() > 0)
-        @foreach ($recipes as $result)
-            <li>
-                <div class="dz-card list">
-                    <div class="dz-media">
-                        <a href="product-detail.html">
-                            <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
-                        </a>
-                    </div>
-                    <div class="dz-content">
-                        <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="flex: 1;">
-                                <h6 class="title" style="margin: 0;">
-                                    <a href="product-detail.html">{{ $result['title'] }}</a>
-                                </h6>
-                                {{ $result['nutrition']['nutrients'][0]['amount']}} calories
+                @if($recipes->count() > 0)
+                    @foreach ($recipes as $result)
+                        <li>
+                            <div class="dz-card list">
+                                <div class="dz-media">
+                                    <a href="product-detail.html">
+                                        <img src="{{ $result['image'] }}" alt="{{ $result['title'] }}">
+                                    </a>
+                                </div>
+                                <div class="dz-content">
+                                    <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="flex: 1;">
+                                            <h6 class="title" style="margin: 0;">
+                                                <a href="product-detail.html">{{ $result['title'] }}</a>
+                                            </h6>
+                                            {{ $result['nutrition']['nutrients'][0]['amount']}} calories
+                                        </div>
+                                        <div>
+                                            @php
+                                                $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
+                                            @endphp
+                                            <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
+                                            <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}" data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                @php
-                                    $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
-                                @endphp
-                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
-                                <i class="book-icon fa fa-book" style="margin-left: 10px; cursor: pointer;" data-recipe-id="{{ $result['id'] }}" data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        @endforeach
-    @else
-        <p>No recipes found.</p>
-    @endif
-</ul>
+                        </li>
+                    @endforeach
+                @else
+                    <p>No recipes found.</p>
+                @endif
+            </ul>
 
 
-{{ $recipes->links('pagination::bootstrap-4') }}
+            {{ $recipes->links('pagination::bootstrap-4') }}
 
 
-<script>
-    document.querySelectorAll('.heart-icon').forEach(icon => {
-        icon.addEventListener('click', function() {
-            const recipeId = this.getAttribute('data-recipe-id');
-            const token = '{{ csrf_token() }}';
+            <script>
+                document.querySelectorAll('.heart-icon').forEach(icon => {
+                    icon.addEventListener('click', function() {
+                        const recipeId = this.getAttribute('data-recipe-id');
+                        const token = '{{ csrf_token() }}';
 
-            if (this.classList.contains('active')) {
-                fetch(`/favorites/${recipeId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        this.classList.remove('active');
-                        this.style.color = 'black';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-                fetch(`/favorites/${recipeId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        this.classList.add('active');
-                        this.style.color = 'red';
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-            }
-        });
-    });
+                        if (this.classList.contains('active')) {
+                            fetch(`/favorites/${recipeId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    this.classList.remove('active');
+                                    this.style.color = 'black';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                        } else {
+                            fetch(`/favorites/${recipeId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    this.classList.add('active');
+                                    this.style.color = 'red';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                        }
+                    });
+                });
 
-    document.querySelectorAll('.book-icon').forEach(icon => {
-        icon.addEventListener('click', function() {
-            const recipeId = this.getAttribute('data-recipe-id');
-            const userId = '{{ auth()->id() }}'; // Get the authenticated user's ID
-            const token = '{{ csrf_token() }}';
-            const calories = this.getAttribute('data-calories'); // Get the calories from the data attribute
+                document.querySelectorAll('.book-icon').forEach(icon => {
+                    icon.addEventListener('click', function() {
+                        const recipeId = this.getAttribute('data-recipe-id');
+                        const userId = '{{ auth()->id() }}'; // Get the authenticated user's ID
+                        const token = '{{ csrf_token() }}';
+                        const calories = this.getAttribute('data-calories'); // Get the calories from the data attribute
 
-            fetch(`/meal-history/${userId}/${recipeId}`, { // Include both user ID and recipe ID in the URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token
-                },
-                body: JSON.stringify({
-                    recipe_id: recipeId,
-                    calories: calories // Pass the calories value in the request body
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-success alert-dismissible fade show fixed-bottom';
-                    alertDiv.innerHTML = `
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                        <strong>Done! Recipe successfully added to your history!</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                            <span><i class="icon feather icon-x"></i></span>
-                        </button>
-                    `;
-                    document.body.appendChild(alertDiv);
+                        fetch(`/meal-history/${userId}/${recipeId}`, { // Include both user ID and recipe ID in the URL
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': token
+                            },
+                            body: JSON.stringify({
+                                recipe_id: recipeId,
+                                calories: calories // Pass the calories value in the request body
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                const alertDiv = document.createElement('div');
+                                alertDiv.className = 'alert alert-success alert-dismissible fade show fixed-bottom';
+                                alertDiv.innerHTML = `
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                    </svg>
+                                    <strong>Done! Recipe successfully added to your history!</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                        <span><i class="icon feather icon-x"></i></span>
+                                    </button>
+                                `;
+                                document.body.appendChild(alertDiv);
 
-                    // Auto-dismiss the alert after 3 seconds
-                    setTimeout(() => {
-                        alertDiv.classList.add('show');
-                        setTimeout(() => {
-                            alertDiv.remove();
-                        }, 5000);
-                    }, 3000);
-                } else {
-                    alert('Failed to store meal history');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-
-
-</script>
+                                // Auto-dismiss the alert after 3 seconds
+                                setTimeout(() => {
+                                    alertDiv.classList.add('show');
+                                    setTimeout(() => {
+                                        alertDiv.remove();
+                                    }, 5000);
+                                }, 3000);
+                            } else {
+                                alert('Failed to store meal history');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    });
+                });
 
 
-
-
-
-
+            </script>
 
             <!-- Featured Beverages -->
           </div>
