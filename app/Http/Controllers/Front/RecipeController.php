@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\MealHistory;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -476,7 +475,7 @@ class RecipeController extends Controller
         $params = [
             'query' => [
                 'apiKey' => env('API_KEY'),
-                'query' => request()->has('query') ? implode(',', request()->input('query')) : null,
+                'query' => request()->has('search') ? request()->input('search') : null,
                 'maxCalories' => $allowed_calories ?? null,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
