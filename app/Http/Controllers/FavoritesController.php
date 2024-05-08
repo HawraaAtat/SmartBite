@@ -15,16 +15,12 @@ class FavoritesController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-
-
      public function index(Request $request)
      {
-        $id= Auth::id();
          $user = Auth::user();
-     
+
          $likedRecipeIds = Favorites::where('user_id', $user->id)->pluck('item_id')->toArray();
-     
+
          $client = new Client();
          $filteredRecipes = [];
          foreach ($likedRecipeIds as $recipeId) {
@@ -33,9 +29,9 @@ class FavoritesController extends Controller
                      'apiKey' => env('API_KEY'),
                  ]
              ];
-     
+
              $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$recipeId.'/information', $params);
-     
+
              if ($response->getStatusCode() == 200) {
                  $recipe = json_decode($response->getBody(), true);
                  $filteredRecipes[] = $recipe;
@@ -45,14 +41,10 @@ class FavoritesController extends Controller
          return view('favorites', compact('filteredRecipes'));
      }
 
-    
-    
-
     public function store(Request $request, $recipeId)
     {
         $user = Auth::user();
 
-       
         // Store the favorite
         $favorite = new Favorites();
         $favorite->user_id = $user->id;
@@ -78,34 +70,4 @@ class FavoritesController extends Controller
 
         return response()->json(['message' => 'Recipe not found in favorites.'], 404);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Favorites $favorites)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Favorites $favorites)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Favorites $favorites)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-
-    
 }

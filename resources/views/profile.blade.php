@@ -27,10 +27,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
-  </head> 
+</head>
 <body>
 <div class="page-wrapper">
-    
+
 	<!-- Preloader -->
 	<div id="preloader">
 		<div class="loader">
@@ -40,11 +40,11 @@
 		</div>
 	</div>
     <!-- Preloader end-->
-	
+
 	<!-- Header -->
 	<header class="header header-fixed">
 		<div class="header-content">
-			
+
 			<div class="mid-content">
 				<h4 class="title">Profile</h4>
 			</div>
@@ -58,7 +58,7 @@
 		</div>
 	</header>
 	<!-- Header -->
-	
+
 	<!-- Main Content Start -->
 	<main class="page-content space-top p-b40">
 		<div class="container pt-0">
@@ -79,9 +79,9 @@
     </a>
 </span>
 
-		
+
     </li>
-	
+
 
     <li style="margin-bottom: 20px;"> <!-- Add margin-bottom to create space -->
         <div class="icon-bx">
@@ -165,7 +165,7 @@
 </span>
 					</ul>
 					<div style="display: flex; justify-content: center;">
-                  
+
                 </div>
 		</div>
 	</main>
@@ -190,7 +190,7 @@
           </div>
         </div>
 	<!-- Menubar -->
-</div>  
+</div>
 <!--**********************************
     Scripts
 ***********************************-->
