@@ -1,53 +1,7 @@
-<!DOCTYPE html>
-<!-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> -->
-    <head>
-         <!-- Title -->
-	<title>Smart Bite</title>
-
-<!-- Meta -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="author" content="DexignZone">
-<meta name="robots" content="index, follow">
-
-
-
-<meta name="format-detection" content="telephone=no">
-
-
-
-<meta name="twitter:image" content="https://ombe.dexignzone.com/xhtml/social-image.png">
-<meta name="twitter:card" content="summary_large_image">
-
-<!-- Mobile Specific -->
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
-
-<!-- Favicons Icon -->
-<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-
-<!-- Stylesheets -->
-<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-<!-- Animte -->
-<link rel="stylesheet" href="assets/vendor/wow/css/libs/animate.css">
-
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
-
-
-        <!-- PWA  -->
-<meta name="theme-color" content="#ffffff"/>
-<link rel="apple-touch-icon" href="{{ asset('logo.PNG') }}">
-<link rel="manifest" href="{{ asset('/manifest.json') }}">
-    </head>
-   
-    <body>
+@include('layout.header')
 <div class="page-wrapper">
-    
-    <!-- splash -->        
+
+    <!-- splash -->
 	<div class="loader-screen" id="splashscreen" >
 		<img src="assets/images/preloader/circle1.png" class="circle-1" alt="">
 		<img src="assets/images/preloader/circle2.png" class="circle-2" alt="">
@@ -55,9 +9,9 @@
 		<div class="loader">
     <img src="{{ asset('assets/logo.png') }}" class="wow zoomInDown" style="width: 25em; height: 25em;" alt="">
 </div>
-		
+
 		</div>
-		<p class="version wow bounceIn" data-wow-duration="0.5s" data-wow-delay="1s">Version 1.0</p>                                        
+		<p class="version wow bounceIn" data-wow-duration="0.5s" data-wow-delay="1s">Version 1.0</p>
 	</div>
 	<!-- splash-->
 
@@ -118,7 +72,7 @@
 		</div>
 	</main>
     <!-- Welcome End -->
-    
+
 </div>
 <!--**********************************
     Scripts
@@ -132,7 +86,7 @@
 <script src="assets/js/custom.js"></script>
 <script>
     new WOW().init();
-    
+
     var wow = new WOW(
     {
       boxClass:     'wow',       // animated element css class (default is wow)
