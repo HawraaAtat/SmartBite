@@ -19,10 +19,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::post('/register', [SessionController::class, 'register']);
-Route::post('/login', [SessionController::class, 'login']);
-Route::group([ 'middleware' => ['auth:sanctum'] ], function () {
-    Route::post('/logout', [SessionController::class, 'logout']);
-    Route::post('/recipes', [RecipeController::class, 'index']);
-});
