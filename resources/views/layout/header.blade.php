@@ -12,16 +12,16 @@
     <meta name="description" content="Smart Bite is a customized food recommendation app that provides personalized meal suggestions based on your health metrics. Discover the perfect blend of nutrition and taste with Smart Bite.">
     <meta property="og:title" content="Smart Bite">
     <meta property="og:description" content="Smart Bite is a customized food recommendation app that provides personalized meal suggestions based on your health metrics. Discover the perfect blend of nutrition and taste with Smart Bite.">
-    <meta property="og:image" content="{{ asset('assets/images/app-logo/favicon.png') }}">
+    <meta property="og:image" content="{{ asset('assets/images/app-logo/4.png') }}">
     <meta name="format-detection" content="telephone=no">
     <meta name="twitter:title" content="Smart Bite - Personalized Food Recommendation App">
     <meta name="twitter:description" content="Smart Bite is a customized food recommendation app that provides personalized meal suggestions based on your health metrics. Discover the perfect blend of nutrition and taste with Smart Bite.">
-    <meta name="twitter:image" content="{{ asset('assets/images/app-logo/favicon.png') }}">
+    <meta name="twitter:image" content="{{ asset('assets/images/app-logo/4.png') }}">
     <meta name="twitter:card" content="summary_large_image">
     <!-- Mobile Specific -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
     <!-- Favicons Icon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/app-logo/favicon.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/app-logo/4.png') }}">
     <!-- PWA Version -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <!-- Global CSS -->
