@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\MealHistoryController;
 
-use App\Http\Controllers\Front\RecipeController;
+use App\Http\Controllers\RecipeController;
 
 /*
 |--------------------------------------------------------------------------
