@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 class RecipeController extends Controller
 {
@@ -516,6 +517,28 @@ class RecipeController extends Controller
         } else {
             $errorMessage = "Error: " . $response->getStatusCode();
             return view('index')->with('error', $errorMessage);
+        }
+    }
+
+    public function details($id)
+    {
+        $user = Auth::user();
+        $client = new Client();
+        $params = [
+            'query' => [
+                'apiKey' => env('API_KEY'),
+            ]
+        ];
+
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$id.'/information', $params);
+
+        if ($response->getStatusCode() == 200) {
+            $responseData = json_decode($response->getBody(), true);
+            Log::info($response->getBody());
+            return view('recipe_detail', ['recipe' => $responseData]);
+        } else {
+            $errorMessage = "Error: " . $response->getStatusCode();
+            return view('recipe_detail')->with('error', $errorMessage);
         }
     }
 }

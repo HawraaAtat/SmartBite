@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
 	<!-- Title -->
 	<title>Ombe- Coffee Shop Mobile App Template (Bootstrap + PWA) | DexignZone</title>
 
@@ -11,7 +11,7 @@
 	<meta name="author" content="DexignZone">
 	<meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">   
+	<meta name="keywords" content="android, ios, mobile, mobile template, mobile app, ui kit, dark layout, app, delivery, ecommerce, material design, mobile, mobile web, order, phonegap, pwa, store, web app, Ombe, coffee app, coffee template, coffee shop, mobile UI, coffee design, app template, responsive design, coffee showcase, style app, trendy app, modern UI, technology, User-Friendly Interface, Coffee Shop App, PWA (Progressive Web App), Mobile Ordering, Coffee Experience, Digital Menu, Innovative Technology, App Development, Coffee Experience, cafe, bootatrap, Bootstrap Framework, UI/UX Design, Coffee Shop Technology, Online Presence, Coffee Shop Website, Cafe Template, Mobile App Design, Web Application, Digital Presence, ">
 
 	<meta name="description" content="Discover the perfect blend of design and functionality with Ombe, a Coffee Shop Mobile App Template crafted with Bootstrap and enhanced with Progressive Web App (PWA) capabilities. Elevate your coffee shop's online presence with a seamless, responsive, and feature-rich template. Explore a modern design, user-friendly interface, and PWA technology for an immersive mobile experience. Brew success for your coffee shop effortlessly – Ombe is the ideal template to caffeinate your digital presence.">
 
@@ -33,25 +33,25 @@
 
 	<!-- Favicons Icon -->
 	<link rel="shortcut icon" type="image/x-icon" href="assets/images/app-logo/favicon.png">
-    
+
     <!-- Global CSS -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
 	<link rel="stylesheet" href="assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
 	<link rel="stylesheet" href="assets/vendor/nouislider/nouislider.min.css">
 	<link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css">
-    
+
 	<!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	
+
     <!-- Google Fonts -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
 
-</head>   
+</head>
 <body>
 <div class="page-wrapper">
-    
+
 	<!-- Preloader -->
 	<div id="preloader">
 		<div class="loader">
@@ -61,7 +61,7 @@
 		</div>
 	</div>
     <!-- Preloader end-->
-	
+
 	<!-- Header -->
 	<header class="header header-fixed transparent">
 		<div class="header-content">
@@ -82,7 +82,7 @@
 		</div>
 	</header>
 	<!-- Header -->
-	
+
 	<!-- Main Content Start -->
 	<main class="page-content p-b80">
 		<div class="container p-0">
@@ -110,8 +110,8 @@
 			<div class="dz-product-detail">
 				<div class="dz-handle"></div>
 				<div class="detail-content">
-					<h4 class="title">Ice Chocolate Coffee</h4>
-					<p>“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p>
+					<h4 class="title">{{$recipe['title']}}</h4>
+					<p>{{$recipe['instructions']}}</p>
 				</div>
 				<div class="dz-item-rating">4.5</div>
 				<div class="item-wrapper">
@@ -129,7 +129,8 @@
 						</div>
 					</div>
 					<div class="description">
-						<p class="text-light">*)Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
+						{{-- <p class="text-light">*)Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p> --}}
+						<p class="text-light">{{$recipe['instructions']}}</p>
 					</div>
 				</div>
 			</div>
@@ -142,7 +143,7 @@
 			<a href="cart.html" class="btn btn-primary btn-lg rounded-xl btn-thin w-100 gap-2">Place order <span class="opacity-25">$17.4</span></a>
 		</div>
 	</div>
-</div>  
+</div>
 <!--**********************************
     Scripts
 ***********************************-->

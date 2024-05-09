@@ -303,7 +303,7 @@
                 </div>
             </div>
             </div>
-            <form id="filterForm" action="{{ route('dashboard')}}" method="GET">
+            <form id="filterForm" action="{{route('dashboard')}}" method="GET">
                 <!-- SearchBox -->
                 <div class="search-box">
                     <div class="input-group input-radius input-rounded input-lg">
@@ -633,7 +633,7 @@
                                     <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
                                         <div style="flex: 1;">
                                             <h6 class="title" style="margin: 0;">
-                                                <a href="product-detail.html">{{ $result['title'] }}</a>
+                                                <a href="{{ route('details', ['id' => $result['id']]) }}">{{ $result['title'] }}</a>
                                             </h6>
                                             {{ $result['nutrition']['nutrients'][0]['amount']}} calories
                                         </div>
@@ -654,9 +654,7 @@
                 @endif
             </ul>
 
-
             {{ $recipes->links('pagination::bootstrap-4') }}
-
 
             <script>
                 document.querySelectorAll('.heart-icon').forEach(icon => {
@@ -760,9 +758,8 @@
               <i class="fi fi-rr-home"></i>
             </a>
             <a href="{{ route('favorites.index') }}" class="nav-link ">
-    <i class="fi fi-rr-heart"></i>
-</a>
-
+                <i class="fi fi-rr-heart"></i>
+            </a>
             <a href="{{route('meal-history.index')}}" class="nav-link">
             <i class="fi fi-rr-document"></i>
             </a>
@@ -798,7 +795,7 @@
     </div>
     <!--**********************************
     Scripts
-***********************************-->
+    ***********************************-->
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/swiper/swiper-bundle.min.js') }}"></script>

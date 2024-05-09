@@ -55,7 +55,11 @@ Route::post('update-profile/{id}', [AuthController::class, 'update_profile'])->n
 Route::get('edit-profile', [AuthController::class, 'edit_profile'])->name('edit-profile')->middleware('checkAuthorization');
 
 ////////////////////////////////////////////Dashboard
-Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard')->middleware('checkAuthorization');;
+Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard')->middleware('checkAuthorization');
+
+////////////////////////////////////////////Details
+Route::get('details/{id}', [RecipeController::class, 'details'])->name('details')->middleware('checkAuthorization');
+
 ////////////////////////////////////////////Like Recipes
 Route::post('/favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
 Route::delete('/favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
