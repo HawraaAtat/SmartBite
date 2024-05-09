@@ -181,7 +181,7 @@ class AuthController extends Controller
         return view('profile',compact('user'));
     }
 
-    public function edit_profile(){
+    public function editProfile(){
         $id= Auth::id();
         $user = User::find($id);
 
