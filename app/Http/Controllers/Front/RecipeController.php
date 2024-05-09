@@ -520,7 +520,7 @@ class RecipeController extends Controller
         }
     }
 
-    public function details($id)
+    public function recipe($id)
     {
         $user = Auth::user();
         $client = new Client();

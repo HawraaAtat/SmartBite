@@ -74,7 +74,7 @@
 					<h3 class="title">Create an account</h3>
 				</div>
 				<div class="account-section">
-					<form class="m-b20" action="{{route('register')}}" method="POSt">
+					<form class="m-b20" action="{{route('signup')}}" method="POSt">
 						@csrf
 						<!-- First Name -->
                         <div class="mb-4">
@@ -218,7 +218,7 @@
 					</div>
                     <div class="text-center account-footer">
 						<p class="text-light">Already have an account?</p>
-						<a href="{{ url('signin') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">SIGNIN TO YOUR ACCOUNT</a>
+						<a href="{{ url('login') }}" class="btn btn-secondary btn-lg btn-thin rounded-xl w-100">LOGIN TO YOUR ACCOUNT</a>
 					</div>
 				</div>
 			</div>

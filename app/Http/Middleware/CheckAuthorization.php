@@ -17,9 +17,8 @@ class CheckAuthorization
      */
     public function handle($request, Closure $next)
     {
-        // Check if the user is authorized
         if (!Auth::check()) {
-            return response()->view('not_allowed', [], 403);
+            return redirect('/');
         }
 
         return $next($request);

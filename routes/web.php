@@ -18,56 +18,40 @@ use App\Http\Controllers\Front\RecipeController;
 |
 */
 
+Route::middleware('not_authenticated')->group(function () {
+    Route::get('/welcome', function () { return view('welcome'); });
+    Route::get('/', function () { return view('onboarding'); });
 
-Route::get('/', function () {
-    return view('onboarding');
-})->middleware('auth.redirect');
+    Route::get('login', function () { return view('Authentication/login'); });
+    Route::post('login', [AuthController::class, 'login'])->name('login');
 
+    Route::get('signup', [AuthController::class, 'createUser'])->name('signup');
+    Route::post('signup', [AuthController::class, 'signup'])->name('signup');
 
-Route::get('/welcome', function () {
-    return view('welcome');
-})->middleware('auth.redirect');
-Route::get('/signin', function () {
-    return view('Authentication/signin');
-})->middleware('auth.redirect');
-
-Route::get('/test', function () {
-    return view('test');
 });
-////////////////////////////////////////////Authentication
 
-Route::get('login', [AuthController::class, 'login'])->name('login')->middleware('auth.redirect');
-Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::get('signup', [AuthController::class, 'create_user'])->name('signup')->middleware('auth.redirect');
-Route::post('register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-////////////////////////////////////////////Forget Password
-Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password')->middleware('auth.redirect');
-Route::post('/forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
-Route::get('/forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password')->middleware('auth.redirect');
-Route::post('/reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
+Route::get('forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
+Route::post('forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
+Route::get('forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password');
+Route::post('reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
 
+Route::middleware('authenticated')->group(function () {
+    Route::get('profile', [AuthController::class, 'profile'])->name('profile');
+    Route::post('update-profile/{id}', [AuthController::class, 'updateProfile'])->name('update-profile');
+    Route::get('edit-profile', [AuthController::class, 'editProfile'])->name('edit-profile');
 
-////////////////////////////////////////////User Profile
-Route::get('profile', [AuthController::class, 'profile'])->name('profile')->middleware('checkAuthorization');
-Route::post('update-profile/{id}', [AuthController::class, 'update_profile'])->name('update-profile');
-Route::get('edit-profile', [AuthController::class, 'edit_profile'])->name('edit-profile')->middleware('checkAuthorization');
+    Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard');
 
-////////////////////////////////////////////Dashboard
-Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard')->middleware('checkAuthorization');
+    Route::get('dashboard/recipe/{id}', [RecipeController::class, 'recipe'])->name('dashboard.recipe');
 
-////////////////////////////////////////////Details
-Route::get('details/{id}', [RecipeController::class, 'details'])->name('details')->middleware('checkAuthorization');
+    Route::post('favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
+    Route::delete('favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
+    Route::get('favorites', [FavoritesController::class, 'index'])->name('favorites.index');
 
-////////////////////////////////////////////Like Recipes
-Route::post('/favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
-Route::delete('/favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
-Route::get('/favorites', [FavoritesController::class, 'index'])->name('favorites.index')->middleware('checkAuthorization');
-
-////////////////////////////////////////////Meal History
-Route::post('/meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
-Route::get('/meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index')->middleware('checkAuthorization');
-////////////////////////////////////////////Reset Password From Profile
-Route::get('edit-password', [AuthController::class, 'edit_password'])->name('edit-password')->middleware('checkAuthorization');
-Route::post('update-password/{id}', [AuthController::class, 'update_password'])->name('update-password');
+    Route::post('meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
+    Route::get('meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index');
+    Route::get('edit-password', [AuthController::class, 'editPassword'])->name('edit-password');
+    Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
+});

@@ -67,7 +67,7 @@
 					</div> -->
 				</div>
 				<div class="section-head">
-					<h3 class="title">Sign In</h3>
+					<h3 class="title">Log In</h3>
 				</div>
 				<div class="account-section">
 					<form class="m-b30" action="{{ route('login') }}" method="POST">

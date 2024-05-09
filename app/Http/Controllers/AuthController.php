@@ -23,6 +23,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+
     public function login(Request $request)
     {
         $request->validate([
@@ -39,7 +40,6 @@ class AuthController extends Controller
         }
         return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
     }
-
 
     public function logout()
     {
@@ -59,12 +59,12 @@ class AuthController extends Controller
     }
 
 
-    public function create_user(){
+    public function createUser(){
         return view('Authentication.signup');
     }
 
 
-    public function register(Request $request){
+    public function signup(Request $request){
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
@@ -173,7 +173,7 @@ class AuthController extends Controller
         return redirect('/welcome')->with('success', 'User created successfully.');
     }
 
-    
+
     public function profile(){
         $id= Auth::id();
         $user = User::find($id);
@@ -189,7 +189,7 @@ class AuthController extends Controller
     }
 
 
-    public function edit_password(){
+    public function editPassword(){
         $id= Auth::id();
         $user = User::find($id);
 
@@ -197,7 +197,7 @@ class AuthController extends Controller
     }
 
 
-    public function update_profile(Request $request){
+    public function updateProfile(Request $request){
         $id = Auth::id();
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
@@ -207,22 +207,22 @@ class AuthController extends Controller
             'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'boolean'],
         ]);
-    
+
         $validatedData['ethical_meal_considerations'] = $request->has('ethical_meal_considerations') ? true : false;
-    
+
         $user = User::findOrFail($id);
         $user->fill($validatedData);
-    
+
         if ($request->has('password')) {
             $user->password = bcrypt($request->password);
         }
-    
+
         $user->save();
-    
+
         return redirect()->route('profile')->with('success', 'User information updated successfully.');
     }
-    
-    public function update_password(Request $request, $id)
+
+    public function updatePassword(Request $request, $id)
 {
     $user = User::findOrFail($id);
     $validator = Validator::make($request->all(), [

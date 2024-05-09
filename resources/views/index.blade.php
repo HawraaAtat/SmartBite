@@ -633,7 +633,7 @@
                                     <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
                                         <div style="flex: 1;">
                                             <h6 class="title" style="margin: 0;">
-                                                <a href="{{ route('details', ['id' => $result['id']]) }}">{{ $result['title'] }}</a>
+                                                <a href="{{ route('dashboard.recipe', ['id' => $result['id']]) }}">{{ $result['title'] }}</a>
                                             </h6>
                                             {{ $result['nutrition']['nutrients'][0]['amount']}} calories
                                         </div>
