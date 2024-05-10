@@ -499,10 +499,14 @@
                                 <div class="dz-head" style="display: flex; justify-content: space-between; align-items: center;">
                                     <div style="flex: 1;">
                                         <h6 class="title" style="margin: 0;">
-                                            <a href="{{ route('dashboard.recipe', ['id' => $result['id']]) }}">{{ $result['title'] }}</a>
+                                            <form id="recipeForm{{ $result['id'] }}" action="{{ route('dashboard.recipe', ['id' => $result['id']]) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="calories" value="{{ $result['nutrition']['nutrients'][0]['amount'] }}">
+                                            </form>
+                                            <a href="#" onclick="document.getElementById('recipeForm{{ $result['id'] }}').submit(); return false;">{{ $result['title'] }}</a>
                                         </h6>
                                         @if(isset($result['nutrition']['nutrients'][0]['amount']))
-                                        {{ $result['nutrition']['nutrients'][0]['amount'] }}
+                                            {{ $result['nutrition']['nutrients'][0]['amount'] }}
                                         @endif
                                     </div>
                                     <div>

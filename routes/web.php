@@ -44,7 +44,7 @@ Route::middleware('authenticated')->group(function () {
 
     Route::get('dashboard', [RecipeController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('dashboard/recipe/{id}', [RecipeController::class, 'recipe'])->name('dashboard.recipe');
+    Route::post('dashboard/recipe/{id}', [RecipeController::class, 'recipe'])->name('dashboard.recipe');
 
     Route::post('favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
     Route::delete('favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');

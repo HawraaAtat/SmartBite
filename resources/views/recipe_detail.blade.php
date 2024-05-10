@@ -106,7 +106,7 @@
             <div class="detail-content">
                 <h4 class="title">{{$recipe['title'] }}</h4>
                 <p> <strong>Serving Size:</strong> {{$recipe['servings'] }} </p>
-                <p> <strong>Calories Per Serving:</strong> {{$recipe['nutrition']['nutrients'][0]['amount']??0 }} calories </p>
+                <p> <strong>Calories Per Serving:</strong> {{ $calories }} </p>
             </div>
             <div class="dz-item-rating">{{$recipe['readyInMinutes'] }}'</div>
             <div class="item-wrapper">

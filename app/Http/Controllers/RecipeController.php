@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MealHistory;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
@@ -520,9 +521,9 @@ class RecipeController extends Controller
         }
     }
 
-    public function recipe($id)
+    public function recipe($id, Request $request)
     {
-        $user = Auth::user();
+        Log::info( $request->input('calories') );
         $client = new Client();
         $params = [
             'query' => [
@@ -535,7 +536,7 @@ class RecipeController extends Controller
         if ($response->getStatusCode() == 200) {
             $responseData = json_decode($response->getBody(), true);
             Log::info($response->getBody());
-            return view('recipe_detail', ['recipe' => $responseData]);
+            return view('recipe_detail', ['recipe' => $responseData, 'calories' => $request->input('calories')]);
         } else {
             $errorMessage = "Error: " . $response->getStatusCode();
             return view('recipe_detail')->with('error', $errorMessage);
