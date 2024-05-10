@@ -10,8 +10,6 @@ class MealHistory extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $fillable = ['user_id', 'recipe_id', 'calories'];
-
 
     public function user()
     {

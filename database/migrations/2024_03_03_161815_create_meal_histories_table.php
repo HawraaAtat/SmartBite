@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('meal_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('recipe_id'); //front use it with the api
+            $table->integer('recipe_id'); 
             $table->float('calories');
+            $table->json('recipe');
             $table->timestamps();
         });
     }
