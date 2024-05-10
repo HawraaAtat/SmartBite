@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FavoritesController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\MealHistoryController;
 
 use App\Http\Controllers\RecipeController;
@@ -46,9 +46,9 @@ Route::middleware('authenticated')->group(function () {
 
     Route::post('dashboard/recipe/{id}', [RecipeController::class, 'recipe'])->name('dashboard.recipe');
 
-    Route::post('favorites/{recipeId}', [FavoritesController::class, 'store'])->name('favorites.store');
-    Route::delete('favorites/{recipeId}', [FavoritesController::class, 'destroy'])->name('favorites.destroy');
-    Route::get('favorites', [FavoritesController::class, 'index'])->name('favorites.index');
+    Route::post('favorites/{recipeId}', [FavoriteController::class, 'store'])->name('favorites.store');
+    Route::delete('favorites/{recipeId}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+    Route::get('favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
     Route::post('meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
     Route::get('meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index');

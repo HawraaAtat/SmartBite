@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('item_id');
+            $table->json('recipe');
             $table->timestamps();
         });
     }
