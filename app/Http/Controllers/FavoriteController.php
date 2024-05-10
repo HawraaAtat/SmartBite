@@ -15,7 +15,6 @@ class FavoriteController extends Controller
      */
      public function index(Request $request)
      {
-        Log::info("message". $request);
         $user = Auth::user();
         $favorites = Favorite::where('user_id', $user->id)->get();
 
