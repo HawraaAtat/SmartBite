@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Broadcast;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -13,10 +12,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
-use App\Enums\ChronicDiseasesEnum;
-use App\Models\MealHistory;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -59,12 +54,14 @@ class AuthController extends Controller
     }
 
 
-    public function createUser(){
+    public function createUser()
+    {
         return view('Authentication.signup');
     }
 
 
-    public function signup(Request $request){
+    public function signup(Request $request)
+    {
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
@@ -88,7 +85,8 @@ class AuthController extends Controller
         }
     }
 
-    function forgetPassword(){
+    function forgetPassword()
+    {
         return view('Authentication/forget-password');
     }
 
@@ -99,8 +97,8 @@ class AuthController extends Controller
         ]);
 
         $existingToken = DB::table('password_reset_tokens')
-                          ->where('email', $request->email)
-                          ->first();
+            ->where('email', $request->email)
+            ->first();
 
         if ($existingToken) {
             $createdAt = Carbon::parse($existingToken->created_at);
@@ -121,7 +119,7 @@ class AuthController extends Controller
             ['token' => $token, 'created_at' => $createdAt]
         );
 
-        Mail::send("emails.forget-password", ['token'=> $token], function ($message) use ($request){
+        Mail::send("emails.forget-password", ['token' => $token], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject("Reset Password");
         });
@@ -129,7 +127,8 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Email sent successfully.');
     }
 
-    public function resetPassword($token){
+    public function resetPassword($token)
+    {
         // Check if the token is expired
         $passwordResetToken = DB::table('password_reset_tokens')
             ->where('token', $token)
@@ -174,30 +173,34 @@ class AuthController extends Controller
     }
 
 
-    public function profile(){
-        $id= Auth::id();
+    public function profile()
+    {
+        $id = Auth::id();
         $user = User::find($id);
 
-        return view('profile',compact('user'));
+        return view('profile', compact('user'));
     }
 
-    public function editProfile(){
-        $id= Auth::id();
+    public function editProfile()
+    {
+        $id = Auth::id();
         $user = User::find($id);
 
-        return view('edit-profile',compact('user'));
-    }
-
-
-    public function editPassword(){
-        $id= Auth::id();
-        $user = User::find($id);
-
-        return view('edit-password',compact('user'));
+        return view('edit-profile', compact('user'));
     }
 
 
-    public function updateProfile(Request $request){
+    public function editPassword()
+    {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        return view('edit-password', compact('user'));
+    }
+
+
+    public function updateProfile(Request $request)
+    {
         $id = Auth::id();
         $validatedData = $request->validate([
             'first_name' => ['required', 'min:3'],
@@ -223,30 +226,30 @@ class AuthController extends Controller
     }
 
     public function updatePassword(Request $request, $id)
-{
-    $user = User::findOrFail($id);
-    $validator = Validator::make($request->all(), [
-        'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
-            if (!Hash::check($value, $user->password)) {
-                $fail('The current password is incorrect.');
-            }
-        }],
-        'new_password' => 'required|string|min:8|confirmed',
-    ], [
-        'new_password.required' => 'Please enter a new password.',
-        'new_password.min' => 'The new password must be at least :min characters.',
-        'new_password.confirmed' => 'The new password confirmation does not match.',
-    ]);
+    {
+        $user = User::findOrFail($id);
+        $validator = Validator::make($request->all(), [
+            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+                if (!Hash::check($value, $user->password)) {
+                    $fail('The current password is incorrect.');
+                }
+            }],
+            'new_password' => 'required|string|min:8|confirmed',
+        ], [
+            'new_password.required' => 'Please enter a new password.',
+            'new_password.min' => 'The new password must be at least :min characters.',
+            'new_password.confirmed' => 'The new password confirmation does not match.',
+        ]);
 
-    // If validation fails, throw ValidationException
-    if ($validator->fails()) {
-        throw new ValidationException($validator);
+        // If validation fails, throw ValidationException
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return redirect()->route('profile')->with('success', 'Password updated successfully.');
     }
-
-    // Update the user's password
-    $user->password = Hash::make($request->new_password);
-    $user->save();
-
-    return redirect()->route('profile')->with('success', 'Password updated successfully.');
-}
 }

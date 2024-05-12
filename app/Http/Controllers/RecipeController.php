@@ -10,7 +10,6 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 
 class RecipeController extends Controller
 {
@@ -530,11 +529,10 @@ class RecipeController extends Controller
             ]
         ];
 
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$id.'/information', $params);
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $id . '/information', $params);
 
         if ($response->getStatusCode() == 200) {
             $responseData = json_decode($response->getBody(), true);
-            Log::info($response->getBody());
             return view('recipe_detail', ['recipe' => $responseData, 'calories' => $request->input('calories')]);
         } else {
             $errorMessage = "Error: " . $response->getStatusCode();

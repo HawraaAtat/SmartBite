@@ -6,15 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
 use App\Models\Favorite;
-use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-     public function index(Request $request)
-     {
+    public function index(Request $request)
+    {
         $user = Auth::user();
         $favorites = Favorite::where('user_id', $user->id)->get();
 
@@ -26,17 +25,17 @@ class FavoriteController extends Controller
             $filteredRecipes[] = $recipe;
         }
 
-         return view('favorites', compact('filteredRecipes'));
-     }
+        return view('favorites', compact('filteredRecipes'));
+    }
 
-     public function show($id)
-     {
-         $favorite = Favorite::where('recipe_id', $id)->first();
-         $recipe = json_decode($favorite->recipe, true);
-         $calories = $favorite->calories;
+    public function show($id)
+    {
+        $favorite = Favorite::where('recipe_id', $id)->first();
+        $recipe = json_decode($favorite->recipe, true);
+        $calories = $favorite->calories;
 
-         return view('recipe_detail', compact('recipe', 'calories'));
-     }
+        return view('recipe_detail', compact('recipe', 'calories'));
+    }
 
     public function store(Request $request)
     {

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\MealHistory;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
 
 class MealHistoryController extends Controller
 {
@@ -23,15 +22,14 @@ class MealHistoryController extends Controller
             $recipe = json_decode($data->recipe, true);
 
             $creationDate = MealHistory::where('user_id', $user->id)
-                                    ->where('recipe_id', $data->recipe_id)
-                                    ->value('updated_at');
+                ->where('recipe_id', $data->recipe_id)
+                ->value('updated_at');
 
             $recipe['updated_at'] = $creationDate;
             $recipe['calories'] =  $data['calories'];
 
             $filteredRecipes[] = $recipe;
         }
-        Log::info($filteredRecipes);
 
         return view('history', compact('filteredRecipes'));
     }
@@ -50,7 +48,7 @@ class MealHistoryController extends Controller
         $user = Auth::user();
 
         $client = new Client();
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'. $request->input('recipe_id').'/information', [
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $request->input('recipe_id') . '/information', [
             'query' => [
                 'apiKey' => env('API_KEY'),
             ]
