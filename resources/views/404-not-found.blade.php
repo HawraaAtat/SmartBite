@@ -32,7 +32,7 @@
         <div class="container fixed-full-area">
             <div class="error-page">
                 <div class="icon-bx">
-                    <img src="assets/images/error2.svg" alt="">
+                    <img src="{{ asset('assets/images/error2.svg') }}" alt="">
                 </div>
                 <div class="clearfix">
                     <h2 class="title text-primary">Sorry</h2>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="error-img">
-                <img src="assets/images/error.png" alt="">
+                <img src="{{ asset('assets/images/error.png') }}" alt="">
             </div>
         </div>
     </main>

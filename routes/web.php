@@ -57,3 +57,7 @@ Route::middleware('authenticated')->group(function () {
     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('edit-password');
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
 });
+
+Route::fallback(function () {
+    return view('404-not-found');
+});
