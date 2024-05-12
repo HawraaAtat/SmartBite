@@ -149,7 +149,7 @@
                                         }
                                         , body: JSON.stringify({
                                             recipe_id: recipeId
-                                            , calories: calories // Pass the calories value in the request body
+                                            , calories: {{$calories}} // Pass the calories value in the request body
                                         })
                                     })
                                     .then(response => {

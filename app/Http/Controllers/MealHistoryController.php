@@ -45,12 +45,14 @@ class MealHistoryController extends Controller
         return view('recipe_detail', compact('recipe', 'calories'));
     }
 
-    public function store(Request $request, $recipeId)
+    public function store(Request $request)
     {
+        Log::info("store history: ". $request);
+
         $user = Auth::user();
 
         $client = new Client();
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$recipeId.'/information', [
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'. $request->input('recipe_id').'/information', [
             'query' => [
                 'apiKey' => env('API_KEY'),
             ]
@@ -59,12 +61,10 @@ class MealHistoryController extends Controller
         if ($response->getStatusCode() == 200) {
             $recipe = json_decode($response->getBody(), true);
 
-            $mealHistory = MealHistory::create([
-                'user_id' => $user->id,
-                'recipe_id' => $recipeId,
-                'calories' => $request->input('calories'),
-                'recipe' => json_encode($recipe)
-            ]);
+            MealHistory::updateOrCreate(
+                ['user_id' => $user->id, 'recipe_id' =>  $request->input('recipe_id')],
+                ['calories' => $request->input('calories'), 'recipe' => json_encode($recipe)]
+            );
 
             return response(['message' => 'Meal history stored successfully']);
         } else {
