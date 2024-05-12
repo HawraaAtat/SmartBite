@@ -28,14 +28,13 @@ Route::middleware('not_authenticated')->group(function () {
     Route::get('signup', [AuthController::class, 'createUser'])->name('signup');
     Route::post('signup', [AuthController::class, 'signup'])->name('signup');
 
+    Route::get('forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
+    Route::post('forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
+    Route::get('forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password');
+    Route::post('reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
 });
 
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
-Route::post('forget-password', [AuthController::class, 'forgetPasswordPost' ])->name('forget.password.post');
-Route::get('forget-password/{token}', [AuthController::class, 'resetPassword' ])->name('reset.password');
-Route::post('reset-password', [AuthController::class, 'resetPasswordPost' ])->name('reset.password.post');
 
 Route::middleware('authenticated')->group(function () {
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
