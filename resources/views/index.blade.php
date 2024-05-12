@@ -777,8 +777,8 @@
                 </a>
                 <img class="logo dark" src="assets/images/app-logo/logo.png" alt="">
                 <img class="logo light" src="assets/images/app-logo/logo-white.png" alt="">
-                <h5 class="title">Ombe - Coffee Shop Mobile App Template</h5>
-                <p class="pwa-text">Install "Ombe Coffee Shop Mobile App Template" to your home screen for easy access,
+                <h5 class="title">Smart Bite</h5>
+                <p class="pwa-text">Install "Smart Bite" to your home screen for easy access,
                     just like any other app</p>
                 <button type="button" class="btn pwa-btn">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
