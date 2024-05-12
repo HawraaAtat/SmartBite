@@ -29,7 +29,9 @@
                     $isFavorite = Auth::user()->favorites->contains('recipe_id', $recipe['id']);
                     $favorite = Auth::user()->favorites->where('recipe_id', $recipe['id'])->first();
                     @endphp
-                    <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'white' }};" data-recipe-id="{{ $recipe['id'] }}" data-calories="{{ $calories }}"></i>
+                    <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}"
+                        style="color: {{ $isFavorite ? 'red' : 'white' }};" data-recipe-id="{{ $recipe['id'] }}"
+                        data-calories="{{ $calories }}"></i>
                 </a>
             </div>
             <script>
@@ -137,7 +139,10 @@
                     <!--
 						<h6>Ingredients</h6>
 					<p style="margin-top: 0; margin-left: 0;">{!! nl2br($recipe['instructions']) !!}</p> -->
-                    <button class="btn btn-thin btn-lg w-100 btn-primary rounded-xl book-icon" data-recipe-id="{{ $recipe['id'] }}" data-calories="{{ $recipe['nutrition']['nutrients'][0]['amount'] ?? 0 }}">I Just Cooked This!</button>
+                    <button class="btn btn-thin btn-lg w-100 btn-primary rounded-xl book-icon"
+                        data-recipe-id="{{ $recipe['id'] }}"
+                        data-calories="{{ $recipe['nutrition']['nutrients'][0]['amount'] ?? 0 }}">I Just Cooked
+                        This!</button>
 
                     <script>
                         document.querySelectorAll('.book-icon').forEach(icon => {
@@ -202,4 +207,5 @@
 <script src="{{ asset('assets/vendor/wnumb/wNumb.js') }}"></script>
 <script src="{{ asset('assets/js/noui-slider.init.js') }}"></script>
 </body>
+
 </html>
