@@ -39,7 +39,6 @@ class MealHistoryController extends Controller
     public function show($id)
     {
         $mealHistory = MealHistory::where('recipe_id', $id)->first();
-        Log::info("show ". $mealHistory);
         $recipe = json_decode($mealHistory->recipe, true);
         $calories = $mealHistory->calories;
 
