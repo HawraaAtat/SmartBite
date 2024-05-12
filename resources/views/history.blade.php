@@ -40,7 +40,9 @@
                     </div>
                     <div class="dz-info">
                         <div class="dz-head">
-                            <h6 class="title">{{ $recipe['title'] }}</h6>
+                            <h6 class="title">
+                                <a href="{{ route('meal-history.show', ['mealHistory' => $recipe['id'] ]) }}" >{{ $recipe['title'] }}</a>
+                            </h6>
                         </div>
                         <ul class="dz-meta">
                             <li>{{ $recipe['created_at']->format('d-m-Y') }}</li>

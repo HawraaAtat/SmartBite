@@ -37,6 +37,14 @@ class MealHistoryController extends Controller
         return view('history', compact('filteredRecipes'));
     }
 
+    public function show(MealHistory $mealHistory)
+    {
+        $recipe = json_decode($mealHistory->recipe, true);
+        $calories = $mealHistory->calories;
+
+        return view('recipe_detail', compact('recipe', 'calories'));
+    }
+
     public function store(Request $request, $recipeId)
     {
         $user = Auth::user();

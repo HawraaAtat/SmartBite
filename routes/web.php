@@ -50,7 +50,9 @@ Route::middleware('authenticated')->group(function () {
     Route::get('favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
     Route::post('meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
+    Route::get('meal-history/{mealHistory}', [MealHistoryController::class, 'show'])->name('meal-history.show');
     Route::get('meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index');
+
     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('edit-password');
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
 });
