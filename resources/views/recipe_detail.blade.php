@@ -155,16 +155,16 @@
                                     .then(response => {
                                         if (response.ok) {
                                             const alertDiv = document.createElement('div');
-                                            alertDiv.className = 'alert alert-success alert-dismissible fade show fixed-bottom';
+                                            alertDiv.className = 'alert alert-primary alert-dismissible fade show fixed-bottom';
                                             alertDiv.innerHTML = `
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                        <strong>Well done chef! You've just added another masterpiece to your Smart Bite repertoire!</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                            <span><i class="icon feather icon-x"></i></span>
-                        </button>
-                    `;
+                                                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                                                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                                </svg>
+                                                <strong>Well done chef! You've just added another masterpiece to your Smart Bite repertoire!</strong>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                                    <span><i class="icon feather icon-x"></i></span>
+                                                </button>
+                                            `;
                                             document.body.appendChild(alertDiv);
 
                                             // Auto-dismiss the alert after 3 seconds
