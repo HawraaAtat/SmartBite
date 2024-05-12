@@ -38,6 +38,3 @@
 </head>
 
 <body>
-<!-- Your content goes here -->
-</body>
-</html>
