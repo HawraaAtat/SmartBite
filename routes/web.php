@@ -49,9 +49,9 @@ Route::middleware('authenticated')->group(function () {
     Route::delete('favorites/{recipeId}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
     Route::get('favorites', [FavoriteController::class, 'index'])->name('favorites.index');
 
-    Route::post('meal-history/{userId}/{recipeId}', [MealHistoryController::class,'store'])->name('meal-history.store');
-    Route::get('meal-history/{mealHistory}', [MealHistoryController::class, 'show'])->name('meal-history.show');
     Route::get('meal-history', [MealHistoryController::class, 'index'])->name('meal-history.index');
+    Route::get('meal-history/{id}', [MealHistoryController::class, 'show'])->name('meal-history.show');
+    Route::post('meal-history', [MealHistoryController::class,'store'])->name('meal-history.store');
 
     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('edit-password');
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');

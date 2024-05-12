@@ -141,7 +141,7 @@
                                 const token = '{{ csrf_token() }}';
                                 const calories = this.getAttribute('data-calories'); // Get the calories from the data attribute
 
-                                fetch(`/meal-history/${userId}/${recipeId}`, { // Include both user ID and recipe ID in the URL
+                                fetch(`/meal-history`, { // Include both user ID and recipe ID in the URL
                                         method: 'POST'
                                         , headers: {
                                             'Content-Type': 'application/json'

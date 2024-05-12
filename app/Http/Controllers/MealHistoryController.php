@@ -24,21 +24,22 @@ class MealHistoryController extends Controller
 
             $creationDate = MealHistory::where('user_id', $user->id)
                                     ->where('recipe_id', $data->recipe_id)
-                                    ->value('created_at');
+                                    ->value('updated_at');
 
-            $recipe['created_at'] = $creationDate;
+            $recipe['updated_at'] = $creationDate;
+            $recipe['calories'] =  $data['calories'];
 
             $filteredRecipes[] = $recipe;
         }
-
-        Log::info("recipeData");
-        Log::info($recipe);
+        Log::info($filteredRecipes);
 
         return view('history', compact('filteredRecipes'));
     }
 
-    public function show(MealHistory $mealHistory)
+    public function show($id)
     {
+        $mealHistory = MealHistory::where('recipe_id', $id)->first();
+        Log::info("show ". $mealHistory);
         $recipe = json_decode($mealHistory->recipe, true);
         $calories = $mealHistory->calories;
 
@@ -47,8 +48,6 @@ class MealHistoryController extends Controller
 
     public function store(Request $request)
     {
-        Log::info("store history: ". $request);
-
         $user = Auth::user();
 
         $client = new Client();
