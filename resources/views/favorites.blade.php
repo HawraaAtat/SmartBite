@@ -40,15 +40,16 @@
                     </div>
                     <div class="dz-info">
                         <div class="dz-head">
-                            <h6 class="title">{{ $recipe['title'] }}</a></h6>
-
+                            <h6 class="title"><a href="{{ route('favorites.show', $recipe['id']) }}">{{ $recipe['title'] }}</a></h6>
                         </div>
                         <ul class="dz-meta">
                             <li>
-							@php
-                                    $isFavorite = Auth::user()->favorites->contains('item_id', $recipe['id']);
+                                @php
+                                $isFavorite = Auth::user()->favorites->contains('recipe_id', $recipe['id']);
+                                $favoriteId = $isFavorite ? Auth::user()->favorites->where('recipe_id', $recipe['id'])->first()->id : null;
+                                $calories = $isFavorite ? Auth::user()->favorites->where('recipe_id', $recipe['id'])->first()->calories : null;
                                 @endphp
-                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $recipe['id'] }}"></i>
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-favorite-id="{{ $favoriteId }}" data-calories="{{ $calories }}"></i>
                             </li>
                         </ul>
                     </div>
@@ -61,11 +62,11 @@
 <script>
     document.querySelectorAll('.heart-icon').forEach(icon => {
         icon.addEventListener('click', function() {
-            const recipeId = this.getAttribute('data-recipe-id');
+            const favoriteId = this.getAttribute('data-favorite-id'); // Use data-favorite-id attribute
             const token = '{{ csrf_token() }}';
 
             if (this.classList.contains('active')) {
-                fetch(`/favorites/${recipeId}`, {
+                fetch(`/favorites/${favoriteId}`, { // Use favoriteId in the URL
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,12 +81,17 @@
                 })
                 .catch(error => console.error('Error:', error));
             } else {
-                fetch(`/favorites/${recipeId}`, {
+                const calories = this.getAttribute('data-calories'); // Retrieve calories attribute value
+                fetch(`/favorites`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
-                    }
+                    },
+                    body: JSON.stringify({
+                        recipe_id: favoriteId, // Pass favoriteId instead of recipeId
+                        calories: calories // Pass the retrieved calories value
+                    })
                 })
                 .then(response => {
                     if (response.ok) {
@@ -97,7 +103,8 @@
             }
         });
     });
-	</script>
+</script>
+
 
 	<!-- Main Content End -->
 

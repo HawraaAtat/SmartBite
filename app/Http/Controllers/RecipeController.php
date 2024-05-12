@@ -523,7 +523,6 @@ class RecipeController extends Controller
 
     public function recipe($id, Request $request)
     {
-        Log::info( $request->input('calories') );
         $client = new Client();
         $params = [
             'query' => [

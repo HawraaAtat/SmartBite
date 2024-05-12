@@ -511,9 +511,9 @@
                                     </div>
                                     <div>
                                         @php
-                                        $isFavorite = Auth::user()->favorites->contains('item_id', $result['id']);
+                                        $isFavorite = Auth::user()->favorites->contains('recipe_id', $result['id']);
                                         @endphp
-                                        <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"></i>
+                                        <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $result['id'] }}"  data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
                                     </div>
                                 </div>
                             </div>
@@ -535,38 +535,42 @@
 
                             if (this.classList.contains('active')) {
                                 fetch(`/favorites/${recipeId}`, {
-                                        method: 'DELETE'
-                                        , headers: {
-                                            'Content-Type': 'application/json'
-                                            , 'X-CSRF-TOKEN': token
-                                        }
-                                    })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            this.classList.remove('active');
-                                            this.style.color = 'black';
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': token
+                                    }
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        this.classList.remove('active');
+                                        this.style.color = 'black';
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
                             } else {
-                                fetch(`/favorites/${recipeId}`, {
-                                        method: 'POST'
-                                        , headers: {
-                                            'Content-Type': 'application/json'
-                                            , 'X-CSRF-TOKEN': token
-                                        }
+                                const calories = this.getAttribute('data-calories'); // Retrieve calories attribute value
+                                fetch(`/favorites`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': token
+                                    },
+                                    body: JSON.stringify({
+                                        recipe_id: recipeId,
+                                        calories: calories // Pass the retrieved calories value
                                     })
-                                    .then(response => {
-                                        if (response.ok) {
-                                            this.classList.add('active');
-                                            this.style.color = 'red';
-                                        }
-                                    })
-                                    .catch(error => console.error('Error:', error));
+                                })
+                                .then(response => {
+                                    if (response.ok) {
+                                        this.classList.add('active');
+                                        this.style.color = 'red';
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
                             }
                         });
                     });
-
                 </script>
 
                 <!-- Featured Beverages -->

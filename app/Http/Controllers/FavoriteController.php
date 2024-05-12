@@ -21,30 +21,40 @@ class FavoriteController extends Controller
         $filteredRecipes = [];
         foreach ($favorites as $favorite) {
             $recipe = json_decode($favorite->recipe, true);
+
+            $recipe['calories'] =  $favorite['calories'];
             $filteredRecipes[] = $recipe;
         }
 
          return view('favorites', compact('filteredRecipes'));
      }
 
-    public function store($recipeId)
+     public function show($id)
+     {
+         $favorite = Favorite::where('recipe_id', $id)->first();
+         $recipe = json_decode($favorite->recipe, true);
+         $calories = $favorite->calories;
+
+         return view('recipe_detail', compact('recipe', 'calories'));
+     }
+
+    public function store(Request $request)
     {
         $user = Auth::user();
 
         $client =  new Client();
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$recipeId.'/information',
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$request->input('recipe_id').'/information',
         [
             'query' => [
                 'apiKey' => env('API_KEY'),
             ]
         ]);
 
-        Log::info($response->getBody());
-
         if ($response->getStatusCode() == 200) {
             Favorite::create([
                 'user_id' => $user->id,
-                'item_id' => $recipeId,
+                'recipe_id' => $request->input('recipe_id'),
+                'calories' =>  $request->input('calories'),
                 'recipe' => $response->getBody()
             ]);
             return response(['message' => 'Recipe favorited successfully.']);
@@ -61,7 +71,7 @@ class FavoriteController extends Controller
         $user = Auth::user();
 
         // Find and delete the favorite
-        $favorite = $user->favorites()->where('item_id', $recipeId)->first();
+        $favorite = $user->favorites()->where('recipe_id', $recipeId)->first();
         if ($favorite) {
             $favorite->delete();
             return response()->json(['message' => 'Recipe unfavorited successfully.'], 200);

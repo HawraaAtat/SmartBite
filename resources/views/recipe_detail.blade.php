@@ -26,9 +26,11 @@
             <div class="right-content d-flex align-items-center gap-4">
                 <a class="item-bookmark style-3">
                     @php
-                    $isFavorite = Auth::user()->favorites->contains('item_id', $recipe['id']);
+                    $isFavorite = Auth::user()->favorites->contains('recipe_id', $recipe['id']);
+                    $favorite = Auth::user()->favorites->where('recipe_id', $recipe['id'])->first();
                     @endphp
-                    <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'white' }};" data-recipe-id="{{ $recipe['id'] }}"></i>
+                    <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'white' }};" data-recipe-id="{{ $recipe['id'] }}" data-calories="{{ $calories }}"></i>
+                </a>
             </div>
             <script>
                 document.querySelectorAll('.heart-icon').forEach(icon => {
@@ -38,38 +40,42 @@
 
                         if (this.classList.contains('active')) {
                             fetch(`/favorites/${recipeId}`, {
-                                    method: 'DELETE'
-                                    , headers: {
-                                        'Content-Type': 'application/json'
-                                        , 'X-CSRF-TOKEN': token
-                                    }
-                                })
-                                .then(response => {
-                                    if (response.ok) {
-                                        this.classList.remove('active');
-                                        this.style.color = 'white';
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    this.classList.remove('active');
+                                    this.style.color = 'white';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
                         } else {
-                            fetch(`/favorites/${recipeId}`, {
-                                    method: 'POST'
-                                    , headers: {
-                                        'Content-Type': 'application/json'
-                                        , 'X-CSRF-TOKEN': token
-                                    }
+                            const calories = this.getAttribute('data-calories'); // Retrieve calories attribute value
+                            fetch(`/favorites`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token
+                                },
+                                body: JSON.stringify({
+                                    recipe_id: recipeId,
+                                    calories: calories // Pass the retrieved calories value
                                 })
-                                .then(response => {
-                                    if (response.ok) {
-                                        this.classList.add('active');
-                                        this.style.color = 'red';
-                                    }
-                                })
-                                .catch(error => console.error('Error:', error));
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    this.classList.add('active');
+                                    this.style.color = 'red';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
                         }
                     });
                 });
-
             </script>
             </a>
         </div>
@@ -141,7 +147,7 @@
                                 const token = '{{ csrf_token() }}';
                                 const calories = this.getAttribute('data-calories'); // Get the calories from the data attribute
 
-                                fetch(`/meal-history`, { // Include both user ID and recipe ID in the URL
+                                fetch(`/meal-history`, {
                                         method: 'POST'
                                         , headers: {
                                             'Content-Type': 'application/json'
