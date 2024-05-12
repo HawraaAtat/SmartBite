@@ -46,10 +46,9 @@
                             <li>
                                 @php
                                 $isFavorite = Auth::user()->favorites->contains('recipe_id', $recipe['id']);
-                                $favoriteId = $isFavorite ? Auth::user()->favorites->where('recipe_id', $recipe['id'])->first()->id : null;
                                 $calories = $isFavorite ? Auth::user()->favorites->where('recipe_id', $recipe['id'])->first()->calories : null;
                                 @endphp
-                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-favorite-id="{{ $favoriteId }}" data-calories="{{ $calories }}"></i>
+                                <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="color: {{ $isFavorite ? 'red' : 'black' }};" data-recipe-id="{{ $recipe['id'] }}" data-calories="{{ $calories }}"></i>
                             </li>
                         </ul>
                     </div>
@@ -62,11 +61,11 @@
 <script>
     document.querySelectorAll('.heart-icon').forEach(icon => {
         icon.addEventListener('click', function() {
-            const favoriteId = this.getAttribute('data-favorite-id'); // Use data-favorite-id attribute
+            const recipeId = this.getAttribute('data-recipe-id'); // Retrieve favorite ID
             const token = '{{ csrf_token() }}';
 
             if (this.classList.contains('active')) {
-                fetch(`/favorites/${favoriteId}`, { // Use favoriteId in the URL
+                fetch(`/favorites/${recipeId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -81,7 +80,7 @@
                 })
                 .catch(error => console.error('Error:', error));
             } else {
-                const calories = this.getAttribute('data-calories'); // Retrieve calories attribute value
+                const calories = this.getAttribute('data-calories');
                 fetch(`/favorites`, {
                     method: 'POST',
                     headers: {
@@ -89,8 +88,8 @@
                         'X-CSRF-TOKEN': token
                     },
                     body: JSON.stringify({
-                        recipe_id: favoriteId, // Pass favoriteId instead of recipeId
-                        calories: calories // Pass the retrieved calories value
+                        recipe_id: recipeId,
+                        calories: calories
                     })
                 })
                 .then(response => {

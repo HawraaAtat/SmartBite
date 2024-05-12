@@ -42,21 +42,25 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
 
-        $client =  new Client();
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/'.$request->input('recipe_id').'/information',
-        [
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $request->input('recipe_id') . '/information', [
             'query' => [
                 'apiKey' => env('API_KEY'),
             ]
         ]);
 
         if ($response->getStatusCode() == 200) {
-            Favorite::create([
+            $recipeData = [
                 'user_id' => $user->id,
-                'recipe_id' => $request->input('recipe_id'),
-                'calories' =>  $request->input('calories'),
+                'calories' => $request->input('calories'),
                 'recipe' => $response->getBody()
-            ]);
+            ];
+
+            Favorite::updateOrCreate(
+                ['user_id' => $user->id, 'recipe_id' => $request->input('recipe_id')],
+                $recipeData
+            );
+
             return response(['message' => 'Recipe favorited successfully.']);
         } else {
             return response(['error' => 'Failed to fetch recipe.'], $response->getStatusCode());
@@ -74,7 +78,7 @@ class FavoriteController extends Controller
         $favorite = $user->favorites()->where('recipe_id', $recipeId)->first();
         if ($favorite) {
             $favorite->delete();
-            return response()->json(['message' => 'Recipe unfavorited successfully.'], 200);
+            return response(['message' => 'Recipe unfavorited successfully.']);
         }
 
         return response(['message' => 'Recipe not found in favorites.']);
