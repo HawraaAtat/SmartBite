@@ -56,7 +56,7 @@ class AuthController extends Controller
 
     public function createUser()
     {
-        return view('Authentication.signup');
+        return view('Authentication.signup')->withHeaders(['Cache-Control' => 'no-store']);
     }
 
 

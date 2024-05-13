@@ -696,7 +696,7 @@
                                         @php
                                         $isFavorite = Auth::user()->favorites->contains('recipe_id', $result['id']);
                                         @endphp
-                                        <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}"
+                                        <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="margin-left:20px"
                                             style="color: {{ $isFavorite ? 'red' : 'black' }};"
                                             data-recipe-id="{{ $result['id'] }}"
                                             data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>

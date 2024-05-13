@@ -170,7 +170,6 @@
                                     <div id="collapseIntolerances" class="accordion-collapse collapse" aria-labelledby="headingIntolerances" data-bs-parent="#accordion-two">
                                         <div class="accordion-body-text">
                                             <div class="mb-4">
-                                                <label class="form-label">Intolerances</label>
                                                 <div class="row">
                                                     <div class="column">
                                                         <div class="radio square-radio">
@@ -178,7 +177,7 @@
                                                             @foreach($intolerances as $index => $allergen)
                                                             @if($index < $columnIntolerances)
                                                             <label class="radio-label">{{ $allergen }}
-                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}">
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ (is_array(old('allergies')) and in_array($allergen, old('allergies'))) ? ' checked' : '' }}>
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                             @endif
@@ -190,7 +189,7 @@
                                                             @foreach($intolerances as $index => $allergen)
                                                             @if($index >= $columnIntolerances && $index < ($columnIntolerances * 2))
                                                             <label class="radio-label">{{ $allergen }}
-                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}">
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ (is_array(old('allergies')) and in_array($allergen, old('allergies'))) ? ' checked' : '' }}>
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                             @endif
@@ -202,7 +201,7 @@
                                                             @foreach($intolerances as $index => $allergen)
                                                             @if($index >= ($columnIntolerances * 2))
                                                             <label class="radio-label">{{ $allergen }}
-                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}">
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ (is_array(old('allergies')) and in_array($allergen, old('allergies'))) ? ' checked' : '' }}>
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                             @endif
@@ -229,7 +228,6 @@
                                     <div id="collapseDiseases" class="accordion-collapse collapse" aria-labelledby="headingDiseases" data-bs-parent="#accordion-two">
                                         <div class="accordion-body-text">
                                             <div class="mb-4">
-                                                <label class="form-label">Chronic Diseases</label>
                                                 <div class="row">
                                                     <div class="column">
                                                         <div class="radio square-radio">
@@ -237,8 +235,8 @@
                                                             @foreach($diseases as $index => $disease)
                                                             @if($index < $columnDiseases)
                                                             <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
-                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}">
-                                                                <span class="checkmark"></span>
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ (is_array(old('chronic_diseases')) and in_array($disease, old('chronic_diseases'))) ? ' checked' : '' }}>
+                                                                <span class="checkmark"></span>                                                                <span class="checkmark"></span>
                                                             </label>
                                                             @endif
                                                             @endforeach
@@ -249,7 +247,7 @@
                                                             @foreach($diseases as $index => $disease)
                                                             @if($index >= $columnDiseases && $index < ($columnDiseases * 2))
                                                             <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
-                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}">
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ (is_array(old('chronic_diseases')) and in_array($disease, old('chronic_diseases'))) ? ' checked' : '' }}>
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                             @endif
@@ -261,7 +259,7 @@
                                                             @foreach($diseases as $index => $disease)
                                                             @if($index >= ($columnDiseases * 2))
                                                             <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
-                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}">
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ (is_array(old('chronic_diseases')) and in_array($disease, old('chronic_diseases'))) ? ' checked' : '' }}>
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                             @endif

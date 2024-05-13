@@ -19,10 +19,18 @@ use App\Http\Controllers\RecipeController;
 */
 
 Route::middleware('not_authenticated')->group(function () {
-    Route::get('/welcome', function () { return view('welcome'); });
-    Route::get('/', function () { return view('onboarding'); });
+    Route::get('/welcome', function () {
+        return response(view('welcome'))->header('Cache-Control', 'no-store');
+    });
 
-    Route::get('login', function () { return view('Authentication/login'); });
+    Route::get('/', function () {
+        return response(view('onboarding'))->header('Cache-Control', 'no-store');
+    });
+
+    Route::get('login', function () {
+        return response(view('Authentication/login'))->header('Cache-Control', 'no-store');
+    });
+
     Route::post('login', [AuthController::class, 'login'])->name('login');
 
     Route::get('signup', [AuthController::class, 'createUser'])->name('signup');
