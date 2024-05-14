@@ -1,4 +1,17 @@
 @include('layout.header')
+<style>
+    .column {
+        float: left;
+        width: 33.33%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
 <div class="page-wrapper">
     <!-- Preloader -->
     <div id="preloader">
@@ -77,27 +90,121 @@
                             </div>
                         </div>
 
-
-                        <div class="mb-4">
-                            <div class="input-group input-mini input-lg">
-                                <select class="form-control select2" name="allergies[]" multiple>
-                                    <option value=""></option>
-                                    @foreach(App\Enums\AllergensEnum::getValues() as $allergen)
-                                    <option value="{{ $allergen }}">{{ $allergen }}</option>
-                                    @endforeach
-                                </select>
+                        <div>
+                            <label class="form-label">Intolerances</label>
+                            <div class="accordion accordion-primary" id="accordion-two">
+                                <div class="accordion-item">
+                                    <div class="accordion-header collapsed" id="headingIntolerances" data-bs-toggle="collapse" data-bs-target="#collapseIntolerances" aria-expanded="false" aria-controls="collapseIntolerances" role="button">
+                                        <span class="accordion-header-icon"></span>
+                                        <span class="accordion-header-text">Any food intolerances?</span>
+                                        <span class="accordion-header-indicator"></span>
+                                    </div>
+                                    <div id="collapseIntolerances" class="accordion-collapse collapse" aria-labelledby="headingIntolerances" data-bs-parent="#accordion-two">
+                                        <div class="accordion-body-text">
+                                            <div class="mb-4">
+                                                <label class="form-label">Intolerances</label>
+                                                <div class="row">
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @php $intolerances = App\Enums\AllergensEnum::getValues(); $totalIntolerances = count($intolerances); $columnIntolerances = ceil($totalIntolerances / 3); @endphp
+                                                            @foreach($intolerances as $index => $allergen)
+                                                            @if($index < $columnIntolerances)
+                                                            <label class="radio-label">{{ $allergen }}
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ in_array($allergen, $user->allergies) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @foreach($intolerances as $index => $allergen)
+                                                            @if($index >= $columnIntolerances && $index < ($columnIntolerances * 2))
+                                                            <label class="radio-label">{{ $allergen }}
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ in_array($allergen, $user->allergies) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @foreach($intolerances as $index => $allergen)
+                                                            @if($index >= ($columnIntolerances * 2))
+                                                            <label class="radio-label">{{ $allergen }}
+                                                                <input type="checkbox" name="allergies[]" value="{{ $allergen }}" {{ in_array($allergen, $user->allergies) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <div class="input-group input-mini input-lg">
-                                <select class="form-control select2" name="chronic_diseases[]" multiple>
-                                    <option value=""></option>
-                                    @foreach(App\Enums\ChronicDiseasesEnum::getValues() as $diseases)
-                                    <option value="{{ $diseases }}">{{
-                                        App\Enums\ChronicDiseasesEnum::getDescription($diseases) }}</option>
-                                    @endforeach
-                                </select>
+                        <div>
+                            <label class="form-label">Chronic Diseases</label>
+                            <div class="accordion accordion-primary" id="accordion-two">
+                                <div class="accordion-item">
+                                    <div class="accordion-header collapsed" id="headingDiseases" data-bs-toggle="collapse" data-bs-target="#collapseDiseases" aria-expanded="false" aria-controls="collapseDiseases" role="button">
+                                        <span class="accordion-header-icon"></span>
+                                        <span class="accordion-header-text">Any chronic conditions?</span>
+                                        <span class="accordion-header-indicator"></span>
+                                    </div>
+                                    <div id="collapseDiseases" class="accordion-collapse collapse" aria-labelledby="headingDiseases" data-bs-parent="#accordion-two">
+                                        <div class="accordion-body-text">
+                                            <div class="mb-4">
+                                                <label class="form-label">Chronic Diseases</label>
+                                                <div class="row">
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @php $diseases = App\Enums\ChronicDiseasesEnum::getValues(); $totalDiseases = count($diseases); $columnDiseases = ceil($totalDiseases / 3); @endphp
+                                                            @foreach($diseases as $index => $disease)
+                                                            @if($index < $columnDiseases)
+                                                            <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ in_array($disease, $user->chronic_diseases) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @foreach($diseases as $index => $disease)
+                                                            @if($index >= $columnDiseases && $index < ($columnDiseases * 2))
+                                                            <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ in_array($disease, $user->chronic_diseases) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="column">
+                                                        <div class="radio square-radio">
+                                                            @foreach($diseases as $index => $disease)
+                                                            @if($index >= ($columnDiseases * 2))
+                                                            <label class="radio-label">{{ App\Enums\ChronicDiseasesEnum::getDescription($disease) }}
+                                                                <input type="checkbox" name="chronic_diseases[]" value="{{ $disease }}" {{ in_array($disease, $user->chronic_diseases) ? 'checked' : '' }}>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            @endif
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

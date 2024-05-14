@@ -117,9 +117,9 @@
                             </div>
                             <div class="dz-content">
                                 <p class="sub-title">Food Intolerances</p>
-                                @if($user->intolerances != null && count($user->intolerances) > 0)
-                                @foreach($user->intolerances as $intolerance)
-                                <h6 class="title">{{ $intolerance }}</h6>
+                                @if($user->allergies != null && count($user->allergies) > 0)
+                                @foreach($user->allergies as $allergie)
+                                <h6 class="title">{{ $allergie }}</h6>
                                 @endforeach
                                 @else
                                 <h6 class="title">None</h6>
