@@ -102,7 +102,6 @@
                                     <div id="collapseIntolerances" class="accordion-collapse collapse" aria-labelledby="headingIntolerances" data-bs-parent="#accordion-two">
                                         <div class="accordion-body-text">
                                             <div class="mb-4">
-                                                <label class="form-label">Intolerances</label>
                                                 <div class="row">
                                                     <div class="column">
                                                         <div class="radio square-radio">
@@ -161,7 +160,6 @@
                                     <div id="collapseDiseases" class="accordion-collapse collapse" aria-labelledby="headingDiseases" data-bs-parent="#accordion-two">
                                         <div class="accordion-body-text">
                                             <div class="mb-4">
-                                                <label class="form-label">Chronic Diseases</label>
                                                 <div class="row">
                                                     <div class="column">
                                                         <div class="radio square-radio">
