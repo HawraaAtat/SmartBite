@@ -213,6 +213,9 @@ class AuthController extends Controller
 
         $validatedData['ethical_meal_considerations'] = $request->has('ethical_meal_considerations') ? true : false;
 
+        $validatedData['chronic_diseases'] = $validatedData['chronic_diseases'] ?? [];
+        $validatedData['allergies'] = $validatedData['allergies'] ?? [];
+
         $user = User::findOrFail($id);
         $user->fill($validatedData);
 
