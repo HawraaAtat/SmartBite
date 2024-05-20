@@ -20,7 +20,6 @@
                     style="background-color: white; background-size: cover; background-repeat: no-repeat;">
                     <div class="main-wrapper">
                         <div class="bg-shape">
-                            <img class="vector-1" src="assets/images/welcome/vector1.svg" alt="">
                             <img class="vector-2" src="assets/images/welcome/vector2.svg" alt="">
                         </div>
                         <div class="main-logo">
