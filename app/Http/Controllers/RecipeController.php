@@ -17,9 +17,10 @@ class RecipeController extends Controller
 {
     public function dashboard()
     {
-        // Path to the JSON files
-        $folderPath = public_path('FitbitData/16-04-2024');
+        $date = request()->has('date') ? request()->input('date') : '16-04-2024';
+        $folderPath = public_path('FitbitData/'. $date);
 
+        // Log::info('folderPath '. $folderPath );
         // Read JSON files
         $activities = json_decode(File::get($folderPath . '/activity.json'), true);
         $breathing  = json_decode(File::get($folderPath . '/breathing_rate.json'), true);
