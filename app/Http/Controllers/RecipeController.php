@@ -49,18 +49,18 @@ class RecipeController extends Controller
         $currentHour = $now->format('H');
         $total_calories = $calories_goal + $total_calories_burned - $database_calories;
 
-        if ($currentHour >= 6 && $currentHour < 11) {
+        if ($currentHour >= 6 && $currentHour < 12) {
             $mealType = "Breakfast";
-            $allowed_calories = $total_calories * 0.30;
-        } elseif ($currentHour >= 11 && $currentHour < 15) {
+            $allowed_calories = $total_calories * 0.22;
+        } elseif ($currentHour >= 12 && $currentHour < 15) {
             $mealType = "Lunch";
-            $allowed_calories = $total_calories * 0.35;
+            $allowed_calories = $total_calories * 0.31;
         } elseif ($currentHour >= 15 && $currentHour < 18) {
             $mealType = "Snack";
-            $allowed_calories = $total_calories * 0.10;
+            $allowed_calories = $total_calories * 0.22;
         } elseif ($currentHour >= 18 && $currentHour < 21) {
             $mealType = "Dinner";
-            $allowed_calories = $total_calories * 0.25;
+            $allowed_calories = $total_calories * 0.35;
         } else {
             $mealType = "It's not mealtime";
         }
@@ -71,9 +71,8 @@ class RecipeController extends Controller
         // Log::info('most_recent_temperature'.$most_recent_temperature);
         if ($most_recent_temperature > 38) {
             $minVitaminC = 10;
-            $minZinc = 15;
-            $maxSpice = 0;
-            $exclude_ingredients[] = 'coffee';
+            $minZinc = 1;
+	        $maxAlcohol=0;
         }
 
         $most_recent_sleep = end($sleep);
@@ -89,20 +88,17 @@ class RecipeController extends Controller
         } elseif ($hours_asleep < 7) {
             $sleep_quality = "insufficient";
             if ($currentHour >= 14) {
-                $exclude_ingredients[] = 'coffee';
-            }
+                $maxCaffeine = 20;              }
         } elseif ($hours_asleep > 9) {
             $sleep_quality = "excessive";
         } elseif ($hoursInBed > $hours_asleep + 1) {
             $sleep_quality = "disturbed";
             if ($currentHour >= 14) {
-                $exclude_ingredients[] = 'coffee';
-            }
+                $maxCaffeine = 20;              }
         } else {
             $sleep_quality = "poor";
             if ($currentHour >= 14) {
-                $exclude_ingredients[] = 'coffee';
-            }
+                $maxCaffeine = 20;              }
         }
 
         $most_recent_breathing = end($breathing['br']);
@@ -119,7 +115,7 @@ class RecipeController extends Controller
         } else {
             $breath_rate = "anormal";
             $heart_rate = "anormal";
-            $exclude_ingredients = array_merge($exclude_ingredients, array('coffee', 'hot sauce'));
+            $maxCaffeine = 0;
             $maxAlcohol = 0;
         }
 
@@ -157,36 +153,31 @@ class RecipeController extends Controller
                     case ChronicDiseasesEnum::DIABETES:
                     case ChronicDiseasesEnum::OBESITY_AND_OVERWEIGHT:
                     case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE:
-                        $maxSaturatedFat = 15;
-                        $maxSodium = 200;
-                        break;
                     case ChronicDiseasesEnum::CANCER:
-                        $maxSaturatedFat = 10;
-                        $maxSugar = 20;
+                        $maxSaturatedFat = 4.3;
+                        $minSodium = 100;
+                        $maxSugar = 10;
                         break;
                     case ChronicDiseasesEnum::RESPIRATORY_DISEASES:
-                        $maxSaturatedFat = 15;
-                        $maxSodium = 300;
+                        $maxSaturatedFat = 10;
+                        $minSodium = 100;
                         break;
                     case ChronicDiseasesEnum::ALZHEIMERS_AND_DEMENTIAS:
-                        $maxSaturatedFat = 15;
+                        $maxSaturatedFat = 10;
                         $maxCholesterol = 30;
                         break;
                     case ChronicDiseasesEnum::INFECTIOUS_DISEASES:
-                        $maxSaturatedFat = 15;
-                        $maxSugar = 20;
+                    case ChronicDiseasesEnum::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS:
+                        $maxSaturatedFat = 10;
+                        $maxSugar = 10;
                         break;
                     case ChronicDiseasesEnum::MENTAL_HEALTH_DISORDERS:
                         $maxSugar = 30;
                         break;
-                    case ChronicDiseasesEnum::OSTEOARTHRITIS_AND_RHEUMATOID_ARTHRITIS:
-                        $maxSaturatedFat = 15;
-                        $maxSugar = 20;
-                        break;
                     case ChronicDiseasesEnum::GASTROESOPHAGEAL_REFLUX_DISEASE:
-                        $maxSaturatedFat = 15;
-                        $maxSugar = 20;
-                        $maxCaffeine = 50;
+                        $maxSaturatedFat = 5;
+                        $maxSugar = 10;
+                        $maxCaffeine = 5;
                         break;
                     case ChronicDiseasesEnum::OTHER:
                         break;
@@ -207,6 +198,7 @@ class RecipeController extends Controller
                 'maxCalories' => $allowed_calories ?? null,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
+                'minSodium' => $minSodium ??null,
                 'maxSpice' => $maxSpice ?? null,
                 'exclude_ingredients' => $exclude_ingredients ?? null,
                 'sort' => 'healthiness' ?? null,
@@ -217,7 +209,6 @@ class RecipeController extends Controller
                 'diet' => request()->has('diet') ? implode(',', request()->input('diet')) : null,
                 'intolerances' => $intolerances ?? null,
                 'maxSaturatedFat' => $maxSaturatedFat ?? null,
-                'maxSodium' => $maxSodium ?? null,
                 'maxSugar' => $maxSugar ?? null,
                 'maxCaffeine' => $maxCaffeine ?? null,
                 'maxCholesterol' => $maxCholesterol ?? null,
