@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatBotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,7 @@ Route::group([ 'middleware' => ['auth:sanctum'] ], function () {
     Route::post('/logout', [SessionController::class, 'logout']);
     Route::post('/recipes', [RecipeController::class, 'index']);
 });
+
+
+Route::post('/sendchat', [ChatBotController::class, 'sendchat']);
+

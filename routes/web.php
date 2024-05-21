@@ -1,7 +1,12 @@
 <?php
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatListControllerr;
+use App\Http\Controllers\SpoonAPIchatController;
+use App\Http\Controllers\AccordionController;
+use App\Http\Controllers\SpoonacularAPIController;
+use App\Http\Controllers\FAQController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +34,21 @@ Route::get('/signin', function () {
     return view('Authentication/signin');
 });
 
+Route::get('/spoonchat', [SpoonAPIchatController::class, 'index'])->name('spoonchat');
+Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'store'])->name('spoonapi-chat');
+Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'create'])->name('spoonapi-foodlist');
+Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'store2'])->name('spoonapianswer');
+
+
+Route::get('/accordion', [AccordionController::class, 'index'])->name('accordion');
+Route::get('/searchbyingredients', [AccordionController::class, 'store'])->name('searchbyingredients');
+Route::get('/searchingredientinfo', [AccordionController::class, 'store2'])->name('searchingredientinfo');
+Route::get('/computeingredientamount', [AccordionController::class, 'store3'])->name('computeingredientamount');
+Route::get('/getingredientsubstitutes', [AccordionController::class, 'store4'])->name('getingredientsubstitutes');
+
+Route::get('/faq', [FAQController::class, 'index'])->name('faq');
+
+
 
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -50,3 +70,14 @@ Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forget-password', [AuthController::class, 'forgetPassword' ])->name('forget.password');
 
+
+
+
+Route::get('/chatbot', function () {
+    return view('chatbot'); 
+})->name('chatbot');
+
+
+Route::get('/chat', function () {
+    return view('chat'); 
+})->name('chat');

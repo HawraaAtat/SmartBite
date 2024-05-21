@@ -121,7 +121,7 @@
 				</a>
 			</li>
 			<li>
-				<a class="nav-link" href="components.html">
+				<a class="nav-link" href="{{route('accordion')}}">
 					<span class="dz-icon">
 						<i class="fi fi-rr-apps-add"></i>
 					</span>
@@ -137,7 +137,7 @@
 				</a>
 			</li>
 			<li>
-				<a class="nav-link" href="chat-list.html">
+				<a class="nav-link" href="{{ url('chatlist') }}">
 					<span class="dz-icon">
 						<i class="feather icon-message-circle"></i>
 					</span>
