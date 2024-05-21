@@ -134,7 +134,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li>
-                <a class="nav-link active" href="index.html">
+                <a class="nav-link active" href="{{ route('dashboard') }}">
                     <span class="dz-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -146,19 +146,15 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="my-order.html">
-                    <span class="dz-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M21.733 21.68C21.8274 21.5791 21.8999 21.4598 21.9458 21.3295C21.9918 21.1992 22.0102 21.0608 22 20.923L21 7.923C20.9806 7.67135 20.8667 7.43636 20.6813 7.26517C20.4958 7.09397 20.2524 6.99925 20 7H17C17 5.67392 16.4733 4.40215 15.5356 3.46447C14.5979 2.52678 13.3261 2 12 2C10.674 2 9.40219 2.52678 8.46451 3.46447C7.52682 4.40215 7.00004 5.67392 7.00004 7H4.00004C3.74764 6.99925 3.50429 7.09397 3.31882 7.26517C3.13335 7.43636 3.01947 7.67135 3.00004 7.923L2.00004 20.923C1.98941 21.0607 2.0074 21.199 2.05287 21.3294C2.09834 21.4597 2.17031 21.5793 2.26425 21.6804C2.35819 21.7816 2.47206 21.8622 2.5987 21.9172C2.72533 21.9722 2.86198 22.0004 3.00004 22H21C21.1377 22 21.2738 21.9715 21.3999 21.9165C21.5261 21.8614 21.6395 21.7809 21.733 21.68V21.68ZM12 4C12.7957 4 13.5588 4.31607 14.1214 4.87868C14.684 5.44129 15 6.20435 15 7H9.00004C9.00004 6.20435 9.31611 5.44129 9.87872 4.87868C10.4413 4.31607 11.2044 4 12 4V4ZM4.08004 20L4.92604 9H7.00004V11C7.00004 11.2652 7.1054 11.5196 7.29293 11.7071C7.48047 11.8946 7.73482 12 8.00004 12C8.26526 12 8.51961 11.8946 8.70715 11.7071C8.89468 11.5196 9.00004 11.2652 9.00004 11V9H15V11C15 11.2652 15.1054 11.5196 15.2929 11.7071C15.4805 11.8946 15.7348 12 16 12C16.2653 12 16.5196 11.8946 16.7071 11.7071C16.8947 11.5196 17 11.2652 17 11V9H19.074L19.92 20H4.08004Z"
-                                fill="#BDBDBD" />
-                        </svg>
+                <a class="nav-link" href="{{ route('favorites.index') }}">
+                <span class="dz-icon">
+                        <i class="fi fi-rr-heart"></i>
                     </span>
-                    <span>My Order</span>
+                    <span>Favorites</span>
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="payment.html">
+                <a class="nav-link" href="{{ route('meal-history.index') }}">
                     <span class="dz-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -181,43 +177,26 @@
                                 fill="#BDBDBD" />
                         </svg>
                     </span>
-                    <span>Transactions</span>
+                    <span>History</span>
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="pages.html">
+                <a class="nav-link" href="{{ route('spoonchat') }}">
                     <span class="dz-icon">
-                        <i class="fi fi-rr-diamond"></i>
+                    <i class="feather icon-message-circle"></i>
                     </span>
-                    <span>Pages</span>
+                    <span>Chatbot</span>
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="components.html">
+                <a class="nav-link" href="{{ route('assistant') }}">
                     <span class="dz-icon">
-                        <i class="fi fi-rr-apps-add"></i>
-                    </span>
-                    <span>Components</span>
+<svg fill="#B0ACB3" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511 511" xml:space="preserve" stroke="#B0ACB3" stroke-width="13.286000000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M391.5,0c-4.142,0-7.5,3.358-7.5,7.5v120c0,4.687-3.813,8.5-8.5,8.5s-8.5-3.813-8.5-8.5V7.5c0-4.142-3.358-7.5-7.5-7.5 S352,3.358,352,7.5v120c0,4.687-3.813,8.5-8.5,8.5s-8.5-3.813-8.5-8.5V7.5c0-4.142-3.358-7.5-7.5-7.5S320,3.358,320,7.5v120 c0,4.687-3.813,8.5-8.5,8.5s-8.5-3.813-8.5-8.5V7.5c0-4.142-3.358-7.5-7.5-7.5S288,3.358,288,7.5v160 c0,12.958,10.542,23.5,23.5,23.5c4.687,0,8.5,3.813,8.5,8.5v73.409c-13.759,3.374-24,15.806-24,30.591v160 c0,26.191,21.309,47.5,47.5,47.5s47.5-21.309,47.5-47.5v-160c0-14.785-10.241-27.216-24-30.591V199.5c0-4.687,3.813-8.5,8.5-8.5 c12.958,0,23.5-10.542,23.5-23.5V7.5C399,3.358,395.642,0,391.5,0z M376,303.5v160c0,17.92-14.58,32.5-32.5,32.5 S311,481.42,311,463.5v-160c0-9.098,7.402-16.5,16.5-16.5h32C368.598,287,376,294.402,376,303.5z M375.5,176 c-12.958,0-23.5,10.542-23.5,23.5V272h-17v-72.5c0-12.958-10.542-23.5-23.5-23.5c-4.687,0-8.5-3.813-8.5-8.5v-18.097 c2.638,1.027,5.503,1.597,8.5,1.597c6.177,0,11.801-2.399,16-6.31c4.199,3.911,9.823,6.31,16,6.31s11.801-2.399,16-6.31 c4.199,3.911,9.823,6.31,16,6.31c2.997,0,5.862-0.57,8.5-1.597V167.5C384,172.187,380.187,176,375.5,176z"></path> <path d="M183.5,0c-20.479,0-38.826,11.623-51.663,32.728C118.86,54.064,112,84.07,112,119.5c0,25.652,13.894,49.464,36.26,62.144 c7.242,4.105,11.74,12.106,11.74,20.88v70.385c-13.759,3.374-24,15.806-24,30.591v160c0,26.191,21.309,47.5,47.5,47.5 s47.5-21.309,47.5-47.5v-160c0-14.785-10.241-27.216-24-30.591v-70.385c0-8.774,4.499-16.775,11.74-20.88 C241.106,168.964,255,145.152,255,119.5c0-35.43-6.86-65.436-19.837-86.772C222.326,11.623,203.979,0,183.5,0z M216,303.5v160 c0,17.92-14.58,32.5-32.5,32.5S151,481.42,151,463.5v-160c0-9.098,7.402-16.5,16.5-16.5h32C208.598,287,216,294.402,216,303.5z M211.343,168.595C199.412,175.359,192,188.36,192,202.524V272h-17v-69.476c0-14.164-7.412-27.165-19.342-33.929 C137.981,158.574,127,139.762,127,119.5c0-32.68,6.104-59.99,17.653-78.978C154.809,23.826,168.242,15,183.5,15 s28.691,8.826,38.847,25.522C233.896,59.51,240,86.82,240,119.5C240,139.762,229.019,158.574,211.343,168.595z"></path> <path d="M191.5,304c-4.142,0-7.5,3.358-7.5,7.5v16c0,4.142,3.358,7.5,7.5,7.5s7.5-3.358,7.5-7.5v-16 C199,307.358,195.642,304,191.5,304z"></path> <path d="M191.5,352c-4.142,0-7.5,3.358-7.5,7.5v72c0,4.142,3.358,7.5,7.5,7.5s7.5-3.358,7.5-7.5v-72 C199,355.358,195.642,352,191.5,352z"></path> <path d="M351.5,304c-4.142,0-7.5,3.358-7.5,7.5v16c0,4.142,3.358,7.5,7.5,7.5s7.5-3.358,7.5-7.5v-16 C359,307.358,355.642,304,351.5,304z"></path> <path d="M351.5,352c-4.142,0-7.5,3.358-7.5,7.5v72c0,4.142,3.358,7.5,7.5,7.5s7.5-3.358,7.5-7.5v-72 C359,355.358,355.642,352,351.5,352z"></path> </g> </g></svg>                    </span>
+                    <span>Assistant</span>
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="products.html">
-                    <span class="dz-icon">
-                        <i class="fi fi-rr-box-open-full"></i>
-                    </span>
-                    <span>Products</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="chat-list.html">
-                    <span class="dz-icon">
-                        <i class="feather icon-message-circle"></i>
-                    </span>
-                    <span>Chat List</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-link" href="profile.html">
+                <a class="nav-link"href="{{ route('profile') }}">
                     <span class="dz-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_329_300)">
@@ -236,10 +215,13 @@
                 </a>
             </li>
             <li>
-                <form action="{{route('logout')}}" method="POST"> @method('POST') @csrf <button type="submit">
+                <form action="{{route('logout')}}" method="POST"> @method('POST') @csrf<button type="submit" class="btn mb-2 me-2 btn-outline-danger" >
+
+
+
                         <a class="nav-link">
                             <span class="dz-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                <!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M16.65 3.10008C16.5318 3.04157 16.4033 3.00692 16.2717 2.9981C16.1401 2.98928 16.0081 3.00646 15.8831 3.04866C15.7582 3.09087 15.6428 3.15727 15.5435 3.24407C15.4442 3.33088 15.363 3.43639 15.3045 3.55458C15.246 3.67277 15.2114 3.80132 15.2025 3.9329C15.1937 4.06448 15.2109 4.19652 15.2531 4.32146C15.2953 4.4464 15.3617 4.5618 15.4485 4.66108C15.5353 4.76036 15.6408 4.84157 15.759 4.90008C17.4682 5.74788 18.8405 7.14857 19.6532 8.87467C20.4659 10.6008 20.6712 12.5509 20.2358 14.4084C19.8004 16.2659 18.7499 17.9217 17.2548 19.1069C15.7597 20.292 13.9079 20.937 12 20.937C10.0922 20.937 8.24035 20.292 6.74526 19.1069C5.25018 17.9217 4.19964 16.2659 3.76424 14.4084C3.32885 12.5509 3.53417 10.6008 4.34687 8.87467C5.15956 7.14857 6.5319 5.74788 8.24102 4.90008C8.47972 4.78192 8.6617 4.57379 8.74694 4.32146C8.83217 4.06913 8.81368 3.79327 8.69553 3.55458C8.57737 3.31588 8.36924 3.1339 8.11691 3.04866C7.86458 2.96343 7.58872 2.98192 7.35002 3.10008C5.23724 4.14875 3.54096 5.88079 2.5366 8.01498C1.53223 10.1492 1.27875 12.5602 1.81731 14.8566C2.35587 17.153 3.65485 19.2 5.50334 20.6651C7.35184 22.1302 9.64131 22.9275 12 22.9275C14.3587 22.9275 16.6482 22.1302 18.4967 20.6651C20.3452 19.2 21.6442 17.153 22.1827 14.8566C22.7213 12.5602 22.4678 10.1492 21.4635 8.01498C20.4591 5.88079 18.7628 4.14875 16.65 3.10008V3.10008Z"
@@ -247,7 +229,7 @@
                                     <path
                                         d="M12 13.0001C12.2652 13.0001 12.5196 12.8948 12.7071 12.7072C12.8947 12.5197 13 12.2654 13 12.0001V2.00012C13 1.73491 12.8947 1.48055 12.7071 1.29302C12.5196 1.10548 12.2652 1.00012 12 1.00012C11.7348 1.00012 11.4804 1.10548 11.2929 1.29302C11.1054 1.48055 11 1.73491 11 2.00012V12.0001C11 12.2654 11.1054 12.5197 11.2929 12.7072C11.4804 12.8948 11.7348 13.0001 12 13.0001Z"
                                         fill="#FF8484" />
-                                </svg>
+                                </svg> -->
                             </span>
                             <span>Log Out</span>
                         </a>
@@ -263,7 +245,7 @@
                 </div>
             </div>
             <div class="app-info">
-                <h6 class="name">Ombe Coffee Shop</h6>
+                <h6 class="name">Smart Bite</h6>
                 <span class="ver-info">App Version 1.1</span>
             </div>
         </div>
@@ -282,10 +264,14 @@
                 </div>
                 <div class="mid-content"></div>
                 <div class="right-content d-flex align-items-center gap-4">
-                    <a href="notification.html" class="notification-badge font-20 badge">
+                <a href="{{ route('spoonchat') }}" class="notification-badge font-20 badge">
 
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" id="Bot"><g fill="none" fill-rule="evenodd"><path stroke="#4a4a4a" stroke-linecap="round" d="M7.707 22.293A1 1 0 0 1 6 21.586V20H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-2.293 2.293z" class="colorStroke4a4a4a svgStroke"></path><path stroke="#4a4a4a" stroke-linecap="square" d="M12.5 6.5v-1" class="colorStroke4a4a4a svgStroke"></path><circle cx="8.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="16.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="12.5" cy="3.5" r="1.5" stroke="#4a4a4a" class="colorStroke4a4a4a svgStroke"></circle><rect width="4" height="1" x="10.5" y="17.5" stroke="#4a4a4a" rx=".5" class="colorStroke4a4a4a svgStroke"></rect><path stroke="#4a4a4a" stroke-linecap="round" d="M8 17c-1.657 0-3-1.567-3-3.5S6.343 10 8 10h9c1.657 0 3 1.567 3 3.5S18.657 17 17 17" class="colorStroke4a4a4a svgStroke"></path></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" id="Bot"><g fill="none" fill-rule="evenodd"><path stroke="#4a4a4a" stroke-linecap="round" d="M7.707 22.293A1 1 0 0 1 6 21.586V20H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-2.293 2.293z" class="colorStroke4a4a4a svgStroke"></path><path stroke="#4a4a4a" stroke-linecap="square" d="M12.5 6.5v-1" class="colorStroke4a4a4a svgStroke"></path><circle cx="8.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="16.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="12.5" cy="3.5" r="1.5" stroke="#4a4a4a" class="colorStroke4a4a4a svgStroke"></circle><rect width="4" height="1" x="10.5" y="17.5" stroke="#4a4a4a" rx=".5" class="colorStroke4a4a4a svgStroke"></rect><path stroke="#4a4a4a" stroke-linecap="round" d="M8 17c-1.657 0-3-1.567-3-3.5S6.343 10 8 10h9c1.657 0 3 1.567 3 3.5S18.657 17 17 17" class="colorStroke4a4a4a svgStroke"></path></g></svg>
                     </a>
+                   
+</a>
+
+
                     <a href="javascript:void(0);" class="icon dz-floating-toggler">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect y="2" width="20" height="3" rx="1.5" fill="#5F5F5F" />
@@ -800,19 +786,21 @@
                                         @endif
                                     </div>
                                     <div>
-                                        @php
-                                        $isFavorite = Auth::user()->favorites->contains('recipe_id', $result['id']);
-                                        @endphp
-                                        <i class="heart-icon fa fa-heart{{ $isFavorite ? ' active' : '' }}" style="margin-left:20px"
-                                            style="color: {{ $isFavorite ? 'red' : 'black' }};"
-                                            data-recipe-id="{{ $result['id'] }}"
-                                            data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
+                                    @php
+$userFavorites = Auth::user()->favorites->pluck('recipe_id')->toArray();
+@endphp
+
+
+                    <i class="heart-icon fa fa-heart{{ in_array($result['id'], $userFavorites) ? ' active' : '' }}" style="margin-left:20px; color: {{ in_array($result['id'], $userFavorites) ? 'red' : 'black' }};"
+                        data-recipe-id="{{ $result['id'] }}"
+                        data-calories="{{ $result['nutrition']['nutrients'][0]['amount'] }}"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+@endforeach
+
                     @else
                     <p>No recipes found.</p>
                     @endif
