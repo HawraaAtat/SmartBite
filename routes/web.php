@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\MealHistoryController;
+use App\Http\Controllers\SpoonAPIchatController;
+use App\Http\Controllers\AccordionController;
 
 use App\Http\Controllers\RecipeController;
 
@@ -64,8 +66,23 @@ Route::middleware('authenticated')->group(function () {
 
     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('edit-password');
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
+
+    Route::get('/spoonchat', [SpoonAPIchatController::class, 'index'])->name('spoonchat');
+Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'store'])->name('spoonapi-chat');
+Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'create'])->name('spoonapi-foodlist');
+Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'store2'])->name('spoonapianswer');
 });
 
 Route::fallback(function () {
     return view('404-not-found');
 });
+
+
+
+
+
+Route::get('/assistant', [AccordionController::class, 'index'])->name('assistant');
+Route::get('/searchbyingredients', [AccordionController::class, 'store'])->name('searchbyingredients');
+Route::get('/searchingredientinfo', [AccordionController::class, 'store2'])->name('searchingredientinfo');
+Route::get('/computeingredientamount', [AccordionController::class, 'store3'])->name('computeingredientamount');
+Route::get('/getingredientsubstitutes', [AccordionController::class, 'store4'])->name('getingredientsubstitutes');
