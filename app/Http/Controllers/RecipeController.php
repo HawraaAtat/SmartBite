@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+
 // use Illuminate\Support\Facades\Log;
 
 class RecipeController extends Controller
@@ -188,6 +190,22 @@ class RecipeController extends Controller
         $unique_ingredients_array = array_unique($exclude_ingredients);
         $exclude_ingredients = implode(',', $unique_ingredients_array);
 
+        //saturated fat sum over a week
+        $oneWeekAgo = Carbon::now()->subWeek();
+
+        $history = MealHistory::where('user_id', $user->id)
+            ->whereBetween('created_at', [$oneWeekAgo, $now])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $saturated_fat_week_percentage = 0;
+        foreach ($history as $data) {
+            $saturated_fat_week_percentage += $data['saturated_fat'];
+        }
+        if($saturated_fat_week_percentage > 700){
+            $maxSaturatedFat = 0;
+        };
+
         //spoonacular
         $client = new Client();
 
@@ -215,6 +233,8 @@ class RecipeController extends Controller
                 'number' => '200',
             ]
         ];
+
+        Log::info($params);
 
         $response = $client->request('GET', 'https://api.spoonacular.com/recipes/complexSearch', $params);
 
