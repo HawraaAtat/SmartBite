@@ -155,12 +155,12 @@ class RecipeController extends Controller
                     case ChronicDiseasesEnum::CHRONIC_KIDNEY_DISEASE:
                     case ChronicDiseasesEnum::CANCER:
                         $maxSaturatedFat = 4.3;
-                        $minSodium = 100;
-                        $maxSugar = 10;
+                        $minSodium = 50;
+                        $maxSugar = 8;
                         break;
                     case ChronicDiseasesEnum::RESPIRATORY_DISEASES:
                         $maxSaturatedFat = 10;
-                        $minSodium = 100;
+                        $minSodium = 50;
                         break;
                     case ChronicDiseasesEnum::ALZHEIMERS_AND_DEMENTIAS:
                         $maxSaturatedFat = 10;
