@@ -48,23 +48,34 @@ class MealHistoryController extends Controller
         $user = Auth::user();
 
         $client = new Client();
-        $response = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $request->input('recipe_id') . '/information', [
+        $recipe_detail = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $request->input('recipe_id') . '/information', [
             'query' => [
                 'apiKey' => env('API_KEY'),
             ]
         ]);
+        $recipe_nutrition = $client->request('GET', 'https://api.spoonacular.com/recipes/' . $request->input('recipe_id') . '/nutritionWidget.json', [
+            'query' => [
+                'apiKey' => env('API_KEY'),
+            ]
+        ]);
+        $decoded_recipe_nutrition = json_decode($recipe_nutrition->getBody(), true);
+        $calories = floatval($decoded_recipe_nutrition['calories']);
+        $saturatedFat = floatval($decoded_recipe_nutrition['bad'][2]['percentOfDailyNeeds']);
 
-        if ($response->getStatusCode() == 200) {
-            $recipe = json_decode($response->getBody(), true);
+        if ($recipe_detail->getStatusCode() == 200) {
+            $recipe = json_decode($recipe_detail->getBody(), true);
 
-            MealHistory::updateOrCreate(
-                ['user_id' => $user->id, 'recipe_id' =>  $request->input('recipe_id')],
-                ['calories' => $request->input('calories'), 'recipe' => json_encode($recipe)]
-            );
+            MealHistory::create([
+                'user_id' => $user->id,
+                'recipe_id' => $request->input('recipe_id'),
+                'calories' => $calories,
+                'saturated_fat' => $saturatedFat,
+                'recipe' => json_encode($recipe)
+            ]);
 
             return response(['message' => 'Meal history stored successfully']);
         } else {
-            return response(['error' => 'Failed to fetch recipe.'], $response->getStatusCode());
+            return response(['error' => 'Failed to fetch recipe.'], $recipe_detail->getStatusCode());
         }
     }
 }
