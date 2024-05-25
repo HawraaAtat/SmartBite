@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
 
@@ -31,6 +32,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('authToken')->accessToken;
+            $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
         return redirect()->back()->withErrors(['email' => 'Invalid credentials'])->withInput($request->only('email'));
@@ -66,8 +68,8 @@ class AuthController extends Controller
             'first_name' => ['required', 'min:3'],
             'last_name' => ['required', 'min:3'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:6'],
-            'password_confirmation' => ['required', 'string', 'min:6', 'same:password'],
+            'password' => ['required', 'string', Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
+            'password_confirmation' => ['required', 'same:password'],
             'chronic_diseases' => ['nullable', 'array', new ChronicDiseasesRule],
             'allergies' => ['nullable', 'array', new AllergensRule],
             'ethical_meal_considerations' => ['nullable', 'boolean'],
@@ -237,11 +239,8 @@ class AuthController extends Controller
                     $fail('The current password is incorrect.');
                 }
             }],
-            'new_password' => 'required|string|min:8|confirmed',
-        ], [
-            'new_password.required' => 'Please enter a new password.',
-            'new_password.min' => 'The new password must be at least :min characters.',
-            'new_password.confirmed' => 'The new password confirmation does not match.',
+            'new_password' => ['required', 'string', Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
+            'new_password_confirmation' => ['required', 'same:new_password'],
         ]);
 
         // If validation fails, throw ValidationException
