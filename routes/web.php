@@ -33,7 +33,7 @@ Route::middleware('not_authenticated')->group(function () {
         return response(view('Authentication/login'))->header('Cache-Control', 'no-store');
     });
 
-    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login')->middleware('throttle:5,1');
 
     Route::get('signup', [AuthController::class, 'createUser'])->name('signup');
     Route::post('signup', [AuthController::class, 'signup'])->name('signup');
