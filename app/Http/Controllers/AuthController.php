@@ -254,4 +254,19 @@ class AuthController extends Controller
 
         return redirect()->route('profile')->with('success', 'Password updated successfully.');
     }
+    public function faq()
+    {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        return view('faq', compact('user'));
+    }
+
+    public function contact()
+    {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        return view('contact', compact('user'));
+    }
 }

@@ -6,7 +6,8 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\MealHistoryController;
 use App\Http\Controllers\SpoonAPIchatController;
 use App\Http\Controllers\AccordionController;
-
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\RecipeController;
 
 /*
@@ -86,3 +87,13 @@ Route::get('/searchbyingredients', [AccordionController::class, 'store'])->name(
 Route::get('/searchingredientinfo', [AccordionController::class, 'store2'])->name('searchingredientinfo');
 Route::get('/computeingredientamount', [AccordionController::class, 'store3'])->name('computeingredientamount');
 Route::get('/getingredientsubstitutes', [AccordionController::class, 'store4'])->name('getingredientsubstitutes');
+
+Route::get('faq', [AuthController::class, 'faq'])->name('faq');
+Route::get('contact', [AuthController::class, 'contact'])->name('contact');
+
+Route::post('contactUs', [ContactController::class, 'store'])->name('contactUs');
+Route::post('/send-email', [MailController::class, 'sendEmail'])->name('sendEmail');
+
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
