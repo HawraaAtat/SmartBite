@@ -268,7 +268,7 @@
 
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" id="Bot"><g fill="none" fill-rule="evenodd"><path stroke="#4a4a4a" stroke-linecap="round" d="M7.707 22.293A1 1 0 0 1 6 21.586V20H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H10l-2.293 2.293z" class="colorStroke4a4a4a svgStroke"></path><path stroke="#4a4a4a" stroke-linecap="square" d="M12.5 6.5v-1" class="colorStroke4a4a4a svgStroke"></path><circle cx="8.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="16.5" cy="13.5" r="1.5" fill="#04764e" class="color4a4a4a svgShape"></circle><circle cx="12.5" cy="3.5" r="1.5" stroke="#4a4a4a" class="colorStroke4a4a4a svgStroke"></circle><rect width="4" height="1" x="10.5" y="17.5" stroke="#4a4a4a" rx=".5" class="colorStroke4a4a4a svgStroke"></rect><path stroke="#4a4a4a" stroke-linecap="round" d="M8 17c-1.657 0-3-1.567-3-3.5S6.343 10 8 10h9c1.657 0 3 1.567 3 3.5S18.657 17 17 17" class="colorStroke4a4a4a svgStroke"></path></g></svg>
                     </a>
-                   
+
 </a>
 
 
@@ -297,6 +297,10 @@
                                 <option value="16-02-2024">16-02-2024</option>
                                 <option value="17-03-2024">17-03-2024</option>
                                 <option value="16-04-2024">16-04-2024</option>
+                                <option value="high-calorie-burnt">High Calorie Burnt</option>
+                                <option value="insufficient-sleep">Insufficient Sleep</option>
+                                <option value="high-core-temperature">High Core Temperature</option>
+                                <option value="high-heart-rate">High Heart Rate</option>
                             </select>
                         </div>
                     </div>
