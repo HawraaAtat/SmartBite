@@ -30,7 +30,6 @@
         }
         .recipe-button {
             margin-top: 10px;
-            margin-left: 25%;
             padding: 5px 10px;
             background: var(--primary);
             color: #fff;
@@ -65,6 +64,7 @@
                             @foreach ($menuItems as $item)
                             <div>
                                 <div>{{ $counter }}. {{ $item['name'] }}</div>
+                                <br>
                                 <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" style="max-width: 100px;">
                                 <button onclick="fetchRecipe({{ $item['id'] }})" class="recipe-button" data-recipe-id="{{ $item['id'] }}">
                                     Get Recipe

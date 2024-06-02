@@ -52,6 +52,14 @@
 
         <!-- Chat Footer -->
         <div class="chat-footer">
+        <div id="scroll-bottom-btn" style="margin-left:50%; display: inline-block; width: 30px; height: 30px; border-radius: 50%; background-color: white; overflow: hidden; visibility: hidden;">
+        <button class="btn scroll-bottom-btn" style="width: 100%; height: 100%; padding: 0; border: none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12L12 19L19 12" stroke="#04764e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        </div>
+
             <form id="chat-form">
                 <div class="form-group boxed">
                     <div class="input-wrapper message-area input-lg">
@@ -80,12 +88,36 @@
             });
 
             function isLogicalInput(input) {
-                const logicalKeywords = ["eat", "food", "recipe", "restaurant", "cooking", "cuisine", "dish", "appetizer", "main course", "dessert", "snack", "ingredients", "flavor", "taste", "spice", "seasoning", "baking", "grilling", "roasting", "frying", "boiling", "steaming", "sauteing", "simmering", "marinating", "mixing", "chopping", "slicing", "dicing", "garnish", "presentation", "nutrients", "healthy", "organic", "fresh", "local", "international", "fusion", "gourmet", "comfort food", "fast food", "fine dining", "buffet", "takeout", "delivery", "meal prep", "vegetarian", "vegan", "gluten-free", "dairy-free", "allergy-friendly", "farm-to-table", "sustainable", "cook", "bake", "grill", "roast", "fry", "boil", "steam", "saute", "simmer", "marinate", "mix", "chop", "slice", "dice"];
+                const logicalKeywords = [
+            "something", "eat", "food", "recipe", "restaurant", "cooking", "cuisine", 
+            "dish", "appetizer", "main course", "dessert", "snack", "ingredients", 
+            "flavor", "taste", "spice", "seasoning", "baking", "grilling", "roasting", 
+            "frying", "boiling", "steaming", "sauteing", "simmering", "marinating", 
+            "mixing", "chopping", "slicing", "dicing", "garnish", "presentation", 
+            "nutrients", "healthy", "organic", "fresh", "local", "international", 
+            "fusion", "gourmet", "comfort food", "fast food", "fine dining", "buffet", 
+            "takeout", "delivery", "meal prep", "vegetarian", "vegan", "gluten-free", 
+            "dairy-free", "allergy-friendly", "farm-to-table", "sustainable", 
+            "cook", "bake", "grill", "roast", "fry", "boil", "steam", "saute", 
+            "simmer", "marinate", "mix", "chop", "slice", "dice",
+            "recommendation", "suggestion", "menu", "specials", "favorites", 
+            "popular", "reviews", "ratings", "critics", "best", "top", "must-try",
+            "delicious", "tasty", "yum", "mouthwatering", "craving", "indulgent", 
+            "tempting", "hearty", "light", "refreshing", "satisfying", "nutritious", 
+            "quick", "easy", "simple", "budget-friendly", "authentic", "homemade", 
+            "signature", "unique", "exotic", "traditional", "innovative", 
+            "local specialties", "regional cuisine", "street food", "comforting"
+            ];
                 return logicalKeywords.some(keyword => input.toLowerCase().includes(keyword));
             }
 
             function isGreetingInput(input) {
-                const greetingKeywords = ["hello", "hi", "greetings", "hey", "howdy", "good morning", "good afternoon", "good evening"];
+                const greetingKeywords = [
+                "hello", "hi", "greetings", "hey", "howdy", "good morning", "good afternoon", 
+                "good evening", "hi there", "hello there", "yo", "what's up", "hiya", 
+                "how's it going", "nice to meet you", "how are you", "what's new", 
+                "how's everything", "long time no see", "what's happening"
+                ];
                 return greetingKeywords.some(keyword => input.toLowerCase().includes(keyword));
             }
 
@@ -220,6 +252,22 @@
                     $('#content-box').append(emptyMessageWarning);
                 }
             });
+            window.addEventListener('scroll', function() {
+            var button = document.getElementById('scroll-bottom-btn');
+            if (window.scrollY > 0) {
+                button.style.visibility = 'visible';
+            } else {
+                button.style.visibility = 'hidden';
+            }
+            });
+            function scrollToBottom() {
+            $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+        }
+
+        // Event listener for scroll-bottom-btn click
+        $('#scroll-bottom-btn').click(function() {
+            scrollToBottom();
+        });
        } );
     </script>
 </body>

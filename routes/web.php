@@ -69,9 +69,10 @@ Route::middleware('authenticated')->group(function () {
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
 
     Route::get('/spoonchat', [SpoonAPIchatController::class, 'index'])->name('spoonchat');
-Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'store'])->name('spoonapi-chat');
-Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'create'])->name('spoonapi-foodlist');
-Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'store2'])->name('spoonapianswer');
+Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'mealSuggest'])->name('spoonapi-chat');
+Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'listLogicalInputs'])->name('spoonapi-foodlist');
+Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'foodSuggest'])->name('spoonapianswer');
+//baadne 3m bshtghl 3lyha
 Route::get('/spoonapicoversation', [SpoonAPIchatController::class, 'store3'])->name('spoonapicoversation');
 
 });

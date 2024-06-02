@@ -19,15 +19,15 @@ class SpoonAPIchatController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function listLogicalInputs(Request $request)
     {   
         try {
             $response1 = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
-                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
+                'apiKey' => env('API_KEY'),
                 'query' => 'food'
             ]);
             $response2 = Http::get('https://api.spoonacular.com/recipes/random', [
-                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158'
+                'apiKey' => env('API_KEY')
             ]);
             if ($response1->failed() || $response2->failed()) {
                 return response()->json(['error' => 'Failed to retrieve menu items'], 500);
@@ -45,7 +45,7 @@ class SpoonAPIchatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function mealSuggest(Request $request)
     {
         try {
             // Check if the suggestion is provided
@@ -56,7 +56,7 @@ class SpoonAPIchatController extends Controller
             
             // Make a request to the Spoonacular API
             $response = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
-                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
+                'apiKey' => env('API_KEY'),
                 'query' => $userChoice
             ]);
             
@@ -77,7 +77,7 @@ class SpoonAPIchatController extends Controller
         }
     }
 
-    public function store2(Request $request)
+    public function foodSuggest(Request $request)
     {
         try {
             // Check if the suggestion is provided
@@ -88,7 +88,7 @@ class SpoonAPIchatController extends Controller
             
             // Make a request to the Spoonacular API
             $response = Http::get('https://api.spoonacular.com/food/search', [
-                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
+                'apiKey' => env('API_KEY'),
                 'query' => $userChoice
             ]);
             
@@ -123,7 +123,7 @@ class SpoonAPIchatController extends Controller
             
             // Make a request to the Spoonacular API
             $response = Http::get('https://api.spoonacular.com/food/converse', [
-                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
+                'apiKey' => env('API_KEY'),
                 'query' => $userChoice
             ]);
             
