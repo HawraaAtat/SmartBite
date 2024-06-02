@@ -23,11 +23,11 @@ class SpoonAPIchatController extends Controller
     {   
         try {
             $response1 = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
-                'apiKey' => '4369cde01c844dcaabaea9400aa5745c',
+                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
                 'query' => 'food'
             ]);
             $response2 = Http::get('https://api.spoonacular.com/recipes/random', [
-                'apiKey' => '4369cde01c844dcaabaea9400aa5745c'
+                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158'
             ]);
             if ($response1->failed() || $response2->failed()) {
                 return response()->json(['error' => 'Failed to retrieve menu items'], 500);
@@ -55,8 +55,8 @@ class SpoonAPIchatController extends Controller
             }
             
             // Make a request to the Spoonacular API
-            $response = Http::get('https://api.spoonacular.com/food/menuItems/search', [
-                'apiKey' => '4369cde01c844dcaabaea9400aa5745c',
+            $response = Http::get('https://api.spoonacular.com/recipes/complexSearch', [
+                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
                 'query' => $userChoice
             ]);
             
@@ -66,7 +66,7 @@ class SpoonAPIchatController extends Controller
             }
             
             // Extract data from the API response
-            $menuItems = $response->json()['menuItems'];
+            $menuItems = $response->json()['results'];
     
             // Render the suggestions Blade view with menu items data
             return view('suggestions', ['menuItems' => $menuItems]);
@@ -88,7 +88,7 @@ class SpoonAPIchatController extends Controller
             
             // Make a request to the Spoonacular API
             $response = Http::get('https://api.spoonacular.com/food/search', [
-                'apiKey' => '4369cde01c844dcaabaea9400aa5745c',
+                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
                 'query' => $userChoice
             ]);
             
@@ -111,6 +111,42 @@ class SpoonAPIchatController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function store3(Request $request)
+    {
+        try {
+            // Check if the suggestion is provided
+            $userChoice = $request->input('suggestion');
+            if (!$userChoice) {
+                return response()->json(['error' => 'Suggestion is required'], 400);
+            }
+            
+            // Make a request to the Spoonacular API
+            $response = Http::get('https://api.spoonacular.com/food/converse', [
+                'apiKey' => 'a3bff443ef744c5e83d7d03e08e9e158',
+                'query' => $userChoice
+            ]);
+            
+            // Check if the request was successful
+            if ($response->failed()) {
+                return response()->json(['error' => 'Failed to retrieve menu items'], 500);
+            }
+            
+            // Extract data from the API response
+            $responseData = $response->json();
+            
+            // Extract relevant data
+            $menuItems = $responseData['answerText'][0]['media'];
+    
+            // Render the suggestions Blade view with menu items data
+            return view('suggestions', ['menuItems' => $menuItems]);
+            
+        } catch (\Exception $e) {
+            // Handle any unexpected errors
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
     
     
     

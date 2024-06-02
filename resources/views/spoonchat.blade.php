@@ -69,287 +69,158 @@
         <!-- Chat Footer -->
     </div>  
 
-    <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-<script>
-$(document).ready(function() {
-    // Set CSRF token for all AJAX requests
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-    // List of suggestions
-    var suggestions = ["Breakfast", "Mid-Morning Snack", "Lunch","Afternoon Snack","Dinner","Or do you want a specific food?"];
-
-    function isLogicalInput(input) {
-        // Check if input contains any logical keywords related to food
-        const logicalKeywords = ["eat","food", "recipe", "restaurant", "cooking", "cuisine", "dish", "appetizer", "main course", "dessert", "snack", "ingredients", "flavor", "taste", "spice", "seasoning", "baking", "grilling", "roasting", "frying", "boiling", "steaming", "sauteing", "simmering", "marinating", "mixing", "chopping", "slicing", "dicing", "garnish", "presentation", "nutrients", "healthy", "organic", "fresh", "local", "international", "fusion", "gourmet", "comfort food", "fast food", "fine dining", "buffet", "takeout", "delivery", "meal prep", "vegetarian", "vegan", "gluten-free", "dairy-free", "allergy-friendly", "farm-to-table", "sustainable", "cook", "bake", "grill", "roast", "fry", "boil", "steam", "saute", "simmer", "marinate", "mix", "chop", "slice", "dice"];
-        for (var i = 0; i < logicalKeywords.length; i++) {
-            if (input.toLowerCase().includes(logicalKeywords[i])) {
-                return true;
+            function isLogicalInput(input) {
+                const logicalKeywords = ["eat", "food", "recipe", "restaurant", "cooking", "cuisine", "dish", "appetizer", "main course", "dessert", "snack", "ingredients", "flavor", "taste", "spice", "seasoning", "baking", "grilling", "roasting", "frying", "boiling", "steaming", "sauteing", "simmering", "marinating", "mixing", "chopping", "slicing", "dicing", "garnish", "presentation", "nutrients", "healthy", "organic", "fresh", "local", "international", "fusion", "gourmet", "comfort food", "fast food", "fine dining", "buffet", "takeout", "delivery", "meal prep", "vegetarian", "vegan", "gluten-free", "dairy-free", "allergy-friendly", "farm-to-table", "sustainable", "cook", "bake", "grill", "roast", "fry", "boil", "steam", "saute", "simmer", "marinate", "mix", "chop", "slice", "dice"];
+                return logicalKeywords.some(keyword => input.toLowerCase().includes(keyword));
             }
-        }
-        return false;
-    }
 
-    function isGreetingInput(input) {
-        // Check if input contains any greeting keywords
-        const greetingKeywords = ["hello", "hi", "greetings", "hey", "howdy", "good morning", "good afternoon", "good evening"];
-        for (var i = 0; i < greetingKeywords.length; i++) {
-            if (input.toLowerCase().includes(greetingKeywords[i])) {
-                return true;
+            function isGreetingInput(input) {
+                const greetingKeywords = ["hello", "hi", "greetings", "hey", "howdy", "good morning", "good afternoon", "good evening"];
+                return greetingKeywords.some(keyword => input.toLowerCase().includes(keyword));
             }
-        }
-        return false;
-    }
 
-    // Handle form submission
-    $('#chat-form').submit(function(event) {
-        event.preventDefault(); 
-        var userInput = $('#input').val();
-        if (userInput !== '') {
-            if (!isLogicalInput(userInput)) {
-                if (isGreetingInput(userInput)) {
-                    $('#content-box').append(`
-                    <div class="chat-box-area" id="chat-box">
-                        <div class="chat-content user">
-                            <div class="message-item">
-                                <div class="media align-items-end gap-2">
-                                    <div>
-                                        <div class="bubble">${userInput}</div>    
-                                        <div class="message-time">${getCurrentTime()}</div>    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            function getCurrentDate() {
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const now = new Date();
+                return `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            }
+
+            function getCurrentTime() {
+                const now = new Date();
+                let hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const ampm = hours >= 12 ? 'pm' : 'am';
+                hours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+                return `${hours}:${minutes} ${ampm}`;
+            }
+
+            $('#current-time').text(getCurrentTime());
+            $('.active-date').text(getCurrentDate());
+
+            $('#chat-form').submit(function(event) {
+                event.preventDefault();
+                const userInput = $('#input').val().trim();
+                
+                if (userInput) {
+                    const userBubble = `
                         <div class="chat-box-area" id="chat-box">
-                            <div class="chat-content bot">
+                            <div class="chat-content user">
                                 <div class="message-item">
                                     <div class="media align-items-end gap-2">
                                         <div>
-                                            <div class="bubble">Welcome! How can I assist you today?</div>
+                                            <div class="bubble">${userInput}</div>
                                             <div class="message-time">${getCurrentTime()}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>`);$('#input').val('');
-                } else {
-                    $('#content-box').append(`
-                    <div class="chat-box-area" id="chat-box">
-                        <div class="chat-content user">
-                            <div class="message-item">
-                                <div class="media align-items-end gap-2">
-                                    <div>
-                                        <div class="bubble">${userInput}</div>    
-                                        <div class="message-time">${getCurrentTime()}</div>    
+                        </div>`;
+
+                    $('#content-box').append(userBubble);
+                    $('#input').val('');
+
+                    if (isGreetingInput(userInput)) {
+                        const botBubble = `
+                            <div class="chat-box-area" id="chat-box">
+                                <div class="chat-content bot">
+                                    <div class="message-item">
+                                        <div class="media align-items-end gap-2">
+                                            <div>
+                                                <div class="bubble">Welcome! How can I assist you today?</div>
+                                                <div class="message-time">${getCurrentTime()}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#content-box').append(botBubble);
+                    } else  {
+                        const suggestions = ["breakfast", "snack", "lunch", "dinner"];
+                        const matchedSuggestion = suggestions.find(suggestion => userInput.toLowerCase().includes(suggestion));
+
+                        if (matchedSuggestion) {
+                            const botSuggestionBubble = `
+                                <div class="chat-box-area" id="chat-box">
+                                    <div class="chat-content bot">
+                                        <div class="message-item">
+                                            <div class="media align-items-end gap-2">
+                                                <div>
+                                                    <div class="bubble">You mentioned ${matchedSuggestion}, is that correct?</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            $('#content-box').append(botSuggestionBubble);
+
+                            $.ajax({
+                                url: "/spoonapi-chat",
+                                method: "GET",
+                                data: { suggestion: matchedSuggestion },
+                                success: function(response) {
+                                    $('#content-box').append(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });}
+                          else
+                          { 
+                            if(isLogicalInput(userInput))
+                            {$.ajax({
+                                url: "/spoonapi-foodlist",
+                                method: "GET",
+                                data: { suggestion: userInput },
+                                success: function(response) {
+                                    $('#content-box').append(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });}
+                         else {
+                            $.ajax({
+                                url: "/spoonapianswer",
+                                method: "GET",
+                                data: { suggestion: userInput },
+                                success: function(response) {
+                                    $('#content-box').append(response);
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });
+                        }
+                    }
+                
+                }} else {
+                    const emptyMessageWarning = `
+                        <div class="chat-box-area" id="chat-box">
+                            <div class="chat-content bot">
+                                <div class="message-item">
+                                    <div class="media align-items-end gap-2">
+                                        <div>
+                                            <div class="bubble">Please type something before sending.</div>
+                                            <div class="message-time">${getCurrentTime()}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-        <div class="chat-box-area" id="chat-box">
-            <div class="chat-content bot">
-                <div class="message-item">
-                    <div class="media align-items-end gap-2">
-                        <div>                            
-                        <div class="message-time">${getCurrentTime()}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>`);$('#input').val('');
-        $.ajax({
-        url: "/spoonapianswer",
-        method: "GET",
-        data: {
-            suggestion: userInput
-        },
-        success: function(response) {
-            // Handle successful response from the server
-            $('#content-box').append(response);
-        },
-        error: function(xhr, status, error) {
-            // Handle error
-            console.error(error);
-        }
-    });
+                        </div>`;
+                    $('#content-box').append(emptyMessageWarning);
                 }
-            } else {
-                // Append user message to chat content
-                $('#content-box').append(`
-                    <div class="chat-box-area" id="chat-box">
-                        <div class="chat-content user">
-                            <div class="message-item">
-                                <div class="media align-items-end gap-2">
-                                    <div>
-                                        <div class="bubble">${userInput}</div>    
-                                        <div class="message-time">${getCurrentTime()}</div>    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`);
-
-                // Clear input value
-                $('#input').val('');
-
-                // Append bot's response with suggestions
-                $('#content-box').append(`
-                    <div class="chat-box-area" id="chat-box">
-                        <div class="chat-content bot">
-                            <div class="message-item">
-                                <div class="media align-items-end gap-2">
-                                    <div>
-                                        <div class="bubble">Please choose from the following suggestions:</div>    
-                                        <div class="suggestions">${suggestions.map(suggestion => `<button class="suggestion">${suggestion}</button>`).join(' ')}</div>
-										<div class="message-time">${getCurrentTime()}</div> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					<style>
-        .suggestions {
-        padding: 15px 18px;
-        border-radius: 20px 20px 20px 2px;
-        color: #000;
-        align-items: center;
-        margin-bottom: 5px;
-        font-size: 14px;
-        font-weight: 400;
-        max-width: 260px;
-        min-width: 90px; 
-        }
-        .suggestion {
-        padding: 15px 18px;
-        border-radius: 20px 20px 20px 2px;
-        background: var(--secondary);
-        color: #000;
-        align-items: center;
-        margin-bottom: 5px;
-        font-size: 14px;
-        font-weight: 400;
-        max-width: 260px;
-        min-width: 90px; 
-        }
-        </style>`);
-            }
-        } else {
-            // Notify the user that the message cannot be empty
-            $('#content-box').append(`
-                <div class="chat-box-area" id="chat-box">
-                    <div class="chat-content bot">
-                        <div class="message-item">
-                            <div class="media align-items-end gap-2">
-                                <div>
-                                    <div class="bubble">Please type something before sending.</div>
-                                    <div class="message-time">${getCurrentTime()}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`);
-        }
-    });
-
-    // Handle user's suggestion selection
-    $(document).on('click', '.suggestion', function() {
-        var selectedSuggestion = $(this).text();
-
-        // Append user's selected suggestion to chat content
-        $('#content-box').append(`
-            <div class="chat-box-area" id="chat-box">
-                <div class="chat-content user">
-                    <div class="message-item">
-                        <div class="media align-items-end gap-2">
-                            <div>
-                                <div class="bubble">${selectedSuggestion}</div>    
-                                <div class="message-time">${getCurrentTime()}</div>    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>`);
-
-            selectedSuggestion = selectedSuggestion.toLowerCase();
-    if (selectedSuggestion.includes("snack")) {
-    selectedSuggestion = "snack";
-    }
-    if (selectedSuggestion === "or do you want a specific food?") {
-    $('#content-box').append(`
-        <div class="chat-box-area" id="chat-box">
-            <div class="chat-content bot">
-                <div class="message-item">
-                    <div class="media align-items-end gap-2">
-                        <div>
-                            <div class="bubble">Tell me what do you want</div>
-                            <div class="message-time">${getCurrentTime()}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>`);
-        $.ajax({
-        url: "/spoonapi-foodlist",
-        method: "GET",
-        data: {
-            suggestion: selectedSuggestion
-        },
-        success: function(response) {
-            // Handle successful response from the server
-            $('#content-box').append(response);
-        },
-        error: function(xhr, status, error) {
-            // Handle error
-            console.error(error);
-        }
-    });
-    } else {
-    $.ajax({
-        url: "/spoonapi-chat",
-        method: "GET",
-        data: {
-            suggestion: selectedSuggestion
-        },
-        success: function(response) {
-            // Handle successful response from the server
-            $('#content-box').append(response);
-        },
-        error: function(xhr, status, error) {
-            // Handle error
-            console.error(error);
-        }
-    });
-    }
-    });
-	function getCurrentDate() {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const now = new Date();
-            const day = now.getDate();
-            const monthIndex = now.getMonth();
-            const year = now.getFullYear();
-            return `${day} ${months[monthIndex]} ${year}`;
-        }
-
-    function getCurrentTime() {
-        const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // 12-hour clock
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return `${hours}:${minutes} ${ampm}`;
-    }
-	document.getElementById('current-time').textContent = getCurrentTime();
-	const activeDateElement = document.querySelector('.active-date');
-        activeDateElement.textContent = getCurrentDate();
-});
-</script>
-
+            });
+       } );
+    </script>
 </body>
 </html>

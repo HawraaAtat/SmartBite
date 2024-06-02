@@ -72,6 +72,8 @@ Route::middleware('authenticated')->group(function () {
 Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'store'])->name('spoonapi-chat');
 Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'create'])->name('spoonapi-foodlist');
 Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'store2'])->name('spoonapianswer');
+Route::get('/spoonapicoversation', [SpoonAPIchatController::class, 'store3'])->name('spoonapicoversation');
+
 });
 
 Route::fallback(function () {
