@@ -20,7 +20,7 @@ class RecipeController extends Controller
     public function dashboard()
     {
         $date = request()->has('date') ? request()->input('date') : '16-04-2024';
-        $folderPath = public_path('FitbitData/'. $date);
+        $folderPath = public_path('FitbitData/' . $date);
 
         // Log::info('folderPath '. $folderPath );
         // Read JSON files
@@ -74,10 +74,12 @@ class RecipeController extends Controller
         if ($most_recent_temperature > 38) {
             $minVitaminC = 10;
             $minZinc = 1;
-	        $maxAlcohol=0;
+            $maxAlcohol = 0;
+            $sort = 'vitamin-c';
+            $sortDirection = 'desc';
         }
 
-        $most_recent_sleep = end($sleep);
+        $most_recent_sleep = reset($sleep);
         $efficiency = $most_recent_sleep['efficiency'];
         $minutesAsleep = $most_recent_sleep['minutesAsleep'];
         $timeInBed = $most_recent_sleep['timeInBed'];
@@ -89,18 +91,23 @@ class RecipeController extends Controller
             $sleep_quality = "good";
         } elseif ($hours_asleep < 7) {
             $sleep_quality = "insufficient";
-            if ($currentHour >= 14) {
-                $maxCaffeine = 20;              }
+            if ($currentHour >= 14) { $maxCaffeine = 20; }
+            $sort = 'caffeine';
+            $sortDirection = 'asc';
         } elseif ($hours_asleep > 9) {
             $sleep_quality = "excessive";
+            $sort = 'caffeine';
+            $sortDirection = 'desc';
         } elseif ($hoursInBed > $hours_asleep + 1) {
             $sleep_quality = "disturbed";
-            if ($currentHour >= 14) {
-                $maxCaffeine = 20;              }
+            if ($currentHour >= 14) { $maxCaffeine = 20; }
+            $sort = 'caffeine';
+            $sortDirection = 'asc';
         } else {
             $sleep_quality = "poor";
-            if ($currentHour >= 14) {
-                $maxCaffeine = 20;              }
+            if ($currentHour >= 14) { $maxCaffeine = 20; }
+            $sort = 'caffeine';
+            $sortDirection = 'asc';
         }
 
         $most_recent_breathing = end($breathing['br']);
@@ -119,6 +126,8 @@ class RecipeController extends Controller
             $heart_rate = "anormal";
             $maxCaffeine = 0;
             $maxAlcohol = 0;
+            $sort = 'sodium';
+            $sortDirection = 'asc';
         }
 
         $allergies = $user->allergies ?? null;
@@ -202,7 +211,7 @@ class RecipeController extends Controller
         foreach ($history as $data) {
             $saturated_fat_week_percentage += $data['saturated_fat'];
         }
-        if($saturated_fat_week_percentage > 700){
+        if ($saturated_fat_week_percentage > 700) {
             $maxSaturatedFat = 0;
         };
 
@@ -216,10 +225,11 @@ class RecipeController extends Controller
                 'maxCalories' => $allowed_calories ?? null,
                 'minVitaminC' => $minVitaminC ?? null,
                 'minZinc' => $minZinc ?? null,
-                'minSodium' => $minSodium ??null,
+                'minSodium' => $minSodium ?? null,
                 'maxSpice' => $maxSpice ?? null,
                 'exclude_ingredients' => $exclude_ingredients ?? null,
-                'sort' => 'healthiness' ?? null,
+                'sort' => $sort ?? 'healthiness',
+                'sortDirection' => $sortDirection ?? 'desc',
                 'addRecipeNutrition' => true,
                 'maxAlcohol' => $maxAlcohol ?? null,
                 'cuisine' => request()->has('cuisine') ? implode(',', request()->input('cuisine')) : null,
