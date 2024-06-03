@@ -3,7 +3,7 @@
 <body>
 <div class="page-wrapper">
     
-	<!-- Preloader -->
+
 	<div id="preloader">
 		<div class="loader">
 			<div class="spinner-border text-primary" role="status">
@@ -11,9 +11,7 @@
 			</div>
 		</div>
 	</div>
-    <!-- Preloader end-->
-	
-	<!-- Header -->
+
 	<header class="header header-fixed border-bottom onepage">
 		<div class="header-content">
 			<div class="left-content">
@@ -27,16 +25,13 @@
 			<div class="right-content"></div>
 		</div>
 	</header>
-	<!-- Header -->
 	
-	<!-- Page Content Start -->
 	<div class="page-content space-top">
 		<div class="container">
 			<div class="card dz-card-box style-1" style="background-image: url('assets/images/bg-shape.png');">				
 			</div>
 			
 			<div class="row" id="contentArea">
-				<!-- Accordion - 1 -->
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
@@ -49,9 +44,15 @@
                 <span class="accordion-header-text">Search Recipes by Ingredients</span>
                 <span class="accordion-header-indicator"></span>
             </div>
+            <div class="card-body row g-3">
+            <div class="col-6">
+            <div class="dz-stepper border-1">
+                <small>Choose how much recipe you want:</small>
+                <input class="stepper" type="text" value="0" name="demo3">
+            </div></div></div>
+            <div id="stepper-alert-container"></div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion-one">
                 <div class="accordion-body">
-                    <!-- Form to add ingredients -->
                     <form id="ingredientForm">
                         <div class="mb-3">
                             <label for="ingredient" class="form-label">Add Ingredient:</label>
@@ -61,9 +62,8 @@
                             </div>
                         </div>
                     </form>
-                    <!-- Ingredient List -->
+                    <div id="submitIngredientsBtn-alert-container"></div>
                     <ul id="ingredientList" class="list-group"></ul>
-                    <!-- Submit Button -->
                     <button id="submitIngredientsBtn" class="btn btn-primary mt-3">Submit Ingredients</button>
                 </div>
             </div>
@@ -75,12 +75,12 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
                 <div class="accordion-body">
-                    <!-- User input phase without "Add" button -->
                     <div class="mb-3">
                         <label for="ingredientInfo" class="form-label">Enter Ingredient:</label>
                         <input type="text" id="ingredientInfo" name="ingredientInfo" class="form-control">
                     </div>
-                    <!-- Get Ingredient Information Button -->
+                    <div id="getIngredientInfoBtn-alert-container"></div>
+                    
                     <button id="getIngredientInfoBtn" class="btn btn-primary mt-3">Submit Ingredient</button>
                 </div>
         </div>
@@ -93,14 +93,15 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion-one">
         <div class="accordion-body">
-            <!-- User input phase with input field and dropdown list -->
             <div class="mb-3">
                 <label for="compute" class="form-label">Enter Ingredient:</label>
                 <input type="text" id="compute" name="compute" class="form-control">
             </div>
+            <div id="computeIngredientAmountBtn-alert-container"></div>
             <div class="mb-3">
                 <label for="measureUnit" class="form-label">Select Target Nutrient:</label>
                 <select id="measureUnit" name="measureUnit" class="form-select">
+                <option value="">choose nutrient</option>
                     <option value="alcohol">Alcohol</option>
                     <option value="sugar_alcohol">Sugar Alcohol</option>
                     <option value="caffeine">Caffeine</option>
@@ -144,7 +145,7 @@
                     <option value="zinc">Zinc</option>
 					</select>
             </div>
-            <!-- Compute Ingredient Amount Button -->
+            <div id="choose-alert-container"></div>
             <button id="computeIngredientAmountBtn" class="btn btn-primary mt-3">Submit Ingredient</button>
         </div>
     </div>
@@ -157,12 +158,11 @@
     </div>
     <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion-one">
         <div class="accordion-body">
-            <!-- User input phase with input field -->
             <div class="mb-3">
                 <label for="ingredientName" class="form-label">Enter Ingredient Name:</label>
                 <input type="text" id="ingredientName" name="ingredientName" class="form-control">
             </div>
-            <!-- Get Ingredient Substitutes Button -->
+            <div id="getIngredientSubstitutesBtn-alert-container"></div>
             <button id="getIngredientSubstitutesBtn" class="btn btn-primary mt-3">Submit Ingredient</button>
         </div>
     </div>
@@ -173,154 +173,90 @@
 						</div>	
 					</div>	
 				</div>	
-				<!-- 
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header">
-							<h5 class="card-title">Accordion Bordered</h5>
-						</div>	
-						<div class="card-body">
-							<div class="accordion accordion-danger-solid" id="accordion-two">
-							  <div class="accordion-item">
-								<div class="accordion-header " id="accord-2One" data-bs-toggle="collapse" data-bs-target="#collapse2One" aria-controls="collapse2One" aria-expanded="true" role="button">
-								  <span class="accordion-header-text">Accordion Header One</span>
-								  <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse2One" class="collapse accordion__body show" aria-labelledby="accord-2One" data-bs-parent="#accordion-two">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							  <div class="accordion-item">
-								<div class="accordion-header collapsed" id="accord-2Two" data-bs-toggle="collapse" data-bs-target="#collapse2Two" aria-controls="collapse2Two" aria-expanded="true" role="button">
-								  <span class="accordion-header-text">Accordion Header Two</span>
-								 <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse2Two" class="collapse accordion__body" aria-labelledby="accord-2Two" data-bs-parent="#accordion-two">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							  <div class="accordion-item">
-								<div class="accordion-header collapsed " id="accord-2Three" data-bs-toggle="collapse" data-bs-target="#collapse2Three" aria-controls="collapse2Three" aria-expanded="true" role="button">
-								  <span class="accordion-header-text">Accordion Header Three</span>
-								 <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse2Three" class="collapse accordion__body" aria-labelledby="accord-2Three" data-bs-parent="#accordion-two">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							</div>
-						</div>	
-					</div>	
-				</div>	
-				 Accordion - 2
-				
-				Accordion -
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header">
-							<h5 class="card-title">Accordion Header Background</h5>
-						</div>	
-						<div class="card-body">
-							<div class="accordion accordion-header-bg accordion-bordered" id="accordion-seven">
-							  <div class="accordion-item">
-								<div class="accordion-header  " id="accord-7One" data-bs-toggle="collapse" data-bs-target="#collapse7One" aria-controls="collapse7One" aria-expanded="true" role="button">
-									<span class="accordion-header-icon"></span>
-								  <span class="accordion-header-text">Accordion Header One</span>
-								  <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse7One" class="collapse accordion__body show" aria-labelledby="accord-7One" data-bs-parent="#accordion-seven">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							  <div class="accordion-item">
-								<div class="accordion-header collapsed " id="accord-7Two" data-bs-toggle="collapse" data-bs-target="#collapse7Two" aria-controls="collapse7Two" aria-expanded="true" role="button">
-									<span class="accordion-header-icon"></span>
-								  <span class="accordion-header-text">Accordion Header Two</span>
-								  <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse7Two" class="collapse accordion__body" aria-labelledby="accord-7Two" data-bs-parent="#accordion-seven">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							  <div class="accordion-item">
-								<div class="accordion-header collapsed " id="accord-7Three" data-bs-toggle="collapse" data-bs-target="#collapse7Three" aria-controls="collapse7Three" aria-expanded="true" role="button">
-									<span class="accordion-header-icon"></span>
-								  <span class="accordion-header-text">Accordion Header Three</span>
-								   <span class="accordion-header-indicator"></span>
-								</div>
-								<div id="collapse7Three" class="collapse accordion__body" aria-labelledby="accord-7Three" data-bs-parent="#accordion-seven">
-								  <div class="accordion-body-text">
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-								  </div>
-								</div>
-							  </div>
-							</div>
-						</div>	
-					</div>	
-				</div>	
-
-				 -->
 			</div>
 		</div>
 	</div>
-	<!-- Page Content End -->
 </div> 
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
-            // Set CSRF token for all AJAX requests
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            // Array to store ingredients
-            var ingredients = [];
+   
 
-            // Handle form submission
+
+            var ingredients = [];
             $('#ingredientForm').submit(function(event) {
-                event.preventDefault(); // Prevent the default form submission
+                event.preventDefault(); 
                 addIngredient();
             });
-
-            // Function to add ingredient
             function addIngredient() {
                 var ingredient = $('#ingredient').val().trim();
                 if (ingredient === "") {
-                    return; // Don't add empty ingredients
+                    return; 
                 }
                 ingredients.push(ingredient);
                 var list = $('#ingredientList');
                 var listItem = $('<li>').addClass('list-group-item').text(ingredient);
                 list.append(listItem);
-                $('#ingredient').val(""); // Clear input after adding
+                $('#ingredient').val(""); 
             }
 
-            // Function to get recipes by ingredients
             $('#submitIngredientsBtn').click(function() {
                 if (ingredients.length === 0) {
-                    alert("Please add at least one ingredient.");
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> Please add at least one ingredient.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('submitIngredientsBtn-alert-container').appendChild(alertDiv);
                     return;
                 }
+
+        var numberOfRecipes = $('.stepper').val();
+        if (numberOfRecipes<1){
+            const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> The number must be at least 1.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('stepper-alert-container').appendChild(alertDiv);
+                    return;
+        }
+
 
 				$.ajax({
         type: "GET",
         url: "/searchbyingredients",
-        data: { ingredients: ingredients },
+        data: { ingredients: ingredients, number: numberOfRecipes },
         success: function(response) {
             console.log(response);
-            // Handle the response data here
             if(response.recipes.length > 0) {
                 var recipesHtml = '<div class="accordion-body-text"><div>Here are some options:</div>';
                 $.each(response.recipes, function(index, recipe) {
@@ -339,11 +275,26 @@
 });
 
 
-// AJAX function to get Ingredient info
 $('#getIngredientInfoBtn').click(function() {
     var ingredientInfo = $('#ingredientInfo').val().trim();
     if (ingredientInfo === "") {
-        alert("Please enter an ingredient.");
+        const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> Please enter an ingredient.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('getIngredientInfoBtn-alert-container').appendChild(alertDiv);
         return;
     }
 
@@ -353,7 +304,6 @@ $('#getIngredientInfoBtn').click(function() {
         data: { ingredientInfo: ingredientInfo },
         success: function(response) {
             console.log(response);
-            // Handle the response data here
             if (response.id) {
                 $('#collapseTwo').append('<div class="accordion-body-text">' +
                     '<div><strong>Ingredient ID:</strong> ' + response.id + '</div>' +
@@ -374,19 +324,55 @@ $('#getIngredientInfoBtn').click(function() {
 });
 $('#computeIngredientAmountBtn').click(function() {
     var ingredientInfo = $('#compute').val().trim();
-    var measureUnit = $('#measureUnit').val(); // Get the selected nutrient
+    var measureUnit = $('#measureUnit').val(); 
     if (ingredientInfo === "") {
-        alert("Please enter an ingredient.");
+        const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> Please enter an ingredient.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('computeIngredientAmountBtn-alert-container').appendChild(alertDiv);
         return;
     }
+    if (measureUnit === "") {
+        const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> Please choose one nutrient.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('computeIngredientAmountBtn-alert-container').appendChild(alertDiv);
+        return;
+    }
+
 
     $.ajax({
         type: "GET",
         url: "/computeingredientamount",
-        data: { ingredientInfo: ingredientInfo, measureUnit: measureUnit }, // Pass the selected nutrient
+        data: { ingredientInfo: ingredientInfo, measureUnit: measureUnit }, 
         success: function(response) {
             console.log(response);
-            // Handle the response data here
             if (response.amount) {
                 $('#collapseThree .accordion-body').append('<div class="accordion-body-text">' +
                     '<div><strong>Amount of ' + response.nutrient + ' in 1 ' + response.ingredientName + ' is:</strong> ' + response.amount + ' ' + response.unit + '</div>' +
@@ -404,35 +390,50 @@ $('#computeIngredientAmountBtn').click(function() {
 $('#getIngredientSubstitutesBtn').click(function() {
     var ingredientName = $('#ingredientName').val().trim();
     if (ingredientName === "") {
-        alert("Please enter an ingredient name.");
+        const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+                    alertDiv.role = 'alert';
+                    
+                    alertDiv.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <strong>Error!</strong> Please enter an ingredient.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span><i class="icon feather icon-x"></i></span>
+                        </button>
+                    `;
+
+                    document.getElementById('getIngredientSubstitutesBtn-alert-container').appendChild(alertDiv);
         return;
     }
-
-    $.ajax({
-        type: "GET",
-        url: "/getingredientsubstitutes",
-        data: { ingredientName: ingredientName },
-        success: function(response) {
-            console.log(response);
-            // Handle the response data here
-            if (response.substitutes && response.substitutes.length > 0) {
-                var substitutesList = '<ul>';
-                response.substitutes.forEach(function(substitute) {
-                    substitutesList += '<li>' + substitute + '</li>';
-                });
-                substitutesList += '</ul>';
-                $('#collapseFour .accordion-body').append('<div class="accordion-body-text">' +
-                    '<div><strong>Substitutes for ' + response.ingredient + ':</strong></div>' +
-                    substitutesList +
-                    '</div>');
-            } else {
-                $('#collapseFour .accordion-body').append('<div class="accordion-body-text">No substitutes found for ' + response.ingredientName + '.</div>');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error:", error);
+$.ajax({
+    type: "GET",
+    url: "/getingredientsubstitutes",
+    data: { ingredientName: ingredientName },
+    success: function(response) {
+        console.log(response);
+        if (response.substitutes && response.substitutes.length > 0) {
+            var substitutesList = '<ul>';
+            response.substitutes.forEach(function(substitute) {
+                substitutesList += '<li>' + substitute + '</li>';
+            });
+            substitutesList += '</ul>';
+            $('#collapseFour .accordion-body').append('<div class="accordion-body-text">' +
+                '<div><strong>Substitutes for ' + response.ingredient + ':</strong></div>' +
+                substitutesList +
+                '</div>');
+        } else {
+            $('#collapseFour .accordion-body').append('<div class="accordion-body-text">There are no substitutes for ' + response.ingredient + '.</div>');
         }
-    });
+    },
+    error: function(xhr, status, error) {
+        console.error("Error:", error);
+    }
+});
+
 });
 
 
@@ -440,9 +441,9 @@ $('#getIngredientSubstitutesBtn').click(function() {
     </script>
 <script src="assets/js/jquery.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script><!-- Swiper -->
-<script src="assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script><!-- Swiper -->
-<script src="assets/js/dz.carousel.js"></script><!-- Swiper -->
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+<script src="assets/js/dz.carousel.js"></script>
 <script src="assets/js/settings.js"></script>
 <script src="assets/js/custom.js"></script>
 </body>

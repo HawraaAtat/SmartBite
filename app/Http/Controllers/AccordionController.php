@@ -34,15 +34,16 @@ class AccordionController extends Controller
         $request->validate([
             'ingredients' => 'required|array',
             'ingredients.*' => 'string',
+            'number' => 'required|integer|min:1'
         ]);
     
         // Process the ingredients
         $ingredients = implode(',', $request->input('ingredients'));
-    
+        $number = $request->input('number');
         // Send request to Spoonacular API
         $response = Http::get('https://api.spoonacular.com/recipes/findByIngredients', [
             'ingredients' => $ingredients,
-            'number' => 2, // You can adjust the number of recipes you want to retrieve
+            'number' => $number, // You can adjust the number of recipes you want to retrieve
             'apiKey' => '4369cde01c844dcaabaea9400aa5745c', // Replace with your Spoonacular API key
         ]);
     
@@ -156,40 +157,49 @@ class AccordionController extends Controller
     }
 
     public function store4(Request $request)
-{
-    // Validate the request data
-    $request->validate([
-        'ingredientName' => 'required|string', // Adjust the validation rule as per your requirement
-    ]);
-
-    // Get the ingredient name from the request
-    $ingredientName = $request->input('ingredientName');
-
-    // Send request to Spoonacular API to get substitutes for the ingredient
-    $response = Http::get('https://api.spoonacular.com/food/ingredients/substitutes', [
-        'apiKey' => '4369cde01c844dcaabaea9400aa5745c', // Replace with your Spoonacular API key
-        'ingredientName' => $ingredientName,
-    ]);
-
-    // Check if request was successful
-    if ($response->successful()) {
-        // Extract the substitutes from the response
-        $data = $response->json();
-        if (isset($data['substitutes'])) {
-            $substitutes = $data['substitutes'];
-            // Return the substitutes along with the ingredient name
-            return response()->json([
-                'status' => 'success',
-                'ingredient' => $ingredientName,
-                'substitutes' => $substitutes,
-                'message' => 'Found ' . count($substitutes) . ' substitutes for the ingredient.'
-            ]);
+    {
+        // Validate the request data
+        $request->validate([
+            'ingredientName' => 'required|string', // Adjust the validation rule as per your requirement
+        ]);
+    
+        // Get the ingredient name from the request
+        $ingredientName = $request->input('ingredientName');
+    
+        // Send request to Spoonacular API to get substitutes for the ingredient
+        $response = Http::get('https://api.spoonacular.com/food/ingredients/substitutes', [
+            'apiKey' => '4369cde01c844dcaabaea9400aa5745c', // Replace with your Spoonacular API key
+            'ingredientName' => $ingredientName,
+        ]);
+    
+        // Check if request was successful
+        if ($response->successful()) {
+            // Extract the substitutes from the response
+            $data = $response->json();
+            if (isset($data['substitutes'])) {
+                $substitutes = $data['substitutes'];
+                // Return the substitutes along with the ingredient name
+                return response()->json([
+                    'status' => 'success',
+                    'ingredient' => $ingredientName,
+                    'substitutes' => $substitutes,
+                    'message' => 'Found ' . count($substitutes) . ' substitutes for the ingredient.'
+                ]);
+            } else {
+                // No substitutes found
+                return response()->json([
+                    'status' => 'success',
+                    'ingredient' => $ingredientName,
+                    'substitutes' => [],
+                    'message' => 'There are no substitutes for this ingredient.'
+                ]);
+            }
         }
+    
+        // Return an error response if the request failed
+        return response()->json(['status' => 'error', 'error' => 'Failed to get substitutes for the ingredient'], 500);
     }
-
-    // Return an error response if the request failed or no substitutes were found
-    return response()->json(['status' => 'error', 'error' => 'Failed to get substitutes for the ingredient'], 500);
-}
+    
 
     
 
