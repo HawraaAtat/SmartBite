@@ -53,13 +53,13 @@ class RecipeController extends Controller
 
         if ($currentHour >= 6 && $currentHour < 12) {
             $mealType = "Breakfast";
-            $allowed_calories = $total_calories * 0.2;
+            $allowed_calories = $total_calories * 0.25;
         } elseif ($currentHour >= 12 && $currentHour < 15) {
             $mealType = "Lunch";
             $allowed_calories = $total_calories * 0.35;
         } elseif ($currentHour >= 15 && $currentHour < 18) {
             $mealType = "Snack";
-            $allowed_calories = $total_calories * 0.15;
+            $allowed_calories = $total_calories * 0.1;
         } elseif ($currentHour >= 18 && $currentHour < 21) {
             $mealType = "Dinner";
             $allowed_calories = $total_calories * 0.3;
