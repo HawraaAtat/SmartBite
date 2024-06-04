@@ -287,4 +287,11 @@ class RecipeController extends Controller
             return view('recipe_detail')->with('error', $errorMessage);
         }
     }
+
+    public function chatbotview()
+    {
+        $user = Auth::user();
+        return view('spoonchat', ['user' => $user]);
+    }
+    
 }

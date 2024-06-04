@@ -39,7 +39,7 @@
                         <div class="message-item">
                             <div class="media align-items-end gap-2">
                                 <div>
-                                    <div class="bubble">Welcome! How can I assist you today?</div>
+                                <div class="bubble">Welcome, {{ Auth::user()->first_name }}! How can I assist you today?</div>
                                     <div class="message-time" id="current-time"></div>    
                                 </div>
                             </div>
@@ -160,7 +160,7 @@
 
                     $('#content-box').append(userBubble);
                     $('#input').val('');
-
+                    var userFirstName = "{{ Auth::user()->first_name }}";
                     if (isGreetingInput(userInput)) {
                         const botBubble = `
                             <div class="chat-box-area" id="chat-box">
@@ -168,7 +168,7 @@
                                     <div class="message-item">
                                         <div class="media align-items-end gap-2">
                                             <div>
-                                                <div class="bubble">Welcome! How can I assist you today?</div>
+                                            <div class="bubble">Welcome, ${userFirstName}! How can I assist you today?</div>
                                                 <div class="message-time">${getCurrentTime()}</div>
                                             </div>
                                         </div>
@@ -181,38 +181,84 @@
                         const matchedSuggestion = suggestions.find(suggestion => userInput.toLowerCase().includes(suggestion));
 
                         if (matchedSuggestion) {
-                            const botSuggestionBubble = `
-                                <div class="chat-box-area" id="chat-box">
-                                    <div class="chat-content bot">
-                                        <div class="message-item">
-                                            <div class="media align-items-end gap-2">
-                                                <div>
-                                                    <div class="bubble">You mentioned ${matchedSuggestion}, is that correct?</div>
-                                                </div>
+                        const botSuggestionBubble = `
+                            <div class="chat-box-area" id="chat-box">
+                                <div class="chat-content bot">
+                                    <div class="message-item">
+                                        <div class="media align-items-end gap-2">
+                                            <div>
+                                                <div class="bubble">You mentioned ${matchedSuggestion}, is that correct?</div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
-                            $('#content-box').append(botSuggestionBubble);
-
-                            $.ajax({
-                                url: "/spoonapi-chat",
-                                method: "GET",
-                                data: { suggestion: matchedSuggestion },
-                                success: function(response) {
-                                    $('#content-box').append(response);
-                                },
-                                error: function(xhr, status, error) {
-                                    console.error(error);
+                                </div>
+                            </div>`;
+                        $('#content-box').append(botSuggestionBubble);
+                        $.ajax({
+                            url: "/spoonapi-chat",
+                            method: "GET",
+                            data: { 
+                                suggestion: matchedSuggestion,
+                                preferences: {
+                                    dietary_preferences: '{{ json_encode(Auth::user()->dietary_preferences) }}',
+                                    allergies: '{{ json_encode(Auth::user()->allergies) }}',
+                                    ethical_meal_considerations: '{{ json_encode(Auth::user()->ethical_meal_considerations) }}',
+                                    preferred_cuisines: '{{ json_encode(Auth::user()->preferred_cuisines) }}',
+                                    favorite_recipes: '{{ json_encode(Auth::user()->favorite_recipes) }}',
+                                    health_and_fitness_data: {
+                                        weight: '{{ Auth::user()->weight }}',
+                                        height: '{{ Auth::user()->height }}',
+                                        age: '{{ Auth::user()->age }}',
+                                        fitness_goals: '{{ Auth::user()->fitness_goals }}',
+                                        daily_calorie_goals: '{{ Auth::user()->daily_calorie_goals }}',
+                                        activity_levels: '{{ Auth::user()->activity_levels }}'
+                                    },
+                                    medical_information: {
+                                        chronic_diseases: '{{ json_encode(Auth::user()->chronic_diseases) }}',
+                                        medications: '{{ json_encode(Auth::user()->medications) }}',
+                                        allergies_to_medications: '{{ json_encode(Auth::user()->allergies_to_medications) }}',
+                                        recent_medical_history: '{{ json_encode(Auth::user()->recent_medical_history) }}'
+                                    }
                                 }
-                            });}
+                            },
+                            success: function(response) {
+                                $('#content-box').append(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+                    }
                           else
                           { 
                             if(isLogicalInput(userInput))
                             {$.ajax({
                                 url: "/spoonapi-foodlist",
                                 method: "GET",
-                                data: { suggestion: userInput },
+                                data: { 
+                                suggestion: userInput,
+                                preferences: {
+                                    dietary_preferences: '{{ json_encode(Auth::user()->dietary_preferences) }}',
+                                    allergies: '{{ json_encode(Auth::user()->allergies) }}',
+                                    ethical_meal_considerations: '{{ json_encode(Auth::user()->ethical_meal_considerations) }}',
+                                    preferred_cuisines: '{{ json_encode(Auth::user()->preferred_cuisines) }}',
+                                    favorite_recipes: '{{ json_encode(Auth::user()->favorite_recipes) }}',
+                                    health_and_fitness_data: {
+                                        weight: '{{ Auth::user()->weight }}',
+                                        height: '{{ Auth::user()->height }}',
+                                        age: '{{ Auth::user()->age }}',
+                                        fitness_goals: '{{ Auth::user()->fitness_goals }}',
+                                        daily_calorie_goals: '{{ Auth::user()->daily_calorie_goals }}',
+                                        activity_levels: '{{ Auth::user()->activity_levels }}'
+                                    },
+                                    medical_information: {
+                                        chronic_diseases: '{{ json_encode(Auth::user()->chronic_diseases) }}',
+                                        medications: '{{ json_encode(Auth::user()->medications) }}',
+                                        allergies_to_medications: '{{ json_encode(Auth::user()->allergies_to_medications) }}',
+                                        recent_medical_history: '{{ json_encode(Auth::user()->recent_medical_history) }}'
+                                    }
+                                }
+                            },
                                 success: function(response) {
                                     $('#content-box').append(response);
                                 },
@@ -235,7 +281,8 @@
                         }
                     }
                 
-                }} else {
+                }
+            } else {
                     const emptyMessageWarning = `
                         <div class="chat-box-area" id="chat-box">
                             <div class="chat-content bot">

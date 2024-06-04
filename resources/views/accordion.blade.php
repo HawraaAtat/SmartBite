@@ -47,7 +47,7 @@
             <div class="card-body row g-3">
             <div class="col-6">
             <div class="dz-stepper border-1">
-                <small>Choose how much recipe you want:</small>
+                <small>Choose how many recipes you want:</small>
                 <input class="stepper" type="text" value="0" name="demo3">
             </div></div></div>
             <div id="stepper-alert-container"></div>
