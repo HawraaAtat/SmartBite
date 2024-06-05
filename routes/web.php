@@ -69,6 +69,8 @@ Route::middleware('authenticated')->group(function () {
     Route::post('update-password/{id}', [AuthController::class, 'updatePassword'])->name('update-password');
 
     Route::get('/spoonchat', [RecipeController::class, 'chatbotview'])->name('spoonchat');
+
+    
 Route::get('/spoonapi-chat', [SpoonAPIchatController::class, 'mealSuggest'])->name('spoonapi-chat');
 Route::get('/spoonapi-foodlist', [SpoonAPIchatController::class, 'listLogicalInputs'])->name('spoonapi-foodlist');
 Route::get('/spoonapianswer', [SpoonAPIchatController::class, 'foodSuggest'])->name('spoonapianswer');

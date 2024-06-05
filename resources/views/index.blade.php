@@ -814,7 +814,7 @@
                                                 $result['title'] }}</a>
                                         </h6>
                                         @if(isset($result['nutrition']['nutrients'][0]['amount']))
-                                        {{ $result['nutrition']['nutrients'][0]['amount'] }}
+                                        {{ $result['nutrition']['nutrients'][0]['amount'] }} calories
                                         @endif
                                     </div>
                                     <div>

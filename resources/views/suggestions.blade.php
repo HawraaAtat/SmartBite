@@ -51,11 +51,11 @@
             <div class="message-item">
                 <div class="media align-items-end gap-2">
                     <div>
-                        @if($menuItems === null || empty($menuItems))
+                        @if($menuItems->count() == 0)
                         <div class="bubble">
                             <div>System: It seems like your message got cut off. Did you want to ask or say something? Feel free to continue!</div>
                             <div class="message-time" id="current-time1"></div>
-                        </div>
+                            </div></div></div>
                         @else
                         <div class="bubble">Here are some options:</div>
                         <div class="bubble1">

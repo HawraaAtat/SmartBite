@@ -90,7 +90,7 @@
             function isLogicalInput(input) {
                 const logicalKeywords = [
             "something", "eat", "food", "recipe", "restaurant", "cooking", "cuisine", 
-            "dish", "appetizer", "main course", "dessert", "snack", "ingredients", 
+            "dish", "appetizer", "main course", "dessert", "ingredients", 
             "flavor", "taste", "spice", "seasoning", "baking", "grilling", "roasting", 
             "frying", "boiling", "steaming", "sauteing", "simmering", "marinating", 
             "mixing", "chopping", "slicing", "dicing", "garnish", "presentation", 
@@ -236,28 +236,7 @@
                                 url: "/spoonapi-foodlist",
                                 method: "GET",
                                 data: { 
-                                suggestion: userInput,
-                                preferences: {
-                                    dietary_preferences: '{{ json_encode(Auth::user()->dietary_preferences) }}',
-                                    allergies: '{{ json_encode(Auth::user()->allergies) }}',
-                                    ethical_meal_considerations: '{{ json_encode(Auth::user()->ethical_meal_considerations) }}',
-                                    preferred_cuisines: '{{ json_encode(Auth::user()->preferred_cuisines) }}',
-                                    favorite_recipes: '{{ json_encode(Auth::user()->favorite_recipes) }}',
-                                    health_and_fitness_data: {
-                                        weight: '{{ Auth::user()->weight }}',
-                                        height: '{{ Auth::user()->height }}',
-                                        age: '{{ Auth::user()->age }}',
-                                        fitness_goals: '{{ Auth::user()->fitness_goals }}',
-                                        daily_calorie_goals: '{{ Auth::user()->daily_calorie_goals }}',
-                                        activity_levels: '{{ Auth::user()->activity_levels }}'
-                                    },
-                                    medical_information: {
-                                        chronic_diseases: '{{ json_encode(Auth::user()->chronic_diseases) }}',
-                                        medications: '{{ json_encode(Auth::user()->medications) }}',
-                                        allergies_to_medications: '{{ json_encode(Auth::user()->allergies_to_medications) }}',
-                                        recent_medical_history: '{{ json_encode(Auth::user()->recent_medical_history) }}'
-                                    }
-                                }
+                                suggestion: userInput
                             },
                                 success: function(response) {
                                     $('#content-box').append(response);
@@ -268,7 +247,7 @@
                             });}
                          else {
                             $.ajax({
-                                url: "/spoonapianswer",
+                                url: "/spoonapi-chat",
                                 method: "GET",
                                 data: { suggestion: userInput },
                                 success: function(response) {

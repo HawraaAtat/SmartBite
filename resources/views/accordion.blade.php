@@ -68,23 +68,6 @@
                 </div>
             </div>
         </div>
-        <div class="accordion-item">
-            <div class="accordion-header collapsed" id="headingTwo" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo" role="button" aria-expanded="true">
-                <span class="accordion-header-text">Get Ingredient Information</span>
-                <span class="accordion-header-indicator"></span>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion-one">
-                <div class="accordion-body">
-                    <div class="mb-3">
-                        <label for="ingredientInfo" class="form-label">Enter Ingredient:</label>
-                        <input type="text" id="ingredientInfo" name="ingredientInfo" class="form-control">
-                    </div>
-                    <div id="getIngredientInfoBtn-alert-container"></div>
-                    
-                    <button id="getIngredientInfoBtn" class="btn btn-primary mt-3">Submit Ingredient</button>
-                </div>
-        </div>
-    </div>
 
 	<div class="accordion-item">
     <div class="accordion-header collapsed" id="headingThree" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree" role="button" aria-expanded="true">
@@ -178,94 +161,147 @@
 	</div>
 </div> 
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-   
-
-
-            var ingredients = [];
-            $('#ingredientForm').submit(function(event) {
-                event.preventDefault(); 
-                addIngredient();
-            });
-            function addIngredient() {
-                var ingredient = $('#ingredient').val().trim();
-                if (ingredient === "") {
-                    return; 
-                }
-                ingredients.push(ingredient);
-                var list = $('#ingredientList');
-                var listItem = $('<li>').addClass('list-group-item').text(ingredient);
-                list.append(listItem);
-                $('#ingredient').val(""); 
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
 
-            $('#submitIngredientsBtn').click(function() {
-                if (ingredients.length === 0) {
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
-                    alertDiv.role = 'alert';
-                    
-                    alertDiv.innerHTML = `
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
-                            <line x1="15" y1="9" x2="9" y2="15"></line>
-                            <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
-                        <strong>Error!</strong> Please add at least one ingredient.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <span><i class="icon feather icon-x"></i></span>
-                        </button>
-                    `;
+        var ingredients = [];
 
-                    document.getElementById('submitIngredientsBtn-alert-container').appendChild(alertDiv);
-                    return;
-                }
-
-        var numberOfRecipes = $('.stepper').val();
-        if (numberOfRecipes<1){
-            const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
-                    alertDiv.role = 'alert';
-                    
-                    alertDiv.innerHTML = `
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                            <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
-                            <line x1="15" y1="9" x2="9" y2="15"></line>
-                            <line x1="9" y1="9" x2="15" y2="15"></line>
-                        </svg>
-                        <strong>Error!</strong> The number must be at least 1.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            <span><i class="icon feather icon-x"></i></span>
-                        </button>
-                    `;
-
-                    document.getElementById('stepper-alert-container').appendChild(alertDiv);
-                    return;
+        // Function to clear alerts
+        function clearAlerts(containerId) {
+            $('#' + containerId).empty();
         }
 
+        // Function to display alert
+        function showAlert(containerId, message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                    <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 2"></polygon>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+                <strong>${type === 'danger' ? 'Error' : 'Success'}!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span><i class="icon feather icon-x"></i></span>
+                </button>
+            `;
+            document.getElementById(containerId).appendChild(alertDiv);
+        }
 
-				$.ajax({
+        $('#ingredientForm').submit(function(event) {
+            event.preventDefault();
+            addIngredient();
+        });
+
+        function addIngredient() {
+            var ingredient = $('#ingredient').val().trim();
+            if (ingredient === "") {
+                showAlert('submitIngredientsBtn-alert-container', 'Please add an ingredient.', 'danger');
+                return;
+            }
+            ingredients.push(ingredient);
+            updateIngredientList();
+            $('#ingredient').val(""); // Clear the input field after adding the ingredient
+        }
+
+        function updateIngredientList() {
+            var list = $('#ingredientList');
+            list.empty(); // Clear the ingredient list before adding new ingredients
+            ingredients.forEach(function(item, index) {
+                var listItem = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center').text(item);
+                var deleteButton = $('<button>').addClass('btn btn-danger btn-sm').text('Delete').click(function() {
+                    removeIngredient(index);
+                });
+                listItem.append(deleteButton);
+                list.append(listItem);
+            });
+        }
+
+        function removeIngredient(index) {
+            ingredients.splice(index, 1);
+            updateIngredientList();
+        }
+
+        $('#submitIngredientsBtn').click(function() {
+            clearAlerts('submitIngredientsBtn-alert-container'); // Clear previous alerts
+
+            if (ingredients.length === 0) {
+                showAlert('submitIngredientsBtn-alert-container', 'Please add at least one ingredient.', 'danger');
+                return;
+            }
+
+            var numberOfRecipes = $('.stepper').val();
+            if (numberOfRecipes < 1) {
+                showAlert('stepper-alert-container', 'The number must be at least 1.', 'danger');
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/searchbyingredients",
+                data: { ingredients: ingredients, number: numberOfRecipes },
+                success: function(response) {
+                    console.log(response);
+                    $('#collapseOne .accordion-body-text').remove(); // Clear previous recipes
+
+                    if (response.recipes.length > 0) {
+                        var recipesHtml = '<div class="accordion-body-text"><div>Here are some options:</div>';
+                        $.each(response.recipes, function(index, recipe) {
+                            recipesHtml += `<div>
+                                                <div>${index + 1}. ${recipe.title}</div>
+                                                <br>
+                                                <img src="${recipe.image}" alt="${recipe.title}" style="max-width: 100px;">
+                                            </div><br>`;
+                        });
+                        recipesHtml += '</div>';
+                        $('#collapseOne').append(recipesHtml);
+                    } else {
+                        $('#collapseOne').append('<div class="accordion-body-text">No recipes found.</div>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
+
+        $('#computeIngredientAmountBtn').click(function() {
+    clearAlerts('computeIngredientAmountBtn-alert-container'); // Clear previous alerts
+
+    var ingredientInfo = $('#compute').val().trim();
+    var measureUnit = $('#measureUnit').val();
+    if (ingredientInfo === "") {
+        showAlert('computeIngredientAmountBtn-alert-container', 'Please enter an ingredient.', 'danger');
+        return;
+    }
+    if (measureUnit === "") {
+        showAlert('computeIngredientAmountBtn-alert-container', 'Please choose one nutrient.', 'danger');
+        return;
+    }
+
+    $.ajax({
         type: "GET",
-        url: "/searchbyingredients",
-        data: { ingredients: ingredients, number: numberOfRecipes },
+        url: "/computeingredientamount",
+        data: { ingredientInfo: ingredientInfo, measureUnit: measureUnit },
         success: function(response) {
             console.log(response);
-            if(response.recipes.length > 0) {
-                var recipesHtml = '<div class="accordion-body-text"><div>Here are some options:</div>';
-                $.each(response.recipes, function(index, recipe) {
-                    recipesHtml += '<div><div>' + (index + 1) + '. ' + recipe.title + '</div><br><img src="' + recipe.image + '" alt="' + recipe.title + '" style="max-width: 100px;"></div><br>';
-                });
-                recipesHtml += '</div>';
-                $('#collapseOne').append(recipesHtml);
+            $('#collapseThree .accordion-body-text').remove(); // Clear previous results
+
+            if (response.amount) {
+                $('#collapseThree .accordion-body').append(`
+                    <div class="accordion-body-text">
+                        <div><strong>Amount of ${response.nutrient} in 1 ${response.ingredientName} is:</strong> ${response.amount} ${response.unit}</div>
+                    </div>
+                `);
             } else {
-                $('#collapseOne').append('<div class="accordion-body-text">No recipes found.</div>');
+                $('#collapseThree .accordion-body').append('<div class="accordion-body-text">No ingredient amount found.</div>');
             }
         },
         error: function(xhr, status, error) {
@@ -273,6 +309,9 @@
         }
     });
 });
+
+ 
+
 
 
 $('#getIngredientInfoBtn').click(function() {
