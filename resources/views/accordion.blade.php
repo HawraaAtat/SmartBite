@@ -73,6 +73,8 @@
 </div>
     </div>
     </div>
+    <ul id="recipe" class="list-group"></ul>
+
 
 
 	<div class="accordion-item">
@@ -169,6 +171,61 @@
 </div> 
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 <script>
+function fetchRecipe(id) {
+    const apiKey = 'a3bff443ef744c5e83d7d03e08e9e158';
+    const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`;
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(response) {
+            const ingredientsList = response.extendedIngredients.map(ingredient => `<li>${ingredient.original}</li>`).join('');
+            const stepsList = response.analyzedInstructions.map(instruction => {
+                const steps = instruction.steps.map(step => `<p><strong>${step.number}. </strong>${step.step}</p>`).join('');
+                return `<strong>${instruction.name}</strong>${steps}`;
+            }).join('');
+
+            const recipeDiv = `
+                <div class="chat-box-area" id="chat-box">
+                    <div class="chat-content bot">
+                        <div class="message-item">
+                            <div class="media align-items-center gap-2">
+                                <div class="bubble1">
+                                    <h3>${response.title}</h3>
+                                    <div class="recipe-image">
+                                        <img src="${response.image}" alt="${response.title}">
+                                    </div>
+                                    <div class="recipe-details">
+                                        <div class="detail-content">
+                                            <p><strong>Serving Size:</strong> ${response.servings}</p>
+                                            <p><strong>Calories Per Serving:</strong> ${response.calories}</p>
+                                            <p><strong>Ready in:</strong> ${response.readyInMinutes} minutes</p>
+                                        </div>
+                                        <div class="description">
+                                            <h6>Ingredients</h6>
+                                            <ul>${ingredientsList}</ul>
+                                            <h6>Steps</h6>
+                                            ${stepsList}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            $('#recipe').append(recipeDiv);
+
+            $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+        },
+        error: function(error) {
+            console.log('Error fetching recipe:', error);
+        }
+    });
+}
+
+
    $(document).ready(function() {
     $.ajaxSetup({
         headers: {
@@ -220,7 +277,7 @@
 
     function updateIngredientList() {
         var list = $('#ingredientList');
-        list.empty(); // Clear the ingredient list before adding new ingredients
+        list.empty();
         ingredients.forEach(function(item, index) {
             var listItem = $('<li>').addClass('list-group-item d-flex justify-content-between align-items-center').text(item);
             var deleteButton = $('<button>').addClass('btn btn-danger btn-sm').text('Delete').click(function() {
@@ -237,6 +294,8 @@
     }
 
     $('#submitIngredientsBtn').click(function() {
+        var recipe = $('#recipe');
+        recipe.empty();
         clearAlerts('submitIngredientsBtn-alert-container'); // Clear previous alerts
 
         if (ingredients.length === 0) {
@@ -265,7 +324,11 @@
                                             <div>${index + 1}. ${recipe.title}</div>
                                             <br>
                                             <img src="${recipe.image}" alt="${recipe.title}" style="max-width: 100px;">
-                                        </div><br>`;
+                                        </div>
+                                        <button onclick="fetchRecipe(${recipe.id})" class="recipe-button" data-recipe-id="${recipe.id}" style="margin-top: 10px; padding: 5px 10px; background: var(--primary); color: #fff; border: none; border-radius: 20px; cursor: pointer; transition: opacity 0.3s ease;" onmouseover="this.style.opacity = '0.8';" onmouseout="this.style.opacity = '1';">
+                                            Get Recipe
+                                        </button>
+                                <br>`;
                     });
                     recipesHtml += '</div>';
                     $('#collapseOne').append(recipesHtml);
